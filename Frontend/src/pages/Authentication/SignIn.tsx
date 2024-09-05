@@ -50,6 +50,7 @@ const SignIn: React.FC = () => {
         }).then(() => {
           // Navigate to home page
           navigate('/');
+          window.location.reload();
         });
       } else {
         // Handle errors or display specific error message

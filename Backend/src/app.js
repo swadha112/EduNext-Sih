@@ -1,21 +1,23 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
 
-const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes');
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const newsRoutes = require("./routes/newsRoutes");
 
 dotenv.config();
 connectDB();
 
 const app = express();
 app.use(cors());
-app.use(express.json());  // Middleware to parse JSON
+app.use(express.json()); // Middleware to parse JSON
 
 // Use routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/news", newsRoutes);
 
 // Export app to be used in the server.js file
 module.exports = app;

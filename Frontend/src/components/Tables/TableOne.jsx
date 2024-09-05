@@ -3,7 +3,15 @@ import React, { useState, useEffect } from 'react';
 // Dummy brand SVG imports replaced with icons or placeholder
 import { AiFillRead } from 'react-icons/ai';
 
-const domains = ['Technology', 'Sports', 'Finance', 'Fashion', 'Medical', 'Arts', 'Culinary'];
+const domains = [
+  'Technology',
+  'Sports',
+  'Finance',
+  'Fashion',
+  'Medical',
+  'Arts',
+  'Culinary',
+];
 
 const TableOne = () => {
   const [selectedDomain, setSelectedDomain] = useState('Technology');
@@ -16,7 +24,9 @@ const TableOne = () => {
 
   const fetchNews = async (domain) => {
     try {
-      const response = await fetch(`http://localhost:5001/news?domain=${domain}`);
+      const response = await fetch(
+        `http://localhost:5000/api/news?domain=${domain}`,
+      );
       const data = await response.json();
       setNewsData(data.articles.slice(0, 5)); // Get top 5 news articles
     } catch (error) {
@@ -31,7 +41,11 @@ const TableOne = () => {
         {domains.map((domain) => (
           <button
             key={domain}
-            className={`mr-2 px-4 py-2 rounded ${selectedDomain === domain ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`mr-2 px-4 py-2 rounded ${
+              selectedDomain === domain
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-200'
+            }`}
             onClick={() => setSelectedDomain(domain)}
           >
             {domain}
@@ -47,36 +61,53 @@ const TableOne = () => {
         <div className="flex flex-col">
           <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
             <div className="p-2.5 xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Source</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Source
+              </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Headline</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Headline
+              </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Published At</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Published At
+              </h5>
             </div>
           </div>
 
           {newsData.map((news, key) => (
             <div
               className={`grid grid-cols-3 sm:grid-cols-5 ${
-                key === newsData.length - 1 ? '' : 'border-b border-stroke dark:border-strokedark'
+                key === newsData.length - 1
+                  ? ''
+                  : 'border-b border-stroke dark:border-strokedark'
               }`}
               key={key}
             >
               <div className="flex items-center gap-3 p-2.5 xl:p-5">
                 <AiFillRead className="text-2xl" />
-                <p className="hidden text-black dark:text-white sm:block">{news.source.name}</p>
+                <p className="hidden text-black dark:text-white sm:block">
+                  {news.source.name}
+                </p>
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <a href={news.url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+                <a
+                  href={news.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500"
+                >
                   {news.title}
                 </a>
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="text-meta-3">{new Date(news.publishedAt).toLocaleDateString()}</p>
+                <p className="text-meta-3">
+                  {new Date(news.publishedAt).toLocaleDateString()}
+                </p>
               </div>
             </div>
           ))}

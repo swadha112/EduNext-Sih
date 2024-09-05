@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface User {
   name: string;
@@ -14,11 +15,15 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token');
-      if (!token) return; // No token found, user is not authenticated
+      if (!token) {
+        // navigate('/auth/signin'); // Redirect to /signin on error
+        return;
+      }
 
       try {
         const response = await fetch(
@@ -37,15 +42,16 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
 
         const userData = await response.json();
-        setUser(userData); // Set the user in the context state
+        setUser(userData.data); // Set the user in the context state
         localStorage.setItem('user', JSON.stringify(userData.data)); // Save user object to local storage
       } catch (error) {
         console.error('Error fetching user profile:', error);
+        // navigate('/auth/signin'); // Redirect to /signin on error
       }
     };
 
     fetchUserProfile();
-  }, []); // Dependency array is empty to run this effect only once on mount
+  }, [navigate]); // Include navigate in dependency array
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
