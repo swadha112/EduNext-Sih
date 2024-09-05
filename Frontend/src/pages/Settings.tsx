@@ -1,7 +1,112 @@
+import { useEffect, useState } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import userThree from '../images/user/user-03.png';
+import Swal from 'sweetalert2';
 
 const Settings = () => {
+  const [userData, setUserData] = useState({
+    name: '',
+    mobileNo: '',
+    email: '',
+    dob: '',
+    gender: '',
+    category: 'UG', // Default category
+    bio: '',
+    interests: '',
+    grade: '',
+    stream: '',
+  });
+
+  useEffect(() => {
+    // Fetch user data from local storage
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user) {
+      setUserData({
+        name: user.name || '',
+        mobileNo: user.mobileNo || '',
+        email: user.email || '',
+        dob: user.dob ? new Date(user.dob).toISOString().split('T')[0] : '',
+        gender: user.gender || '',
+        category: user.category || 'UG',
+        bio: user.bio || '',
+        interests: user.interests || '',
+        grade: user.grade || '',
+        stream: user.stream || '',
+      });
+    }
+  }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Get token from local storage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No token found, please sign in again!',
+      });
+      return;
+    }
+
+    try {
+      const bodyData = {
+        name: userData.name,
+        mobileNo: userData.mobileNo,
+        dob: userData.dob,
+        gender: userData.gender,
+        category: userData.category,
+        bio: userData.bio,
+        interests: userData.interests,
+        grade: userData.grade,
+        stream: userData.stream,
+      };
+
+      const response = await fetch('http://localhost:5050/api/users/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Attach the token as a Bearer token
+        },
+        body: JSON.stringify(bodyData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Update local storage
+        console.log(data);
+        localStorage.setItem('user', JSON.stringify(data.data));
+
+        // Show success message
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Profile updated successfully!',
+        }).then(() => {
+          // Reload the page after success message
+          window.location.reload();
+        });
+      } else {
+        // Show error message
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: data.message || 'Failed to update profile!',
+        });
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Server error while updating profile!',
+      });
+    }
+  };
+
   return (
     <>
       <div className="mx-auto max-w-270">
@@ -16,7 +121,7 @@ const Settings = () => {
                 </h3>
               </div>
               <div className="p-7">
-                <form action="#">
+                <form onSubmit={handleSubmit}>
                   <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                     <div className="w-full sm:w-1/2">
                       <label
@@ -55,8 +160,10 @@ const Settings = () => {
                           type="text"
                           name="fullName"
                           id="fullName"
-                          placeholder="Devid Jhon"
-                          defaultValue="Devid Jhon"
+                          value={userData.name}
+                          onChange={(e) =>
+                            setUserData({ ...userData, name: e.target.value })
+                          }
                         />
                       </div>
                     </div>
@@ -73,8 +180,10 @@ const Settings = () => {
                         type="text"
                         name="phoneNumber"
                         id="phoneNumber"
-                        placeholder="+990 3343 7865"
-                        defaultValue="+990 3343 7865"
+                        value={userData.mobileNo}
+                        onChange={(e) =>
+                          setUserData({ ...userData, mobileNo: e.target.value })
+                        }
                       />
                     </div>
                   </div>
@@ -116,8 +225,10 @@ const Settings = () => {
                         type="email"
                         name="emailAddress"
                         id="emailAddress"
-                        placeholder="example@domain.com"
-                        defaultValue="example@domain.com"
+                        value={userData.email}
+                        onChange={(e) =>
+                          setUserData({ ...userData, email: e.target.value })
+                        }
                       />
                     </div>
                   </div>
@@ -135,7 +246,10 @@ const Settings = () => {
                         type="date"
                         name="dateOfBirth"
                         id="dateOfBirth"
-                        defaultValue="2000-01-01"
+                        value={userData.dob}
+                        onChange={(e) =>
+                          setUserData({ ...userData, dob: e.target.value })
+                        }
                       />
                     </div>
 
@@ -150,11 +264,15 @@ const Settings = () => {
                         className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         name="gender"
                         id="gender"
+                        value={userData.gender}
+                        onChange={(e) =>
+                          setUserData({ ...userData, gender: e.target.value })
+                        }
                       >
                         <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                   </div>
@@ -163,67 +281,43 @@ const Settings = () => {
                     <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
-                        htmlFor="bio"
+                        htmlFor="category"
                       >
-                        Bio
+                        Category
                       </label>
-                      <textarea
+                      <select
                         className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                        name="bio"
-                        id="bio"
-                        placeholder="Tell us about yourself..."
-                        defaultValue="Tell us about yourself..."
-                      />
+                        name="category"
+                        id="category"
+                        value={userData.category}
+                        onChange={(e) =>
+                          setUserData({ ...userData, category: e.target.value })
+                        }
+                      >
+                        <option value="UG">UG</option>
+                        <option value="PG">PG</option>
+                        <option value="School">School</option>
+                      </select>
                     </div>
+                  </div>
 
-                    <div className="w-full sm:w-1/2">
+                  {['UG', 'PG'].includes(userData.category) && (
+                    <div className="mb-5.5">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
-                        htmlFor="interests"
+                        htmlFor="cv"
                       >
-                        Interests
+                        CV Upload
                       </label>
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                        type="text"
-                        name="interests"
-                        id="interests"
-                        placeholder="Enter your interests"
+                        type="file"
+                        name="cv"
+                        id="cv"
+                        accept=".pdf,.doc,.docx"
                       />
                     </div>
-                  </div>
-
-                  <div className="mb-5.5">
-                    <label
-                      className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="password"
-                    >
-                      New Password
-                    </label>
-                    <input
-                      className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="Enter new password"
-                    />
-                  </div>
-
-                  <div className="mb-5.5">
-                    <label
-                      className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="cv"
-                    >
-                      CV Upload
-                    </label>
-                    <input
-                      className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      type="file"
-                      name="cv"
-                      id="cv"
-                      accept=".pdf,.doc,.docx"
-                    />
-                  </div>
+                  )}
 
                   <div className="mb-5.5">
                     <label
@@ -245,6 +339,50 @@ const Settings = () => {
                     <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
+                        htmlFor="bio"
+                      >
+                        Bio
+                      </label>
+                      <textarea
+                        className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        name="bio"
+                        id="bio"
+                        placeholder="Tell us about yourself..."
+                        value={userData.bio}
+                        onChange={(e) =>
+                          setUserData({ ...userData, bio: e.target.value })
+                        }
+                      />
+                    </div>
+
+                    <div className="w-full sm:w-1/2">
+                      <label
+                        className="mb-3 block text-sm font-medium text-black dark:text-white"
+                        htmlFor="interests"
+                      >
+                        Interests
+                      </label>
+                      <input
+                        className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        type="text"
+                        name="interests"
+                        id="interests"
+                        placeholder="Enter your interests"
+                        value={userData.interests}
+                        onChange={(e) =>
+                          setUserData({
+                            ...userData,
+                            interests: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
+                    <div className="w-full sm:w-1/2">
+                      <label
+                        className="mb-3 block text-sm font-medium text-black dark:text-white"
                         htmlFor="grade"
                       >
                         Grade
@@ -255,6 +393,10 @@ const Settings = () => {
                         name="grade"
                         id="grade"
                         placeholder="Enter your grade"
+                        value={userData.grade}
+                        onChange={(e) =>
+                          setUserData({ ...userData, grade: e.target.value })
+                        }
                       />
                     </div>
 
@@ -271,6 +413,10 @@ const Settings = () => {
                         name="stream"
                         id="stream"
                         placeholder="Enter your stream"
+                        value={userData.stream}
+                        onChange={(e) =>
+                          setUserData({ ...userData, stream: e.target.value })
+                        }
                       />
                     </div>
                   </div>
