@@ -1,0 +1,36 @@
+.rpg-game {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
+  }
+  
+  .choice-button {
+    display: block;
+    width: 250px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .choice-button:hover {
+    background-color: #45a049;
+  }
+  
+  .game-over {
+    margin-top: 50px;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  p {
+    font-size: 18px;
+  }
+  
