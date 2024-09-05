@@ -15,8 +15,10 @@ import {
   Alert,
   Grid,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 const Counselors = () => {
+  const theme = useTheme(); // Access the current theme (light or dark)
   const [address, setAddress] = useState('');
   const [counselors, setCounselors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -53,7 +55,16 @@ const Counselors = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 'bold' }}>
+      {/* Title with custom color */}
+      <Typography
+        variant="h3"
+        align="center"
+        gutterBottom
+        sx={{
+          fontWeight: 'bold',
+          color: theme.palette.mode === 'dark' ? '#3f51b5' : '#3f51b5', // Adjust title color based on theme
+        }}
+      >
         Find Career Counselors
       </Typography>
 
@@ -62,7 +73,7 @@ const Counselors = () => {
           <TextField
             fullWidth
             variant="outlined"
-            label="Enter your address"
+            label="Enter your address WITH PINCODE"
             value={address}
             onChange={handleInputChange}
             disabled={loading}
@@ -70,21 +81,37 @@ const Counselors = () => {
               mb: 2,
               '& .MuiOutlinedInput-root': {
                 height: '56px', // Ensuring the input height matches the button height
+                backgroundColor: theme.palette.mode === 'dark' ? '#424242' : '#e3f2fd', // Custom background for dark mode
+                borderRadius: '8px', // Rounded corners for search box
               },
+              '& .MuiInputLabel-root': {
+                color: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Custom label color for dark/light mode
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Border color based on theme
+              },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme.palette.mode === 'dark' ? '#42a5f5' : '#1565c0', // Focus border color for dark/light mode
+              },
+              color: theme.palette.text.primary, // Adjust text color based on the theme
             }}
           />
         </Grid>
-        <Grid item xs={15} sm={4} md={3}>
+        <Grid item xs={12} sm={4} md={3}>
           <Button
             fullWidth
             variant="contained"
-            color="primary"
             onClick={handleSubmit}
             disabled={loading || !address}
             startIcon={loading && <CircularProgress size={20} />}
             sx={{
               height: '56px', // Matching the button height with the input field
               fontSize: '1rem', // Ensuring font size is clear and readable
+              backgroundColor: theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5', // Button background based on theme
+              color: theme.palette.mode === 'dark' ? '#fff' : '#fff', // Button text color based on theme
+              '&:hover': {
+                backgroundColor: theme.palette.mode === 'dark' ? '#303f9f' : '#303f9f', // Hover state background color
+              },
             }}
           >
             {loading ? 'Searching...' : 'Search'}
@@ -99,26 +126,39 @@ const Counselors = () => {
       )}
 
       {counselors.length > 0 && (
-        <TableContainer component={Paper} sx={{ mt: 5, maxHeight: '70vh' }}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            mt: 5,
+            maxHeight: '70vh',
+            backgroundColor: theme.palette.background.paper, // Adapt table background to theme
+          }}
+        >
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.5rem' }}>Title</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.5rem' }}>Website</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.5rem' }}>Google Maps</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.5rem', color: theme.palette.text.primary }}>
+                  Title
+                </TableCell>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.5rem', color: theme.palette.text.primary }}>
+                  Website
+                </TableCell>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.5rem', color: theme.palette.text.primary }}>
+                  Google Maps
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {counselors.map((counselor, index) => (
                 <TableRow key={index}>
-                  <TableCell>{counselor.title}</TableCell>
-                  <TableCell>
-                    <a href={counselor.url} target="_blank" rel="noopener noreferrer">
+                  <TableCell sx={{ color: theme.palette.text.primary }}>{counselor.title}</TableCell>
+                  <TableCell sx={{ color: theme.palette.text.primary }}>
+                    <a href={counselor.url} target="_blank" rel="noopener noreferrer" style={{ color: theme.palette.primary.main }}>
                       Visit Website
                     </a>
                   </TableCell>
-                  <TableCell>
-                    <a href={counselor.maps_link} target="_blank" rel="noopener noreferrer">
+                  <TableCell sx={{ color: theme.palette.text.primary }}>
+                    <a href={counselor.maps_link} target="_blank" rel="noopener noreferrer" style={{ color: theme.palette.primary.main }}>
                       View on Google Maps
                     </a>
                   </TableCell>
