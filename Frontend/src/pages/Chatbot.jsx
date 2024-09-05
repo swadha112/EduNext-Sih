@@ -3,7 +3,7 @@ import {
   Box,
   TextField,
   Button,
-  Paper,
+  Paper, 
   Typography,
   Container,
 } from '@mui/material';
@@ -98,7 +98,7 @@ function Chatbot() {
       maxWidth={false}
       disableGutters
       sx={{
-        height: '90%', // Full height for the chat window
+        height: '80vh', // Full height for the chat window
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -121,7 +121,7 @@ function Chatbot() {
             overflowY: 'auto', // Enable vertical scrolling
             padding: 2,
             backgroundColor: '#f5f5f5',
-            maxHeight: '70vh', // Limit height so it becomes scrollable when content overflows
+            maxHeight: '60vh', // Limit height so it becomes scrollable when content overflows
           }}
         >
           {messages.map((msg, index) => (
