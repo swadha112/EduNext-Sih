@@ -19,6 +19,7 @@ import DefaultLayout from './layout/DefaultLayout';
 import Counselors from './pages/Counselors.jsx';
 import Chatbot from './pages/Chatbot.jsx';
 import Quiz from './pages/Quiz.jsx';
+import Alumni from './pages/Alumni.jsx'
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -121,6 +122,15 @@ function App() {
                   <>
                     <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                     <Counselors />
+                  </>
+                }
+              />
+              <Route
+                path="/alumni"
+                element={
+                  <>
+                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <Alumni />
                   </>
                 }
               />
