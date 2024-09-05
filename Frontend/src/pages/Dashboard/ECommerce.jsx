@@ -47,11 +47,31 @@ const ECommerce = () => {
     ],
   };
 
+  // Example completion percentage
+  const profileCompletion = 75; // This value can be dynamically set based on user's profile
+
   return (
     <>
+      {/* Welcome Message */}
       <div className="text-center py-10 bg-gray-50">
         <h1 className="text-4xl font-bold mb-2">Welcome to EduNext!</h1>
       </div>
+
+      {/* Dashboard-Style Progress Container */}
+      <div className="mx-auto my-8 w-3/4 bg-white p-6 rounded-md shadow-md">
+        <h2 className="text-xl font-semibold mb-2">You have completed {profileCompletion}% of your profile</h2>
+        <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
+          <div
+            className="bg-blue-600 h-4 rounded-full"
+            style={{ width: `${profileCompletion}%` }}
+          ></div>
+        </div>
+        <NavLink to="/complete-profile" className="text-blue-500 underline">
+          Click here to complete your profile
+        </NavLink>
+      </div>
+
+      {/* Grid of Cards */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="High School" content="">
           <img
@@ -90,14 +110,15 @@ const ECommerce = () => {
         </CardDataStats>
       </div>
 
+      {/* Tagline */}
       <div className="text-center py-10 bg-gray-50">
         <h1 className="text-4xl font-bold mb-2">Your Journey, Our Expertise.</h1>
         <p className="text-lg text-gray-600 mb-6">
           Count on our expertise to make the right choices for your education and career.
         </p>
-    
       </div>
 
+      {/* Horizontal carousel with react-slick */}
       <div className="my-10 px-4">
         <Slider {...settings}>
           <div className="px-2">
