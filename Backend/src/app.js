@@ -6,18 +6,48 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const newsRoutes = require("./routes/newsRoutes");
+const counselorsRoutes = require("./routes/counsellorRoutes");  // Import counselors routes
 
-dotenv.config();
+dotenv.config();  // Load environment variables
+
+// Connect to MongoDB
 connectDB();
 
+// Initialize the Express app
 const app = express();
+
+// Middleware to parse JSON and handle CORS
 app.use(cors());
-app.use(express.json()); // Middleware to parse JSON
+app.use(express.json());
 
-// Use routes
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/news", newsRoutes);
+// Define routes
+app.use("/api/auth", authRoutes);        // Authentication routes
+app.use("/api/users", userRoutes);       // User-related routes
+app.use("/api/news", newsRoutes);        // News-related routes
+app.use("/api/counselors", counselorsRoutes);  // Counselors-related routes
 
-// Export app to be used in the server.js file
+// Health Check Route
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
+// Global error handler (optional but useful)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    success: false,
+    message: "An internal server error occurred.",
+    error: err.message,
+  });
+});
+
+// 404 handler for undefined routes
+app.use((req, res, next) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+
+// Export the app to be used in server.js
 module.exports = app;
