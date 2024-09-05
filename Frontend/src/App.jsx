@@ -20,7 +20,7 @@ import Counselors from './pages/Counselors.jsx';
 import Chatbot from './pages/Chatbot.jsx';
 import Quiz from './pages/Quiz.jsx';
 import Alumni from './pages/Alumni.jsx'
-
+import Video from './pages/Video.jsx';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -153,7 +153,25 @@ function App() {
                 }
               />
               <Route
-                path="/settings"
+                path="/video"
+                element={
+                  <>
+                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <Video/>
+                  </>
+                }
+              />
+              <Route
+                path="/video"
+                element={
+                  <>
+                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <Video/>
+                  </>
+                }
+              />
+              <Route
+                path="/update"
                 element={
                   <>
                     <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />

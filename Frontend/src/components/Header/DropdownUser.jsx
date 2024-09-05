@@ -99,7 +99,7 @@ const DropdownUser = () => {
 
             <li>
               <Link
-                to="/settings"
+                to="/update"
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
                 <svg

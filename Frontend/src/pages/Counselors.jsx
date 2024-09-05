@@ -62,7 +62,8 @@ const Counselors = () => {
         gutterBottom
         sx={{
           fontWeight: 'bold',
-          color: '#4A4A4A', // Set the title color to dark grey
+          color: theme.palette.mode === 'dark' ? '#ffffff' : '#4A4A4A',
+          
         }}
       >
         Find Career Counselors
