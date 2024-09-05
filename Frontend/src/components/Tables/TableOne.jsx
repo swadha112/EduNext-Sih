@@ -9,15 +9,23 @@ const domains = [
   'Medical',
   'Arts',
   'Culinary',
+  'Law',
+  'Management',
+  'Aerospace',
+  'Agriculture',
+  'Other' // Add 'Other' option here
 ];
 
 const TableOne = () => {
   const [selectedDomain, setSelectedDomain] = useState('Technology');
   const [newsData, setNewsData] = useState([]);
+  const [customDomain, setCustomDomain] = useState(''); // State to store custom domain input
 
   // Fetch news from the backend when the domain changes
   useEffect(() => {
-    fetchNews(selectedDomain);
+    if (selectedDomain !== 'Other') {
+      fetchNews(selectedDomain);
+    }
   }, [selectedDomain]);
 
   const fetchNews = async (domain) => {
@@ -29,6 +37,16 @@ const TableOne = () => {
       setNewsData(data.articles.slice(0, 5)); // Get top 5 news articles
     } catch (error) {
       console.error('Error fetching news:', error);
+    }
+  };
+
+  const handleCustomDomainChange = (e) => {
+    setCustomDomain(e.target.value);
+  };
+
+  const handleFetchCustomDomain = () => {
+    if (customDomain.trim() !== '') {
+      fetchNews(customDomain.trim());
     }
   };
 
@@ -51,9 +69,28 @@ const TableOne = () => {
         ))}
       </div>
 
+      {/* Show input for custom domain if 'Other' is selected */}
+      {selectedDomain === 'Other' && (
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Enter custom domain"
+            value={customDomain}
+            onChange={handleCustomDomainChange}
+            className="mr-2 px-4 py-2 rounded border"
+          />
+          <button
+            onClick={handleFetchCustomDomain}
+            className="px-4 py-2 rounded bg-blue-500 text-white"
+          >
+            Fetch News
+          </button>
+        </div>
+      )}
+
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-          {selectedDomain} Job Market Trends
+          {selectedDomain === 'Other' ? customDomain : selectedDomain} Job Market Trends
         </h4>
 
         <div className="flex flex-col">
