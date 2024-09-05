@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import userThree from '../images/user/user-03.png';
 import Swal from 'sweetalert2';
+
+const predefinedInterests = [
+  'Coding',
+  'Gaming',
+  'Traveling',
+  'Music',
+  'Sports',
+  'Reading',
+];
 
 const Settings = () => {
   const [userData, setUserData] = useState({
@@ -12,10 +20,12 @@ const Settings = () => {
     gender: '',
     category: 'UG', // Default category
     bio: '',
-    interests: '',
+    interests: [], // Interests as an array
     grade: '',
     stream: '',
   });
+
+  const [selectedInterests, setSelectedInterests] = useState([]);
 
   useEffect(() => {
     // Fetch user data from local storage
@@ -30,12 +40,24 @@ const Settings = () => {
         gender: user.gender || '',
         category: user.category || 'UG',
         bio: user.bio || '',
-        interests: user.interests || '',
+        interests: user.interests ? user.interests.split(', ') : [], // Convert to array
         grade: user.grade || '',
         stream: user.stream || '',
       });
+
+      // Pre-select user's interests
+      setSelectedInterests(user.interests ? user.interests.split(', ') : []);
     }
   }, []);
+
+  const handleInterestChange = (interest) => {
+    // Toggle selected interest
+    if (selectedInterests.includes(interest)) {
+      setSelectedInterests(selectedInterests.filter((i) => i !== interest));
+    } else {
+      setSelectedInterests([...selectedInterests, interest]);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -59,7 +81,7 @@ const Settings = () => {
         gender: userData.gender,
         category: userData.category,
         bio: userData.bio,
-        interests: userData.interests,
+        interests: selectedInterests.join(', '), // Convert array to string
         grade: userData.grade,
         stream: userData.stream,
       };
@@ -77,7 +99,6 @@ const Settings = () => {
 
       if (response.ok) {
         // Update local storage
-        console.log(data);
         localStorage.setItem('user', JSON.stringify(data.data));
 
         // Show success message
@@ -229,6 +250,7 @@ const Settings = () => {
                         onChange={(e) =>
                           setUserData({ ...userData, email: e.target.value })
                         }
+                        disabled
                       />
                     </div>
                   </div>
@@ -355,7 +377,7 @@ const Settings = () => {
                       />
                     </div>
 
-                    <div className="w-full sm:w-1/2">
+                    {/* <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
                         htmlFor="interests"
@@ -376,6 +398,54 @@ const Settings = () => {
                           })
                         }
                       />
+                    </div> */}
+                  </div>
+                  <div className="mb-5.5">
+                    <label
+                      className="mb-3 block text-sm font-medium text-black dark:text-white"
+                      htmlFor="interests"
+                    >
+                      Interests
+                    </label>
+                    <div className="flex flex-wrap gap-4">
+                      {predefinedInterests.map((interest) => (
+                        <label
+                          key={interest}
+                          className="flex items-center cursor-pointer select-none"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedInterests.includes(interest)}
+                            onChange={() => handleInterestChange(interest)}
+                            className="hidden"
+                          />
+                          <span
+                            className={`h-5 w-5 inline-flex items-center justify-center mr-2 border ${
+                              selectedInterests.includes(interest)
+                                ? 'bg-primary border-primary'
+                                : 'border-gray-300'
+                            }`}
+                          >
+                            {selectedInterests.includes(interest) && (
+                              <svg
+                                className="w-3 h-3 text-white"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M5 13l4 4L19 7"
+                                ></path>
+                              </svg>
+                            )}
+                          </span>
+                          {interest}
+                        </label>
+                      ))}
                     </div>
                   </div>
 
@@ -432,7 +502,7 @@ const Settings = () => {
             </div>
           </div>
 
-          <div className="col-span-5 xl:col-span-2">
+          {/* <div className="col-span-5 xl:col-span-2">
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
               <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
                 <h3 className="font-medium text-black dark:text-white">
@@ -467,7 +537,7 @@ const Settings = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
