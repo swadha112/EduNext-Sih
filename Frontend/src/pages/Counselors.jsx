@@ -55,14 +55,14 @@ const Counselors = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      {/* Title with custom color */}
+      {/* Title with custom dark grey color */}
       <Typography
         variant="h3"
         align="center"
         gutterBottom
         sx={{
           fontWeight: 'bold',
-          color: theme.palette.mode === 'dark' ? '#3f51b5' : '#3f51b5', // Adjust title color based on theme
+          color: '#4A4A4A', // Set the title color to dark grey
         }}
       >
         Find Career Counselors
