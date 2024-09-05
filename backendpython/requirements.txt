@@ -1,0 +1,6 @@
+Flask
+flask-cors
+serpapi
+beautifulsoup4
+requests
+rich
