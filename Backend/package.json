@@ -8,12 +8,8 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.1",
-<<<<<<< HEAD
-    "nodemon": "^3.1.4",
-    "python-shell": "^5.0.0"
-=======
+    "python-shell": "^5.0.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.4"
->>>>>>> 62c85a7c6f632261d094cd99c0007ce3848bfcee
   }
 }

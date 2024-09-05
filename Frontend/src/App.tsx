@@ -17,7 +17,7 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
 import Counselors from './pages/Counselors';
-
+import Chatbot from './pages/Chatbot.jsx';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -119,6 +119,16 @@ function App() {
                   <>
                     <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                     <Counselors />
+                  </>
+                }
+              />
+
+              <Route
+                path="/chatbot"
+                element={
+                  <>
+                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <Chatbot />
                   </>
                 }
               />

@@ -7,7 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const newsRoutes = require("./routes/newsRoutes");
 const counselorsRoutes = require("./routes/counsellorRoutes");  // Import counselors routes
-
+const chatbotRoutes = require("./routes/chatbotRoutes");
 dotenv.config();  // Load environment variables
 
 // Connect to MongoDB
@@ -25,7 +25,7 @@ app.use("/api/auth", authRoutes);        // Authentication routes
 app.use("/api/users", userRoutes);       // User-related routes
 app.use("/api/news", newsRoutes);        // News-related routes
 app.use("/api/counselors", counselorsRoutes);  // Counselors-related routes
-
+app.use("/api/chatbot", chatbotRoutes);
 // Health Check Route
 app.get("/", (req, res) => {
   res.send("API is running...");
