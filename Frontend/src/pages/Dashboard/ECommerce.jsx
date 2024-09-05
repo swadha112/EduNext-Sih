@@ -28,6 +28,24 @@ const ECommerce = () => {
           />
         </CardDataStats>
 
+        <CardDataStats title="Counsellors">
+          <img
+            src={Counsellor}
+            alt="Counsellors"
+            className="h-full w-full object-cover"
+            title="Counsellors"
+          />
+        </CardDataStats>
+
+        <CardDataStats title="Professionals">
+          <img
+            src={Professional}
+            alt="Professional"
+            className="h-full w-full object-cover"
+            title="Professional"
+          />
+        </CardDataStats>
+
       </div>
 
             {/* Tagline */}
