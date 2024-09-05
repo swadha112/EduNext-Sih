@@ -6,10 +6,11 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const newsRoutes = require("./routes/newsRoutes");
-const counselorsRoutes = require("./routes/counsellorRoutes");  // Import counselors routes
+const counselorsRoutes = require("./routes/counsellorRoutes");
 const chatbotRoutes = require("./routes/chatbotRoutes");
-const quizRoutes = require("./routes/quizRoutes"); 
+const quizRoutes = require("./routes/quizRoutes");
 const alumniRoutes = require("./routes/alumniRoutes");
+const videoRoutes = require("./routes/videoRoutes");  // Import video routes
 
 dotenv.config();  // Load environment variables
 
@@ -31,6 +32,7 @@ app.use("/api/counselors", counselorsRoutes);  // Counselors-related routes
 app.use("/api/chatbot/chat", chatbotRoutes);  // Chatbot-related routes
 app.use("/api/quiz", quizRoutes);        // Quiz-related routes
 app.use("/api/alumni", alumniRoutes);    // Alumni-related routes
+app.use("/api/video", videoRoutes);      // Video-related routes
 
 // Health Check Route
 app.get("/", (req, res) => {

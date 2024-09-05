@@ -48,7 +48,24 @@ const ECommerce = () => {
   };
 
   // Example completion percentage
-  const profileCompletion = 75; // This value can be dynamically set based on user's profile
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  // Fields to exclude from the calculation
+  const excludedFields = ['cv', 'marksheet', '__v', '_id'];
+
+  // Get all keys from the user object
+  const totalFields = Object.keys(user).filter(
+    (field) => !excludedFields.includes(field),
+  ).length;
+
+  // Count the number of filled fields (excluding null or empty values)
+  const filledFields = Object.keys(user).filter(
+    (field) =>
+      !excludedFields.includes(field) && user[field] && user[field] !== '',
+  ).length;
+
+  // Calculate profile completion percentage
+  const profileCompletion = ((filledFields / totalFields) * 100).toFixed(2);
 
   return (
     <>
@@ -59,16 +76,25 @@ const ECommerce = () => {
 
       {/* Dashboard-Style Progress Container */}
       <div className="mx-auto my-8 w-3/4 bg-white p-6 rounded-md shadow-md">
-        <h2 className="text-xl font-semibold mb-2">You have completed {profileCompletion}% of your profile</h2>
+        <h2 className="text-xl font-semibold mb-2">
+          You have completed {profileCompletion}% of your profile
+        </h2>
         <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
           <div
             className="bg-blue-600 h-4 rounded-full"
             style={{ width: `${profileCompletion}%` }}
           ></div>
         </div>
-        <NavLink to="/complete-profile" className="text-blue-500 underline">
-          Click here to complete your profile
-        </NavLink>
+        {/* Conditionally render link based on profile completion */}
+        {profileCompletion < 100 ? (
+          <NavLink to="/settings" className="text-blue-500 underline">
+            Click here to complete your profile
+          </NavLink>
+        ) : (
+          <NavLink to="/chatbot" className="text-blue-500 underline">
+            Proceed to Chatbot
+          </NavLink>
+        )}
       </div>
 
       {/* Grid of Cards */}
@@ -112,9 +138,12 @@ const ECommerce = () => {
 
       {/* Tagline */}
       <div className="text-center py-10 bg-gray-50">
-        <h1 className="text-4xl font-bold mb-2">Your Journey, Our Expertise.</h1>
+        <h1 className="text-4xl font-bold mb-2">
+          Your Journey, Our Expertise.
+        </h1>
         <p className="text-lg text-gray-600 mb-6">
-          Count on our expertise to make the right choices for your education and career.
+          Count on our expertise to make the right choices for your education
+          and career.
         </p>
       </div>
 
@@ -123,7 +152,10 @@ const ECommerce = () => {
         <Slider {...settings}>
           <div className="px-2">
             <NavLink to="/chatbot">
-              <CardDataStats title="Chatbot" content="Chat with our AI to explore career options.">
+              <CardDataStats
+                title="Chatbot"
+                content="Chat with our AI to explore career options."
+              >
                 <img
                   src={Chatbot}
                   alt="Chatbot"
@@ -135,7 +167,10 @@ const ECommerce = () => {
           </div>
           <div className="px-2">
             <NavLink to="/quiz">
-              <CardDataStats title="Dynamic Quizes" content="Test your knowledge with our dynamic quizzes.">
+              <CardDataStats
+                title="Dynamic Quizes"
+                content="Test your knowledge with our dynamic quizzes."
+              >
                 <img
                   src={Quiz}
                   alt="Dynamic Quizes"
@@ -147,7 +182,10 @@ const ECommerce = () => {
           </div>
           <div className="px-2">
             <NavLink to="/interview">
-              <CardDataStats title="Interview Preparation" content="Prepare for interviews with behavioural analysis.">
+              <CardDataStats
+                title="Interview Preparation"
+                content="Prepare for interviews with behavioural analysis."
+              >
                 <img
                   src={Interview}
                   alt="Interview Preparation"
@@ -159,7 +197,10 @@ const ECommerce = () => {
           </div>
           <div className="px-2">
             <NavLink to="/tables">
-              <CardDataStats title="Market Trends" content="Stay updated with the latest market trends.">
+              <CardDataStats
+                title="Market Trends"
+                content="Stay updated with the latest market trends."
+              >
                 <img
                   src={Trends}
                   alt="Market Trends"
@@ -171,7 +212,10 @@ const ECommerce = () => {
           </div>
           <div className="px-2">
             <NavLink to="/workshops">
-              <CardDataStats title="Upcoming Workshops" content="Information on upcoming workshops.">
+              <CardDataStats
+                title="Upcoming Workshops"
+                content="Information on upcoming workshops."
+              >
                 <img
                   src={Workshop}
                   alt="Upcoming Workshops"
@@ -183,7 +227,10 @@ const ECommerce = () => {
           </div>
           <div className="px-2">
             <NavLink to="/counsellors">
-              <CardDataStats title="Counsellors Nearby" content="Info of counselors nearby your area.">
+              <CardDataStats
+                title="Counsellors Nearby"
+                content="Info of counselors nearby your area."
+              >
                 <img
                   src={Counsellor}
                   alt="Connect with Counsellors"
@@ -195,7 +242,10 @@ const ECommerce = () => {
           </div>
           <div className="px-2">
             <NavLink to="/alumini">
-              <CardDataStats title="Alumini Connect" content="Connect with your alumni.">
+              <CardDataStats
+                title="Alumini Connect"
+                content="Connect with your alumni."
+              >
                 <img
                   src={Alumini}
                   alt="Alumini Connect"
@@ -207,10 +257,15 @@ const ECommerce = () => {
           </div>
         </Slider>
       </div>
-      
+
       <div className="text-center py-10 bg-gray-50">
-        <h1 className="text-4xl font-bold mb-2">Career Services Tailored for you.</h1>
-        <p className="text-lg text-gray-600 mb-6">Our services are meticulously designed to unveil your potential, interests, and skills.</p>
+        <h1 className="text-4xl font-bold mb-2">
+          Career Services Tailored for you.
+        </h1>
+        <p className="text-lg text-gray-600 mb-6">
+          Our services are meticulously designed to unveil your potential,
+          interests, and skills.
+        </p>
       </div>
     </>
   );
