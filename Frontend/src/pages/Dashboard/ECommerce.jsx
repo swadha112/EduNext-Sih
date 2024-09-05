@@ -47,13 +47,13 @@ const ECommerce = () => {
     ],
   };
 
-  // Example completion percentage
-  const user = JSON.parse(localStorage.getItem('user'));
+  // Safely parse user data from localStorage
+  const user = JSON.parse(localStorage.getItem('user')) || {};
 
   // Fields to exclude from the calculation
   const excludedFields = ['cv', 'marksheet', '__v', '_id'];
 
-  // Get all keys from the user object
+  // Get all keys from the user object, filtering out excluded fields
   const totalFields = Object.keys(user).filter(
     (field) => !excludedFields.includes(field),
   ).length;
@@ -65,7 +65,20 @@ const ECommerce = () => {
   ).length;
 
   // Calculate profile completion percentage
-  const profileCompletion = ((filledFields / totalFields) * 100).toFixed(2);
+  const profileCompletion = totalFields > 0 ? ((filledFields / totalFields) * 100).toFixed(2) : 0;
+  const categories = [
+    'Technology',
+    'Sports',
+    'Finance',
+    'Fashion',
+    'Medical',
+    'Arts',
+    'Culinary',
+    'Law',
+    'Management',
+    'Aerospace',
+    'Agriculture',
+  ];
 
   return (
     <>
@@ -75,8 +88,8 @@ const ECommerce = () => {
       </div>
 
       {/* Dashboard-Style Progress Container */}
-      <div className="mx-auto my-8 w-3/4 bg-white p-6 rounded-md shadow-md">
-        <h2 className="text-xl font-semibold mb-2">
+      <div className="mx-auto my-8 w-3/4 dark:bg-boxdark  p-6 rounded-md shadow-md">
+        <h2 className="text-xl mb-2 font-semibold text-gray-800 dark:text-white ">
           You have completed {profileCompletion}% of your profile
         </h2>
         <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
@@ -96,7 +109,11 @@ const ECommerce = () => {
           </NavLink>
         )}
       </div>
-
+      <div className="text-center py-10 bg-gray-50">
+      <h1 className="text-4xl font-bold mb-2">
+          Your Journey, Our Expertise.
+        </h1>
+      </div>
       {/* Grid of Cards */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="High School" content="">
@@ -138,15 +155,17 @@ const ECommerce = () => {
 
       {/* Tagline */}
       <div className="text-center py-10 bg-gray-50">
-        <h1 className="text-4xl font-bold mb-2">
-          Your Journey, Our Expertise.
-        </h1>
+        
         <p className="text-lg text-gray-600 mb-6">
           Count on our expertise to make the right choices for your education
           and career.
         </p>
       </div>
-
+      <div className="text-center py-4 bg-gray-50">
+        <h1 className="text-4xl font-bold mb-2">
+          Career Services Tailored for you.
+        </h1>
+        </div>
       {/* Horizontal carousel with react-slick */}
       <div className="my-10 px-4">
         <Slider {...settings}>
@@ -168,14 +187,14 @@ const ECommerce = () => {
           <div className="px-2">
             <NavLink to="/quiz">
               <CardDataStats
-                title="Dynamic Quizes"
+                title="Dynamic Quizzes"
                 content="Test your knowledge with our dynamic quizzes."
               >
                 <img
                   src={Quiz}
-                  alt="Dynamic Quizes"
+                  alt="Dynamic Quizzes"
                   className="h-full w-full object-cover"
-                  title="Dynamic Quizes"
+                  title="Dynamic Quizzes"
                 />
               </CardDataStats>
             </NavLink>
@@ -184,7 +203,7 @@ const ECommerce = () => {
             <NavLink to="/interview">
               <CardDataStats
                 title="Interview Preparation"
-                content="Prepare for interviews with behavioural analysis."
+                content="Prepare for interviews with behavioral analysis."
               >
                 <img
                   src={Interview}
@@ -229,7 +248,7 @@ const ECommerce = () => {
             <NavLink to="/counsellors">
               <CardDataStats
                 title="Counsellors Nearby"
-                content="Info of counselors nearby your area."
+                content="Info on counselors nearby your area."
               >
                 <img
                   src={Counsellor}
@@ -243,14 +262,14 @@ const ECommerce = () => {
           <div className="px-2">
             <NavLink to="/alumini">
               <CardDataStats
-                title="Alumini Connect"
+                title="Alumni Connect"
                 content="Connect with your alumni."
               >
                 <img
                   src={Alumini}
-                  alt="Alumini Connect"
+                  alt="Alumni Connect"
                   className="h-full w-full object-cover"
-                  title="Alumini Connect"
+                  title="Alumni Connect"
                 />
               </CardDataStats>
             </NavLink>
@@ -258,13 +277,36 @@ const ECommerce = () => {
         </Slider>
       </div>
 
-      <div className="text-center py-10 bg-gray-50">
-        <h1 className="text-4xl font-bold mb-2">
-          Career Services Tailored for you.
-        </h1>
-        <p className="text-lg text-gray-600 mb-6">
+      <div className="text-center py-4 bg-gray-50">
+        <p className="text-lg text-gray-600 mb-4">
           Our services are meticulously designed to unveil your potential,
           interests, and skills.
+        </p>
+      </div>
+      <div className="text-center py-10 bg-gray-50">
+        <h1 className="text-4xl font-bold mb-2">
+          Wondering about your future?
+        </h1>
+        <div className="flex flex-wrap justify-center gap-4 my-8">
+        {categories.map((category, index) => (
+          <button
+            key={index}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg"
+          >
+            {category}
+          </button>
+        ))}
+
+        {/* Last Button for "Explore Job Trends" with NavLink */}
+        <NavLink
+          to="/tables"
+          className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+        >
+          Explore Job Trends
+        </NavLink>
+      </div>
+        <p className="text-lg text-gray-600 mb-6">
+          Take the first step to your future by choosing a field of interest and discovering the trends in the job market.
         </p>
       </div>
     </>
