@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CardDataStats = ({ title, children }) => {
+const CardDataStats = ({ title, children,content }) => {
   return (
     <div className="rounded-lg border border-stroke bg-white py-6 px-7.5 shadow-lg dark:border-strokedark dark:bg-boxdark">
       {/* Image Container */}
@@ -12,6 +12,11 @@ const CardDataStats = ({ title, children }) => {
       <div className="mt-4 text-center">
         <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">
           {title}
+        </span>
+      </div>
+      <div className="mt-4 text-center">
+        <span className="text-lg font-small text-gray-800 dark:text-gray-200">
+          {content}
         </span>
       </div>
     </div>
