@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import Swal from 'sweetalert2'; // Import SweetAlert2 for alert boxes
-import LogoDark from '../../images/logo/logo-dark.svg';
-import Logo from '../../images/logo/logo.svg';
+
+import Logo from '../../images/logo/EduNEXT.svg';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -80,7 +80,7 @@ const SignIn: React.FC = () => {
           <div className="py-17.5 px-26 text-center">
             <Link className="mb-5.5 inline-block" to="/">
               <img className="hidden dark:block" src={Logo} alt="Logo" />
-              <img className="dark:hidden" src={LogoDark} alt="Logo" />
+              <img className="dark:hidden" src={Logo} alt="Logo" />
             </Link>
 
             <p className="2xl:px-20">

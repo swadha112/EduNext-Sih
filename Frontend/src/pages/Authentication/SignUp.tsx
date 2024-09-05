@@ -100,7 +100,7 @@ const SignUp: React.FC = () => {
         <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
           <div className="w-full p-4 sm:px-12.5 xl:px-17.5">
             <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-              Sign Up to TailAdmin
+              Sign Up to EduNext
             </h2>
 
             <form onSubmit={handleSubmit}>
