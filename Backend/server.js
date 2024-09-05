@@ -7,11 +7,10 @@ dotenv.config();
 // Connect to MongoDB
 connectDB();
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5050;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
 // News API Server
 // const newsApp = express();
 // const NEWS_PORT = process.env.NEWS_PORT || 5001;

@@ -27,7 +27,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
       try {
         const response = await fetch(
-          'http://localhost:5000/api/users/profile',
+          'http://localhost:5050/api/users/profile',
           {
             method: 'GET',
             headers: {

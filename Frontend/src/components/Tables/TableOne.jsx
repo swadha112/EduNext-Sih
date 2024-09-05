@@ -25,7 +25,7 @@ const TableOne = () => {
   const fetchNews = async (domain) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/news?domain=${domain}`,
+        `http://localhost:5050/api/news?domain=${domain}`,
       );
       const data = await response.json();
       setNewsData(data.articles.slice(0, 5)); // Get top 5 news articles
