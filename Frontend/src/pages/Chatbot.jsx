@@ -98,7 +98,7 @@ function Chatbot() {
       maxWidth={false}
       disableGutters
       sx={{
-        height: "90%" ,// Full height for the chat window
+        height: '90%', // Full height for the chat window
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
