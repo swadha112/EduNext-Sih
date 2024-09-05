@@ -1,4 +1,4 @@
-import { useState , useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import UserOne from '../../images/user/user-01.png';
@@ -6,6 +6,18 @@ import UserOne from '../../images/user/user-01.png';
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userName, setUserName] = useState('Swadha Khatod'); // Default name
+
+  const handleLogout = () => {
+    // Remove user and token from local storage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    // Update user state in context to null
+
+
+    // Redirect to the sign-in page
+    window.location.href = '/auth/signin';
+  };
 
   useEffect(() => {
     // Check if user data exists in local storage
@@ -107,7 +119,10 @@ const DropdownUser = () => {
               </Link>
             </li>
           </ul>
-          <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+          >
             <svg
               className="fill-current"
               width="22"
