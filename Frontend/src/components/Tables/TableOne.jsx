@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
-// Dummy brand SVG imports replaced with icons or placeholder
 import { AiFillRead } from 'react-icons/ai';
 
 const domains = [
@@ -59,18 +57,20 @@ const TableOne = () => {
         </h4>
 
         <div className="flex flex-col">
-          <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
-            <div className="p-2.5 xl:p-5">
+          {/* Adjusted grid to increase headline column width */}
+          <div className="grid grid-cols-3 sm:grid-cols-5">
+            <div className="col-span-1 p-2.5 xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
                 Source
               </h5>
             </div>
-            <div className="p-2.5 text-center xl:p-5">
+            {/* Increase the headline column width */}
+            <div className="col-span-3 p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
                 Headline
               </h5>
             </div>
-            <div className="p-2.5 text-center xl:p-5">
+            <div className="col-span-1 p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
                 Published At
               </h5>
@@ -86,14 +86,15 @@ const TableOne = () => {
               }`}
               key={key}
             >
-              <div className="flex items-center gap-3 p-2.5 xl:p-5">
+              <div className="col-span-1 flex items-center gap-3 p-2.5 xl:p-5">
                 <AiFillRead className="text-2xl" />
                 <p className="hidden text-black dark:text-white sm:block">
                   {news.source.name}
                 </p>
               </div>
 
-              <div className="flex items-center justify-center p-2.5 xl:p-5">
+              {/* Increase the headline column width */}
+              <div className="col-span-3 flex items-center justify-center p-2.5 xl:p-5">
                 <a
                   href={news.url}
                   target="_blank"
@@ -104,7 +105,7 @@ const TableOne = () => {
                 </a>
               </div>
 
-              <div className="flex items-center justify-center p-2.5 xl:p-5">
+              <div className="col-span-1 flex items-center justify-center p-2.5 xl:p-5">
                 <p className="text-meta-3">
                   {new Date(news.publishedAt).toLocaleDateString()}
                 </p>
