@@ -153,7 +153,7 @@ function App() {
                 }
               />
               <Route
-                path="/settings"
+                path="/update"
                 element={
                   <>
                     <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
