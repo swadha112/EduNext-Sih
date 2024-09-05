@@ -30,6 +30,35 @@ const userSchema = new mongoose.Schema(
       required: [true, "Gender is required"],
       enum: ["Male", "Female", "Other"],
     },
+    category: {
+      type: String,
+      enum: ["UG", "PG", "School"],
+      default: "UG", // Default category can be set to any of the options
+    },
+    cv: {
+      type: String,
+      default: null, // Assuming you'll store the file path or URL as a string
+    },
+    marksheet: {
+      type: String,
+      default: null, // Assuming you'll store the file path or URL as a string
+    },
+    bio: {
+      type: String,
+      default: "",
+    },
+    interests: {
+      type: String,
+      default: "",
+    },
+    grade: {
+      type: String,
+      default: "",
+    },
+    stream: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,
