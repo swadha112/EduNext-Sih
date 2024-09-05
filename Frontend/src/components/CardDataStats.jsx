@@ -2,15 +2,17 @@ import React from 'react';
 
 const CardDataStats = ({ title, children }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-      {/* Container for Image */}
-      <div className="flex items-center justify-center h-70 w-50 bg-meta-2 dark:bg-meta-4 overflow-hidden">
+    <div className="rounded-lg border border-stroke bg-white py-6 px-7.5 shadow-lg dark:border-strokedark dark:bg-boxdark">
+      {/* Image Container */}
+      <div className="h-48 w-full bg-meta-2 dark:bg-meta-4 overflow-hidden flex items-center justify-center">
         {children}
       </div>
 
       {/* Title */}
       <div className="mt-4 text-center">
-        <span className="text-sm font-medium">{title}</span>
+        <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+          {title}
+        </span>
       </div>
     </div>
   );
