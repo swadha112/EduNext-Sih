@@ -60,7 +60,7 @@ const Alumni = () => {
         gutterBottom
         sx={{
           fontWeight: 'bold',
-          color: '#4A4A4A', // Set the title color to dark grey
+          color: theme.palette.mode === 'dark' ? 'black' : 'white', // Set the title color to dark grey
         }}
       >
         Alumni Information

@@ -62,7 +62,7 @@ const Counselors = () => {
         gutterBottom
         sx={{
           fontWeight: 'bold',
-          color: theme.palette.mode === 'dark' ? '#ffffff' : '#4A4A4A',
+          color: theme.palette.mode === 'dark' ? 'black' : 'white',
           
         }}
       >
@@ -108,7 +108,7 @@ const Counselors = () => {
             sx={{
               height: '56px', // Matching the button height with the input field
               fontSize: '1rem', // Ensuring font size is clear and readable
-              backgroundColor: theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5', // Button background based on theme
+              backgroundColor: theme.palette.mode === 'dark' ? 'white' : '#3f51b5', // Button background based on theme
               color: theme.palette.mode === 'dark' ? '#fff' : '#fff', // Button text color based on theme
               '&:hover': {
                 backgroundColor: theme.palette.mode === 'dark' ? '#303f9f' : '#303f9f', // Hover state background color
