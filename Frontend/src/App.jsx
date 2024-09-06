@@ -19,7 +19,7 @@ import DefaultLayout from './layout/DefaultLayout';
 import Counselors from './pages/Counselors.jsx';
 import Chatbot from './pages/Chatbot.jsx';
 import Quiz from './pages/Quiz.jsx';
-import Alumni from './pages/Alumni.jsx'
+import Alumni from './pages/Alumni.jsx';
 import Video from './pages/Video.jsx';
 import Workshop from './pages/Workshops.jsx';
 function App() {
@@ -73,7 +73,7 @@ function App() {
                 }
               />
               <Route
-                path="/calendar"
+                path="/roleplay"
                 element={
                   <>
                     <PageTitle title="Role Playing Game" />
@@ -82,7 +82,7 @@ function App() {
                 }
               />
               <Route
-                path="/calendar"
+                path="/roleplay"
                 element={
                   <>
                     <PageTitle title="Role Playing Game" />
@@ -91,7 +91,7 @@ function App() {
                 }
               />
               <Route
-                path="/calendar"
+                path="/roleplay"
                 element={
                   <>
                     <PageTitle title="Role Playing Game" />
@@ -194,7 +194,7 @@ function App() {
                 element={
                   <>
                     <PageTitle title="Tables" />
-                    <Video/>
+                    <Video />
                   </>
                 }
               />
@@ -203,7 +203,7 @@ function App() {
                 element={
                   <>
                     <PageTitle title="Tables" />
-                    <Video/>
+                    <Video />
                   </>
                 }
               />
