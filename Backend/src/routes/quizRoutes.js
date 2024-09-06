@@ -28,6 +28,26 @@ const generateQuestionsWithGemini = async (prompt, apiKey) => {
   }
 };
 
+// Helper function to recommend subjects based on answers
+const recommendSubjects = (answers) => {
+  const subjects = { 'Mathematics': 0, 'Science': 0, 'Art': 0, 'Literature': 0, 'Sports': 0 };
+
+  answers.forEach(answer => {
+    const answerLower = answer.toLowerCase();
+    if (answerLower.includes('math')) subjects['Mathematics'] += 1;
+    else if (answerLower.includes('science')) subjects['Science'] += 1;
+    else if (answerLower.includes('art') || answerLower.includes('draw') || answerLower.includes('paint')) subjects['Art'] += 1;
+    else if (answerLower.includes('read') || answerLower.includes('write') || answerLower.includes('book')) subjects['Literature'] += 1;
+    else if (answerLower.includes('sport') || answerLower.includes('game')) subjects['Sports'] += 1;
+  });
+
+  return Object.entries(subjects)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([subject]) => subject);
+};
+
+// Route to generate questions using Gemini API
 router.post("/generate-questions", async (req, res) => {
   const { name, profession, interests, hobbies, experience, dob } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;  // Load your API key from environment variables
@@ -49,6 +69,19 @@ router.post("/generate-questions", async (req, res) => {
     res.json({ questions: initialQuestions });
   } catch (error) {
     res.status(500).json({ error: "Failed to generate questions." });
+  }
+});
+
+// Route to recommend subjects based on answers
+router.post("/recommend-subjects", (req, res) => {
+  const { answers } = req.body;
+
+  try {
+    const recommendedSubjects = recommendSubjects(answers);
+    res.json({ recommendedSubjects });
+  } catch (error) {
+    console.error("Error recommending subjects:", error);
+    res.status(500).json({ error: "Failed to recommend subjects." });
   }
 });
 
