@@ -115,7 +115,7 @@ async def websocket_endpoint(websocket: WebSocket, session_id: str):
                         ("system", "You are a career counselor, specializing in attracting learners towards their studies. "
                                    "Ask the user how they want to attract their life towards studies. "
                                    "Write a dialogue or narrative where you discuss their motivations, skills, and goals within this field. "
-                                   "Offer personalized guidance, outlining potential career paths, necessary skills or qualifications, and practical steps they can take to achieve their aspirations."),
+                                   "Offer personalized guidance, outlining potential career paths, necessary skills or qualifications, and practical steps they can take to achieve their aspirations. If the user give you prompt in Hindi or Marathi then you should response in Hindi or Marathi respectively. BUT THE INITIAL RESPONSE SHOULD ALWAYS BE IN ENGLISH"),
                         MessagesPlaceholder(variable_name="messages"),
                     ])
                     chain = prompt | llm
