@@ -73,7 +73,7 @@ const Counselors = () => {
           <TextField
             fullWidth
             variant="outlined"
-            label="Enter your address WITH PINCODE"
+            label="Enter your pincode"
             value={address}
             onChange={handleInputChange}
             disabled={loading}
@@ -81,18 +81,22 @@ const Counselors = () => {
               mb: 2,
               '& .MuiOutlinedInput-root': {
                 height: '56px', // Ensuring the input height matches the button height
-                backgroundColor: theme.palette.mode === 'dark' ? '#424242' : '#e3f2fd', // Custom background for dark mode
+                backgroundColor:
+                  theme.palette.mode === 'dark' ? '#424242' : '#e3f2fd', // Custom background for dark mode
                 borderRadius: '8px', // Rounded corners for search box
               },
               '& .MuiInputLabel-root': {
                 color: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Custom label color for dark/light mode
               },
               '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Border color based on theme
+                borderColor:
+                  theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Border color based on theme
               },
-              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.mode === 'dark' ? '#42a5f5' : '#1565c0', // Focus border color for dark/light mode
-              },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
+                {
+                  borderColor:
+                    theme.palette.mode === 'dark' ? '#42a5f5' : '#1565c0', // Focus border color for dark/light mode
+                },
               color: theme.palette.text.primary, // Adjust text color based on the theme
             }}
           />
@@ -110,7 +114,8 @@ const Counselors = () => {
               backgroundColor: theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5', // Button background based on theme
               color: theme.palette.mode === 'dark' ? '#fff' : '#fff', // Button text color based on theme
               '&:hover': {
-                backgroundColor: theme.palette.mode === 'dark' ? '#303f9f' : '#303f9f', // Hover state background color
+                backgroundColor:
+                  theme.palette.mode === 'dark' ? '#303f9f' : '#303f9f', // Hover state background color
               },
             }}
           >
@@ -138,13 +143,31 @@ const Counselors = () => {
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.5rem', color: theme.palette.text.primary }}>
+                <TableCell
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: '1.5rem',
+                    color: theme.palette.text.primary,
+                  }}
+                >
                   Title
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.5rem', color: theme.palette.text.primary }}>
+                <TableCell
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: '1.5rem',
+                    color: theme.palette.text.primary,
+                  }}
+                >
                   Website
                 </TableCell>
-                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.5rem', color: theme.palette.text.primary }}>
+                <TableCell
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: '1.5rem',
+                    color: theme.palette.text.primary,
+                  }}
+                >
                   Google Maps
                 </TableCell>
               </TableRow>
@@ -152,14 +175,26 @@ const Counselors = () => {
             <TableBody>
               {counselors.map((counselor, index) => (
                 <TableRow key={index}>
-                  <TableCell sx={{ color: theme.palette.text.primary }}>{counselor.title}</TableCell>
                   <TableCell sx={{ color: theme.palette.text.primary }}>
-                    <a href={counselor.url} target="_blank" rel="noopener noreferrer" style={{ color: theme.palette.primary.main }}>
+                    {counselor.title}
+                  </TableCell>
+                  <TableCell sx={{ color: theme.palette.text.primary }}>
+                    <a
+                      href={counselor.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: theme.palette.primary.main }}
+                    >
                       Visit Website
                     </a>
                   </TableCell>
                   <TableCell sx={{ color: theme.palette.text.primary }}>
-                    <a href={counselor.maps_link} target="_blank" rel="noopener noreferrer" style={{ color: theme.palette.primary.main }}>
+                    <a
+                      href={counselor.maps_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: theme.palette.primary.main }}
+                    >
                       View on Google Maps
                     </a>
                   </TableCell>
