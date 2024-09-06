@@ -72,18 +72,16 @@ const handleChoice = (points) => {
       setGameOver(true); // End the game if last scene
     }
   };
-
-  // Grading logic based on the final score
-  const getGrade = () => {
-    if (score >= 75) {
-      return "A - You've become a highly skilled and respected pilot!";
-    } else if (score >= 50) {
-      return "B - You've built a solid career as a pilot.";
-    } else {
-      return "C - You've faced some challenges as a pilot.";
-    }
-  };
-
+// Grading logic based on the final score
+const getGrade = () => {
+  if (score >= 75) {
+    return "A - You’ve become a well-respected lawyer!";
+  } else if (score >= 50) {
+    return "B - You've built a modest career as a lawyer.";
+  } else {
+    return "C - You struggled to make it in the legal field.";
+  }
+};
   return (
     <div className="rpg-game">
       {!gameOver ? (
@@ -115,7 +113,7 @@ const handleChoice = (points) => {
           <p>Your final score is: {score}</p>
           <p>{getGrade()}</p>
            {/* Button to go back to career selection page */}
-           <button onClick={() => navigate('/Calendar')} className="back-button">
+           <button onClick={() => navigate('/')} className="back-button">
             Back to Career Selection
           </button>
         </div>
