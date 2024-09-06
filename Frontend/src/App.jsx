@@ -21,6 +21,7 @@ import Chatbot from './pages/Chatbot.jsx';
 import Quiz from './pages/Quiz.jsx';
 import Alumni from './pages/Alumni.jsx'
 import Video from './pages/Video.jsx';
+import Workshop from './pages/Workshops.jsx';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -167,6 +168,15 @@ function App() {
                   <>
                     <PageTitle title="Tables" />
                     <Chatbot />
+                  </>
+                }
+              />
+              <Route
+                path="/workshop"
+                element={
+                  <>
+                    <PageTitle title="Tables" />
+                    <Workshop />
                   </>
                 }
               />
