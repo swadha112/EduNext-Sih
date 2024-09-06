@@ -1,66 +1,75 @@
 .rpg-game {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    margin-top: 50px;
+  position: relative;
+  padding: 20px;
+  text-align: center;
+}
+
+.choice-button {
+  display: block;
+  width: 250px;
+  margin: 10px auto;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+
+}
+
+.points-popup {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+  animation: pop-up-fade 1s ease-out;
+}
+
+.points-popup.positive {
+  color: green;
+}
+
+.points-popup.negative {
+  color: red;
+}
+
+@keyframes pop-up-fade {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
   }
-  
-  .choice-button {
-    display: block;
-    width: 250px;
-    margin: 10px auto;
-    padding: 10px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  50% {
+    transform: translate(-50%, -20px);
   }
-  
-  .choice-button:hover {
-    background-color: #45a049;
+  100% {
+    transform: translate(-50%, -40px);
+    opacity: 0;
   }
-  
-  .game-over {
-    margin-top: 50px;
-  }
-  
-  h2 {
-    color: #333;
-  }
-  
-  p {
-    font-size: 18px;
-  }
-  .points-popup {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 20px;
-    font-size: 2rem;
-    font-weight: bold;
-    animation: pop-up-fade 1s ease-out;
-  }
-  
-  .points-popup.positive {
-    color: green;
-  }
-  
-  .points-popup.negative {
-    color: red;
-  }
-  
-  @keyframes pop-up-fade {
-    0% {
-      transform: translate(-50%, 0);
-      opacity: 1;
-    }
-    50% {
-      transform: translate(-50%, -20px);
-    }
-    100% {
-      transform: translate(-50%, -40px);
-      opacity: 0;
-    }
-  }
+}
+/* Timer clock styling */
+.timer-clock {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff6347; /* Tomato color for the timer */
+}
+.back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}

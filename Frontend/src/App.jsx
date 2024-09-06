@@ -75,7 +75,7 @@ function App() {
                 path="/calendar"
                 element={
                   <>
-                    <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Role Playing Game" />
                     <Calendar />
                   </>
                 }

@@ -1,118 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import './Career.css'; // Optional CSS for styling
+import React, { useState } from 'react';
+import Lawyer from './Lawyer';  // Import the RPG components for each career
+import Doctor from './pyschologist';
+import Pilot from './Pilot';
+import EthicalHacker from './EthicalHacker';
+import './CareerSelection.css'; // Optional CSS for custom styling
 
-const CareerRPG = () => {
-  // State to keep track of the current scene and user's score
-  const [scene, setScene] = useState(0);
-  const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-  const [pointsPopup, setPointsPopup] = useState(null); // State for points animation
+const CareerSelection = () => {
+  const [selectedCareer, setSelectedCareer] = useState(null);
 
-  // Array of scenes with storyline, choices, and point values
-  const scenes = [
-    {
-      text: "Congratulations, you’ve just passed the bar exam! What will you do next?",
-      options: [
-        { text: "Start your own firm", points: 10 },
-        { text: "Join a large law firm", points: 5 },
-        { text: "Take a break and travel", points: 2 },
-      ],
-    },
-    {
-      text: "You’re defending a high-profile case. How do you proceed?",
-      options: [
-        { text: "Prepare thoroughly and negotiate", points: 10 },
-        { text: "Take risks to make headlines", points: 3 },
-        { text: "Settle the case early", points: 5 },
-      ],
-    },
-    {
-      text: "A rival lawyer, Victoria Blackwood, challenges you in court. What do you do?",
-      options: [
-        { text: "Challenge her head-on", points: 15 },
-        { text: "Avoid conflict", points: -5 },
-        { text: "Negotiate a truce", points: 5 },
-      ],
-    },
-    {
-      text: "A politician offers you a case involving corruption. Do you take it?",
-      options: [
-        { text: "Defend the politician", points: 20 },
-        { text: "Refuse the case", points: -10 },
-        { text: "Expose the politician", points: 15 },
-      ],
-    },
-    {
-      text: "You've gained media attention. How will you handle it?",
-      options: [
-        { text: "Give a careful interview", points: 5 },
-        { text: "Reveal confidential details", points: 10 },
-        { text: "Decline the interview", points: 3 },
-      ],
-    },
-    {
-      text: "You've reached the climactic trial. How do you approach it?",
-      options: [
-        { text: "Defend the company", points: 30 },
-        { text: "Turn against the company", points: 20 },
-        { text: "Settle out of court", points: 10 },
-      ],
-    },
-  ];
-
-  // Function to handle the user's choice and progress to the next scene
-  const handleChoice = (points) => {
-    setScore(score + points);
-    setPointsPopup(points); // Show points animation
-    setTimeout(() => setPointsPopup(null), 1000); // Hide points animation after 1 second
-
-    if (scene < scenes.length - 1) {
-      setScene(scene + 1);
-    } else {
-      setGameOver(true); // End the game if last scene
-    }
+  // Handle career selection
+  const handleCareerSelection = (career) => {
+    setSelectedCareer(career);
   };
 
-  // Grading logic based on the final score
-  const getGrade = () => {
-    if (score >= 75) {
-      return "A - You’ve become a well-respected lawyer!";
-    } else if (score >= 50) {
-      return "B - You've built a modest career as a lawyer.";
-    } else {
-      return "C - You struggled to make it in the legal field.";
+  // Render the career component based on user's choice
+  const renderCareerRPG = () => {
+    switch (selectedCareer) {
+      case 'lawyer':
+        return <Lawyer />;
+      case 'doctor':
+        return <Doctor />;
+      case 'pilot':
+        return <Pilot />;
+      case 'ethicalHacker':
+        return <EthicalHacker />;
+      default:
+        return null;
     }
   };
 
   return (
-    <div className="rpg-game">
-      {!gameOver ? (
-        <div>
-          <p>{scenes[scene].text}</p>
-          {scenes[scene].options.map((option, index) => (
-            <button
-              key={index}
-              onClick={() => handleChoice(option.points)}
-              className="choice-button"
-            >
-              {option.text}
-            </button>
-          ))}
-          {pointsPopup !== null && (
-            <div className={`points-popup ${pointsPopup > 0 ? 'positive' : 'negative'}`}>
-              {pointsPopup > 0 ? `+${pointsPopup}` : pointsPopup}
+    <div className="gray-container mx-auto my-8 w-3/4 dark:bg-boxdark p-6 rounded-md shadow-md">
+      <div className="career-selection">
+        {!selectedCareer ? (
+          <div className="career-selection-container">
+            <h1 className="text-xl mb-2 font-semibold text-gray-800 dark:text-white ">Select a Career to Start the Role-Playing Game</h1>
+            <p className="text-xl mb-2  text-gray-800 dark:text-white ">Game Rules: In this role-playing game, you will be presented with various career-specific scenarios and challenges. For each scenario, you’ll have multiple choices, and each choice will award you a certain number of points based on the decision you make. Your goal is to make the best decisions that align with the career you've chosen. The game features a 15-second timer for each question, so make your choices wisely and quickly! At the end of the game, your total score will determine how well you've navigated your career path.</p>
+            <div className="career-buttons-container">
+              <button onClick={() => handleCareerSelection('lawyer')} className="career-button">
+                Lawyer
+              </button>
+              <button onClick={() => handleCareerSelection('doctor')} className="career-button">
+                Doctor
+              </button>
+              <button onClick={() => handleCareerSelection('pilot')} className="career-button">
+                Pilot
+              </button>
+              <button onClick={() => handleCareerSelection('ethicalHacker')} className="career-button">
+                Ethical Hacker
+              </button>
             </div>
-          )}
-        </div>
-      ) : (
-        <div className="game-over">
-          <h2>Game Over</h2>
-          <p>Your final score is: {score}</p>
-          <p>{getGrade()}</p>
-        </div>
-      )}
+          </div>
+        ) : (
+          <div>
+            {/* Render the selected career RPG */}
+            {renderCareerRPG()}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-export default CareerRPG;
+export default CareerSelection;

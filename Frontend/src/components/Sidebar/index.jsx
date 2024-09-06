@@ -280,7 +280,7 @@ useEffect(() => {
                       fill=""
                     />
                   </svg>
-                  Career
+                  Role Playing Game
                 </NavLink>
               </li>
               {/* <!-- Menu Item Calendar --> */}

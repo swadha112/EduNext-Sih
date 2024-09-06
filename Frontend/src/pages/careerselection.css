@@ -1,0 +1,54 @@
+.career-selection {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.gray-container {
+   
+    padding: 40px; /* Padding for spacing */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted look */
+    max-width: 900px; /* Max width for the container */
+    margin: 50px auto; /* Centering the container */
+   
+}
+
+
+
+.career-selection-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.career-buttons-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.career-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.career-button:hover {
+    background-color: #0056b3;
+}
+
+.career-button:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px 2px #0056b3;
+}
