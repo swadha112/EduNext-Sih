@@ -83,10 +83,7 @@ const SignIn: React.FC = () => {
               <img className="dark:hidden" src={Logo} alt="Logo" />
             </Link>
 
-            <p className="2xl:px-20">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              suspendisse.
-            </p>
+          
 
             <span className="mt-15 inline-block">{/* SVG content */}</span>
           </div>
