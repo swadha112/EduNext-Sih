@@ -206,7 +206,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </clipPath>
                         </defs>
                       </svg>
-                      Career Anna
+                      Chatbot
                     </NavLink>
                   );
                 }}
