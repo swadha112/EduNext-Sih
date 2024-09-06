@@ -4,13 +4,17 @@ import {
   TextField,
   Button,
   CircularProgress,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
   Typography,
   Alert,
   Grid,
-  Paper,
-  List,
-  ListItem,
-  ListItemText,
+  Link,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
@@ -53,20 +57,22 @@ const Alumni = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      {/* Title with custom dark grey color */}
+      {/* Title with custom lemon green color */}
       <Typography
         variant="h3"
-        align="center"
+        align="left"
         gutterBottom
         sx={{
           fontWeight: 'bold',
-          color: theme.palette.mode === 'dark' ? 'black' : 'white', // Set the title color to dark grey
+          color: '#ADFF2F', // Lemon green color
+          ml: 1, // Reduced left padding
+          fontSize: '2.5rem', // Increased font size
         }}
       >
         Alumni Information
       </Typography>
 
-      <Grid container spacing={3} justifyContent="center">
+      <Grid container spacing={3} justifyContent="flex-start">
         <Grid item xs={12} sm={8} md={6}>
           <TextField
             fullWidth
@@ -75,14 +81,14 @@ const Alumni = () => {
             value={universityName}
             onChange={handleInputChange}
             disabled={loading}
-            sx={{
-              mb: 2,
-              '& .MuiOutlinedInput-root': {
-                height: '56px', // Ensuring the input height matches the button height
-                backgroundColor:
-                  theme.palette.mode === 'dark' ? '#424242' : '#e3f2fd', // Custom background for dark mode
+            InputProps={{
+              sx: {
+                backgroundColor: theme.palette.mode === 'dark' ? '#ffffff' : '#d3d3d3', // White in dark mode, grey in light mode
                 borderRadius: '8px', // Rounded corners for search box
               },
+            }}
+            sx={{
+              mb: 2,
               '& .MuiInputLabel-root': {
                 color: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Custom label color for dark/light mode
               },
@@ -129,62 +135,34 @@ const Alumni = () => {
         </Alert>
       )}
 
+      {/* Display results in a table */}
       {alumniData.length > 0 && (
-        <Paper
-          sx={{
-            mt: 5,
-            p: 5, // Increase padding for more spacing
-            width: '100%', // Occupy full width of the container
-            backgroundColor: theme.palette.background.paper,
-          }}
-        >
-          <Typography
-            variant="h5"
-            sx={{
-              mb: 3,
-              fontWeight: 'bold',
-              color: theme.palette.primary.main,
-            }}
-          >
-            Alumni List
-          </Typography>
-          <List>
-            {alumniData.map((alumni, index) => (
-              <ListItem key={index} sx={{ mb: 3 }}>
-                <ListItemText
-                  primary={alumni.name}
-                  secondary={alumni.university_name}
-                  primaryTypographyProps={{
-                    fontSize: '1.3rem', // Slightly reduced font size
-                    fontWeight: 'bold',
-                    color:
-                      theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5', // Custom color for name
-                  }}
-                  secondaryTypographyProps={{
-                    fontSize: '1rem', // Slightly reduced font size for university
-                    color: theme.palette.text.secondary,
-                  }}
-                />
-                <Typography
-                  variant="body1"
-                  component="a"
-                  href={alumni.linkedin_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    ml: 2,
-                    fontSize: '1.1rem',
-                    color: theme.palette.primary.main,
-                    textDecoration: 'underline',
-                    cursor: 'pointer',
-                  }}
-                >
-                  LinkedIn Profile
-                </Typography>
-              </ListItem>
-            ))}
-          </List>
-        </Paper>
+        <TableContainer component={Paper} sx={{ mt: 5, borderRadius: 3, p: 3 }}>
+          <Table sx={{ minWidth: 650 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem', padding: '16px' }}>#</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem', padding: '16px' }}>Name</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem', padding: '16px' }}>University</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem', padding: '16px' }}>LinkedIn Profile</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {alumniData.map((alumni, index) => (
+                <TableRow key={index}>
+                  <TableCell sx={{ fontSize: '1.2rem', padding: '16px' }}>{index + 1}</TableCell>
+                  <TableCell sx={{ fontSize: '1.2rem', padding: '16px' }}>{alumni.name}</TableCell>
+                  <TableCell sx={{ fontSize: '1.2rem', padding: '16px' }}>{alumni.university_name}</TableCell>
+                  <TableCell sx={{ fontSize: '1.2rem', padding: '16px' }}>
+                    <Link href={alumni.linkedin_link} target="_blank" rel="noopener noreferrer">
+                      LinkedIn Profile
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
     </Container>
   );

@@ -62,11 +62,10 @@ const Counselors = () => {
         gutterBottom
         sx={{
           fontWeight: 'bold',
-          color: theme.palette.mode === 'dark' ? 'black' : 'white',
-          
+          color: '#4A4A4A', // Set the title color to dark grey
         }}
       >
-        Find Career Counselors
+        Find Career Counsellors
       </Typography>
 
       <Grid container spacing={3} justifyContent="center">
@@ -112,7 +111,7 @@ const Counselors = () => {
             sx={{
               height: '56px', // Matching the button height with the input field
               fontSize: '1rem', // Ensuring font size is clear and readable
-              backgroundColor: theme.palette.mode === 'dark' ? 'white' : '#3f51b5', // Button background based on theme
+              backgroundColor: theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5', // Button background based on theme
               color: theme.palette.mode === 'dark' ? '#fff' : '#fff', // Button text color based on theme
               '&:hover': {
                 backgroundColor:
@@ -138,6 +137,7 @@ const Counselors = () => {
             mt: 5,
             maxHeight: '70vh',
             backgroundColor: theme.palette.background.paper, // Adapt table background to theme
+            borderRadius: '8px', // Add some rounded corners to the table
           }}
         >
           <Table stickyHeader>

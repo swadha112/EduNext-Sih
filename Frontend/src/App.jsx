@@ -12,7 +12,7 @@ import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
-import Tables from './pages/Tables.jsx';
+import Trends from './pages/Tables.jsx';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
@@ -21,6 +21,7 @@ import Chatbot from './pages/Chatbot.jsx';
 import Quiz from './pages/Quiz.jsx';
 import Alumni from './pages/Alumni.jsx'
 import Video from './pages/Video.jsx';
+import Workshop from './pages/Workshops.jsx';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -42,7 +43,7 @@ function App() {
         path="/auth/signup"
         element={
           <>
-            <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+            <PageTitle title="Signup" />
             <SignUp />
           </>
         }
@@ -51,7 +52,7 @@ function App() {
         path="/auth/signin"
         element={
           <>
-            <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+            <PageTitle title="Signup" />
             <SignIn />
           </>
         }
@@ -66,7 +67,7 @@ function App() {
                 index
                 element={
                   <>
-                    <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="eCommerce Dashboard" />
                     <ECommerce />
                   </>
                 }
@@ -75,7 +76,34 @@ function App() {
                 path="/calendar"
                 element={
                   <>
-                    <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Role Playing Game" />
+                    <Calendar />
+                  </>
+                }
+              />
+              <Route
+                path="/calendar"
+                element={
+                  <>
+                    <PageTitle title="Role Playing Game" />
+                    <Calendar />
+                  </>
+                }
+              />
+              <Route
+                path="/calendar"
+                element={
+                  <>
+                    <PageTitle title="Role Playing Game" />
+                    <Calendar />
+                  </>
+                }
+              />
+              <Route
+                path="/career-selection"
+                element={
+                  <>
+                    <PageTitle title="Role Playing Game" />
                     <Calendar />
                   </>
                 }
@@ -84,7 +112,7 @@ function App() {
                 path="/profile"
                 element={
                   <>
-                    <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Profile" />
                     <Profile />
                   </>
                 }
@@ -93,7 +121,7 @@ function App() {
                 path="/forms/form-elements"
                 element={
                   <>
-                    <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Form Elements" />
                     <FormElements />
                   </>
                 }
@@ -102,7 +130,7 @@ function App() {
                 path="/forms/form-layout"
                 element={
                   <>
-                    <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Form Layout" />
                     <FormLayout />
                   </>
                 }
@@ -111,8 +139,8 @@ function App() {
                 path="/tables"
                 element={
                   <>
-                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                    <Tables />
+                    <PageTitle title="Tables" />
+                    <Trends />
                   </>
                 }
               />
@@ -120,7 +148,7 @@ function App() {
                 path="/counsellors"
                 element={
                   <>
-                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Tables" />
                     <Counselors />
                   </>
                 }
@@ -129,7 +157,7 @@ function App() {
                 path="/alumni"
                 element={
                   <>
-                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Tables" />
                     <Alumni />
                   </>
                 }
@@ -138,8 +166,17 @@ function App() {
                 path="/chatbot"
                 element={
                   <>
-                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Tables" />
                     <Chatbot />
+                  </>
+                }
+              />
+              <Route
+                path="/workshop"
+                element={
+                  <>
+                    <PageTitle title="Tables" />
+                    <Workshop />
                   </>
                 }
               />
@@ -147,7 +184,7 @@ function App() {
                 path="/quiz"
                 element={
                   <>
-                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Tables" />
                     <Quiz />
                   </>
                 }
@@ -156,7 +193,7 @@ function App() {
                 path="/video"
                 element={
                   <>
-                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Tables" />
                     <Video/>
                   </>
                 }
@@ -165,7 +202,7 @@ function App() {
                 path="/video"
                 element={
                   <>
-                    <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Tables" />
                     <Video/>
                   </>
                 }
@@ -174,7 +211,7 @@ function App() {
                 path="/update"
                 element={
                   <>
-                    <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Settings" />
                     <Settings />
                   </>
                 }
@@ -183,7 +220,7 @@ function App() {
                 path="/chart"
                 element={
                   <>
-                    <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Basic Chart" />
                     <Chart />
                   </>
                 }
@@ -192,7 +229,7 @@ function App() {
                 path="/ui/alerts"
                 element={
                   <>
-                    <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Alerts" />
                     <Alerts />
                   </>
                 }
@@ -201,7 +238,7 @@ function App() {
                 path="/ui/buttons"
                 element={
                   <>
-                    <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                    <PageTitle title="Buttons" />
                     <Buttons />
                   </>
                 }
