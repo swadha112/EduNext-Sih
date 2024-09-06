@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom'; // Import NavLink for routing
+import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -16,6 +16,46 @@ import Workshop from '../../images/cards/workshop.png';
 import Alumini from '../../images/cards/alumini.png';
 
 const ECommerce = () => {
+  const [typedText, setTypedText] = useState('');
+  const fullText = "EduNext";
+  const typingSpeed = 150;
+  const erasingSpeed = 100;
+  const pauseDuration = 1000;
+
+  useEffect(() => {
+    let timer;
+    let isTyping = true;
+    let index = 0;
+
+    const typeEffect = () => {
+      if (isTyping) {
+        if (index < fullText.length) {
+          setTypedText(fullText.slice(0, index + 1));
+          index++;
+          timer = setTimeout(typeEffect, typingSpeed);
+        } else {
+          isTyping = false;
+          timer = setTimeout(eraseEffect, pauseDuration);
+        }
+      }
+    };
+
+    const eraseEffect = () => {
+      if (index > 0) {
+        setTypedText(fullText.slice(0, index - 1));
+        index--;
+        timer = setTimeout(eraseEffect, erasingSpeed);
+      } else {
+        isTyping = true;
+        timer = setTimeout(typeEffect, pauseDuration);
+      }
+    };
+
+    timer = setTimeout(typeEffect, pauseDuration);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const settings = {
     dots: false,
     infinite: true,
@@ -66,6 +106,7 @@ const ECommerce = () => {
 
   // Calculate profile completion percentage
   const profileCompletion = totalFields > 0 ? ((filledFields / totalFields) * 100).toFixed(2) : 0;
+
   const categories = [
     'Technology',
     'Sports',
@@ -84,11 +125,24 @@ const ECommerce = () => {
     <>
       {/* Welcome Message */}
       <div className="text-center py-10 bg-gray-50">
-        <h1 className="text-4xl font-bold mb-2">Welcome to EduNext!</h1>
+        <h1 className="text-4xl font-bold mb-2">
+          Welcome to <span>{typedText}</span>
+          <span className="animate-blink">|</span>
+        </h1>
       </div>
 
+      <style jsx>{`
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        .animate-blink {
+          animation: blink 0.7s infinite;
+        }
+      `}</style>
+
       {/* Dashboard-Style Progress Container */}
-      <div className="mx-auto my-8 w-3/4 dark:bg-boxdark  p-6 rounded-md shadow-md">
+      <div className="mx-auto my-8 w-3/4 dark:bg-boxdark p-6 rounded-md shadow-md">
         <h2 className="text-xl mb-2 font-semibold text-gray-800 dark:text-white ">
           You have completed {profileCompletion}% of your profile
         </h2>
@@ -109,11 +163,7 @@ const ECommerce = () => {
           </NavLink>
         )}
       </div>
-      <div className="text-center py-10 bg-gray-50">
-      <h1 className="text-4xl font-bold mb-2">
-          Your Journey, Our Expertise.
-        </h1>
-      </div>
+
       {/* Grid of Cards */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="High School" content="">
@@ -155,17 +205,15 @@ const ECommerce = () => {
 
       {/* Tagline */}
       <div className="text-center py-10 bg-gray-50">
-        
+        <h1 className="text-4xl font-bold mb-2">
+          Your Journey, Our Expertise.
+        </h1>
         <p className="text-lg text-gray-600 mb-6">
           Count on our expertise to make the right choices for your education
           and career.
         </p>
       </div>
-      <div className="text-center py-4 bg-gray-50">
-        <h1 className="text-4xl font-bold mb-2">
-          Career Services Tailored for you.
-        </h1>
-        </div>
+
       {/* Horizontal carousel with react-slick */}
       <div className="my-10 px-4">
         <Slider {...settings}>
@@ -260,7 +308,7 @@ const ECommerce = () => {
             </NavLink>
           </div>
           <div className="px-2">
-            <NavLink to="/alumini">
+            <NavLink to="/alumni">
               <CardDataStats
                 title="Alumni Connect"
                 content="Connect with your alumni."
@@ -277,34 +325,26 @@ const ECommerce = () => {
         </Slider>
       </div>
 
-      <div className="text-center py-4 bg-gray-50">
-        <p className="text-lg text-gray-600 mb-4">
-          Our services are meticulously designed to unveil your potential,
-          interests, and skills.
-        </p>
-      </div>
+      {/* Explore Job Trends Button */}
       <div className="text-center py-10 bg-gray-50">
-        <h1 className="text-4xl font-bold mb-2">
-          Wondering about your future?
-        </h1>
+        <h1 className="text-4xl font-bold mb-2">Wondering about your future?</h1>
         <div className="flex flex-wrap justify-center gap-4 my-8">
-        {categories.map((category, index) => (
-          <button
-            key={index}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg"
+          {categories.map((category, index) => (
+            <button
+              key={index}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg"
+            >
+              {category}
+            </button>
+          ))}
+          {/* Last Button for "Explore Job Trends" with NavLink */}
+          <NavLink
+            to="/tables"
+            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
           >
-            {category}
-          </button>
-        ))}
-
-        {/* Last Button for "Explore Job Trends" with NavLink */}
-        <NavLink
-          to="/tables"
-          className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
-        >
-          Explore Job Trends
-        </NavLink>
-      </div>
+            Explore Job Trends
+          </NavLink>
+        </div>
         <p className="text-lg text-gray-600 mb-6">
           Take the first step to your future by choosing a field of interest and discovering the trends in the job market.
         </p>

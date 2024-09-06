@@ -33,4 +33,34 @@
   p {
     font-size: 18px;
   }
+  .points-popup {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    animation: pop-up-fade 1s ease-out;
+  }
   
+  .points-popup.positive {
+    color: green;
+  }
+  
+  .points-popup.negative {
+    color: red;
+  }
+  
+  @keyframes pop-up-fade {
+    0% {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+    50% {
+      transform: translate(-50%, -20px);
+    }
+    100% {
+      transform: translate(-50%, -40px);
+      opacity: 0;
+    }
+  }

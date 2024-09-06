@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Career.css'; // Optional CSS for styling
 
 const CareerRPG = () => {
@@ -6,6 +6,7 @@ const CareerRPG = () => {
   const [scene, setScene] = useState(0);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [pointsPopup, setPointsPopup] = useState(null); // State for points animation
 
   // Array of scenes with storyline, choices, and point values
   const scenes = [
@@ -62,6 +63,9 @@ const CareerRPG = () => {
   // Function to handle the user's choice and progress to the next scene
   const handleChoice = (points) => {
     setScore(score + points);
+    setPointsPopup(points); // Show points animation
+    setTimeout(() => setPointsPopup(null), 1000); // Hide points animation after 1 second
+
     if (scene < scenes.length - 1) {
       setScene(scene + 1);
     } else {
@@ -94,6 +98,11 @@ const CareerRPG = () => {
               {option.text}
             </button>
           ))}
+          {pointsPopup !== null && (
+            <div className={`points-popup ${pointsPopup > 0 ? 'positive' : 'negative'}`}>
+              {pointsPopup > 0 ? `+${pointsPopup}` : pointsPopup}
+            </div>
+          )}
         </div>
       ) : (
         <div className="game-over">
