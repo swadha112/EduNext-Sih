@@ -21,7 +21,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token');
       if (!token) {
-        // navigate('/auth/signin'); // Redirect to /signin on error
+        navigate('/auth/signin'); // Redirect to /signin on error
         return;
       }
 
@@ -46,7 +46,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(userData.data)); // Save user object to local storage
       } catch (error) {
         console.error('Error fetching user profile:', error);
-        // navigate('/auth/signin'); // Redirect to /signin on error
+        navigate('/auth/signin'); // Redirect to /signin on error
       }
     };
 

@@ -73,9 +73,10 @@ async def process_video(file: UploadFile = File(...)):
         
         video_file = f"uploads/{file.filename}"
         
-        # Save the uploaded video file
+        # Save the uploaded video file in chunks to prevent memory overflow
         with open(video_file, "wb") as f:
-            f.write(await file.read())
+            while content := await file.read(1024):  # Read in chunks of 1024 bytes
+                f.write(content)
 
         # Extract audio from video and analyze it
         video = VideoFileClip(video_file)
