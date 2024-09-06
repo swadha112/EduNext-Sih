@@ -33,6 +33,7 @@ module.exports = {
         'lemon-green': '#ADFF2F',
         'gray-2': '#F7F9FC',
         'gray-3': '#FAFAFA',
+        'gray-light': '#d3d3d3',
         whiten: '#F1F5F9',
         whiter: '#F5F7FD',
         boxdark: '#24303F',
