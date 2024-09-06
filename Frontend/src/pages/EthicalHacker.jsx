@@ -62,18 +62,6 @@ const CareerRPG = () => {
     },
   ];
 
-  // Function to handle the user's choice and progress to the next scene
-  const handleChoice = (points) => {
-    setScore(score + points);
-    setPointsPopup(points); // Show points animation
-    setTimeout(() => setPointsPopup(null), 1000); // Hide points animation after 1 second
-
-    if (scene < scenes.length - 1) {
-      setScene(scene + 1);
-    } else {
-      setGameOver(true); // End the game if last scene
-    }
-  };
 
   // Grading logic based on the final score
   const getGrade = () => {
@@ -85,6 +73,39 @@ const CareerRPG = () => {
       return "C - You've struggled with ethical challenges in the field.";
     }
   };
+
+  // Handle user's choice and proceed to the next scene
+  const handleChoice = (points) => {
+    setScore(score + points);
+    setPointsPopup(points); // Show points animation
+    setTimeout(() => setPointsPopup(null), 1000); // Hide points animation after 1 second
+    resetTimer(); // Reset timer after choice is made
+
+    if (scene < scenes.length - 1) {
+      setScene(scene + 1);
+    } else {
+      setGameOver(true); // End the game if it's the last scene
+    }
+  };
+
+  // Reset the timer to 15 seconds when a new scene starts
+  const resetTimer = () => {
+    setTimer(15);
+  };
+
+  // Countdown effect for the timer
+  useEffect(() => {
+    if (timer === 0) {
+      handleChoice(0); // If the timer reaches 0, automatically proceed with no points
+    }
+    const interval = setInterval(() => {
+      setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount or scene change
+  }, [timer]);
+
+ 
 
   return (
     <div className="rpg-game">
@@ -117,7 +138,7 @@ const CareerRPG = () => {
           <p>Your final score is: {score}</p>
           <p>{getGrade()}</p>
            {/* Button to go back to career selection page */}
-           <button onClick={() => navigate('/calendar')} className="back-button">
+           <button onClick={() => navigate('/roleplay')} className="back-button">
             Back to Career Selection
           </button>
         </div>

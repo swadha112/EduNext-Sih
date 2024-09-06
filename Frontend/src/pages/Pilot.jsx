@@ -73,7 +73,23 @@ const CareerRPG = () => {
       setGameOver(true); // End the game if last scene
     }
   };
+ // Reset the timer to 15 seconds when a new scene starts
+ const resetTimer = () => {
+    setTimer(15);
+  };
 
+  // Countdown effect for the timer
+  useEffect(() => {
+    if (timer === 0) {
+      handleChoice(0); // If the timer reaches 0, automatically proceed with no points
+    }
+    const interval = setInterval(() => {
+      setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount or scene change
+  }, [timer]);
+  
   // Grading logic based on the final score
   const getGrade = () => {
     if (score >= 75) {
@@ -116,7 +132,7 @@ const CareerRPG = () => {
           <p>Your final score is: {score}</p>
           <p>{getGrade()}</p>
            {/* Button to go back to career selection page */}
-           <button onClick={() => navigate('/')} className="back-button">
+           <button onClick={() => navigate('/roleplay')} className="back-button">
             Back to Career Selection
           </button>
         </div>

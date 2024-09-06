@@ -136,7 +136,7 @@ const CareerRPG = () => {
           <p>Your final score is: {score}</p>
           <p>{getGrade()}</p>
            {/* Button to go back to career selection page */}
-           <button onClick={() => navigate('/calendar')} className="back-button">
+           <button onClick={() => navigate('/roleplay')} className="back-button">
             Back to Career Selection
           </button>
         </div>
