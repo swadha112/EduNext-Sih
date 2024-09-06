@@ -155,7 +155,7 @@ const ECommerce = () => {
         </div>
         {/* Conditionally render link based on profile completion */}
         {profileCompletion < 100 ? (
-          <NavLink to="/settings" className="text-blue-500 underline">
+          <NavLink to="/update" className="text-blue-500 underline">
             Click here to complete your profile
           </NavLink>
         ) : (
