@@ -12,7 +12,7 @@ import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
-import Tables from './pages/Tables.jsx';
+import Trends from './pages/Tables.jsx';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
@@ -139,7 +139,7 @@ function App() {
                 element={
                   <>
                     <PageTitle title="Tables" />
-                    <Tables />
+                    <Trends />
                   </>
                 }
               />
