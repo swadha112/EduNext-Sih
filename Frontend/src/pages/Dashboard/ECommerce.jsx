@@ -124,12 +124,13 @@ const ECommerce = () => {
   return (
     <>
       {/* Welcome Message */}
-      <div className="text-center py-10 bg-gray-50">
+      <div className="text-center py-10 bg-gray-50 dark:bg-gray-900">
         <h1 className="text-4xl font-bold mb-2">
-          Welcome to <span>{typedText}</span>
+          Welcome to{' '} <span className="text-black dark:text-lemon-green"> {/* lemon green in dark mode */}{typedText}</span>
           <span className="animate-blink">|</span>
         </h1>
       </div>
+
 
       <style jsx>{`
         @keyframes blink {

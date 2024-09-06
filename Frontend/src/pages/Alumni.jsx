@@ -4,9 +4,6 @@ import {
   TextField,
   Button,
   CircularProgress,
-  Typography,
-  Alert,
-  Grid,
   Table,
   TableBody,
   TableCell,
@@ -14,6 +11,9 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Typography,
+  Alert,
+  Grid,
   Link,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -57,14 +57,14 @@ const Alumni = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      {/* Title with custom dark grey color, reduced left padding and increased font size */}
+      {/* Title with custom lemon green color */}
       <Typography
         variant="h3"
         align="left"
         gutterBottom
         sx={{
           fontWeight: 'bold',
-          color: '#4A4A4A', // Dark grey color
+          color: '#ADFF2F', // Lemon green color
           ml: 1, // Reduced left padding
           fontSize: '2.5rem', // Increased font size
         }}
@@ -81,13 +81,14 @@ const Alumni = () => {
             value={universityName}
             onChange={handleInputChange}
             disabled={loading}
-            sx={{
-              mb: 2,
-              '& .MuiOutlinedInput-root': {
-                height: '56px', // Ensuring the input height matches the button height
-                backgroundColor: theme.palette.mode === 'dark' ? '#424242' : '#e3f2fd', // Custom background for dark mode
+            InputProps={{
+              sx: {
+                backgroundColor: theme.palette.mode === 'dark' ? '#ffffff' : '#d3d3d3', // White in dark mode, grey in light mode
                 borderRadius: '8px', // Rounded corners for search box
               },
+            }}
+            sx={{
+              mb: 2,
               '& .MuiInputLabel-root': {
                 color: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Custom label color for dark/light mode
               },
