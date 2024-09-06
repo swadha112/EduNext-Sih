@@ -92,11 +92,14 @@ const Alumni = () => {
                 color: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Custom label color for dark/light mode
               },
               '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Border color based on theme
+                borderColor:
+                  theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Border color based on theme
               },
-              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.mode === 'dark' ? '#42a5f5' : '#1565c0', // Focus border color for dark/light mode
-              },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
+                {
+                  borderColor:
+                    theme.palette.mode === 'dark' ? '#42a5f5' : '#1565c0', // Focus border color for dark/light mode
+                },
               color: theme.palette.text.primary, // Adjust text color based on the theme
             }}
           />
@@ -111,10 +114,12 @@ const Alumni = () => {
             sx={{
               height: '56px', // Matching the button height with the input field
               fontSize: '1rem', // Ensuring font size is clear and readable
-              backgroundColor: theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5', // Button background based on theme
+              backgroundColor:
+                theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5', // Button background based on theme
               color: theme.palette.mode === 'dark' ? '#fff' : '#fff', // Button text color based on theme
               '&:hover': {
-                backgroundColor: theme.palette.mode === 'dark' ? '#303f9f' : '#303f9f', // Hover state background color
+                backgroundColor:
+                  theme.palette.mode === 'dark' ? '#303f9f' : '#303f9f', // Hover state background color
               },
             }}
           >
