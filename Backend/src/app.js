@@ -13,7 +13,7 @@ const alumniRoutes = require("./routes/alumniRoutes");
 const videoRoutes = require("./routes/videoRoutes");
 const workshopRoutes = require("./routes/workshopRoutes");
 const whatsappRoutes = require("./routes/whatsappRoutes");
-
+const careerScenarioRoutes = require("./routes/careerScenarioRoutes");
 const twilio = require("twilio");
 
 dotenv.config(); // Load environment variables
@@ -73,7 +73,7 @@ app.use("/api/alumni", alumniRoutes); // Alumni-related routes
 app.use("/api/video", videoRoutes); // Video-related routes
 app.use("/api/workshop", workshopRoutes);
 app.use("/api/whatsapp", whatsappRoutes);
-
+app.use("/api/career-scenarios", careerScenarioRoutes);
 // Health Check Route
 app.get("/", (req, res) => {
   res.send("API is running...");
