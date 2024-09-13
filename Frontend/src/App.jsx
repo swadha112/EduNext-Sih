@@ -67,7 +67,7 @@ function App() {
                 index
                 element={
                   <>
-                    <PageTitle title="eCommerce Dashboard" />
+                    <PageTitle title="EduNext" />
                     <ECommerce />
                   </>
                 }
