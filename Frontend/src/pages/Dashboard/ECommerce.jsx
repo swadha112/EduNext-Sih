@@ -326,6 +326,67 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
+          <div className="px-2">
+            <NavLink to="/tables">
+              <CardDataStats
+                title="Market Trends"
+                content="Stay updated with the latest market trends."
+              >
+                <img
+                  src={Trends}
+                  alt="Market Trends"
+                  className="h-full w-full object-cover"
+                  title="Market Trends"
+                />
+              </CardDataStats>
+            </NavLink>
+          </div>
+          <div className="px-2">
+            <NavLink to="/workshops">
+              <CardDataStats
+                title="Upcoming Workshops"
+                content="Information on upcoming workshops."
+              >
+                <img
+                  src={Workshop}
+                  alt="Upcoming Workshops"
+                  className="h-full w-full object-cover"
+                  title="Upcoming Workshops"
+                />
+              </CardDataStats>
+            </NavLink>
+          </div>
+          <div className="px-2">
+            <NavLink to="/counsellors">
+              <CardDataStats
+                title="Counsellors Nearby"
+                content="Info on counselors nearby your area."
+              >
+                <img
+                  src={Counsellor}
+                  alt="Connect with Counsellors"
+                  className="h-full w-full object-cover"
+                  title="Connect with Counsellors"
+                />
+              </CardDataStats>
+            </NavLink>
+          </div>
+          <div className="px-2">
+            <NavLink to="/alumni">
+              <CardDataStats
+                title="Alumni Connect"
+                content="Connect with your alumni."
+              >
+                <img
+                  src={Alumini}
+                  alt="Alumni Connect"
+                  className="h-full w-full object-cover"
+                  title="Alumni Connect"
+                />
+              </CardDataStats>
+            </NavLink>
+          </div>
+
         </Slider>
       </div>
 
