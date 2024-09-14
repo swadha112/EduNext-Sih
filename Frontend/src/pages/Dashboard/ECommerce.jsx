@@ -326,7 +326,7 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/tables">
               <CardDataStats
                 title="Market Trends"
@@ -341,7 +341,7 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/workshops">
               <CardDataStats
                 title="Upcoming Workshops"
@@ -356,7 +356,7 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/counsellors">
               <CardDataStats
                 title="Counsellors Nearby"
@@ -371,7 +371,7 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/alumni">
               <CardDataStats
                 title="Alumni Connect"
