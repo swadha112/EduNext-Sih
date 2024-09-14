@@ -46,9 +46,10 @@ const CareerSelection = () => {
   );
 };
 
+
 const CareerRPG = ({ selectedCareer }) => {
   const navigate = useNavigate();
-  const [scene, setScene] = useState(0);
+  const [scene, setScene] = useState(0); // Initialize to first scene
   const [scenes, setScenes] = useState([]); // Dynamic scenes from API
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
@@ -65,7 +66,7 @@ const CareerRPG = ({ selectedCareer }) => {
       try {
         const response = await fetch(`http://localhost:5050/api/career-scenarios?career=${selectedCareer}`);
         if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
+          throw new Error(` ${response.status} ${response.statusText}`);
         }
         const data = await response.json();
         setScenes(data.scenarios); // Update the scenes state with fetched scenarios
@@ -86,10 +87,11 @@ const CareerRPG = ({ selectedCareer }) => {
     setTimeout(() => setPointsPopup(null), 1000);
     resetTimer();
 
+    // Only advance to the next scene if there are more scenes to go through
     if (scene < scenes.length - 1) {
-      setScene(scene + 1);
+      setScene(scene + 1); // Advance to the next scene
     } else {
-      setGameOver(true);
+      setGameOver(true); // End the game when you've gone through all the scenes
     }
   };
 
@@ -122,22 +124,36 @@ const CareerRPG = ({ selectedCareer }) => {
   if (loading) return <p>Loading scenarios...</p>;
   if (error) return <p>Error: {error}</p>;
 
+  if (!scenes || scenes.length === 0) return <p>No scenarios available.</p>;
+
   return (
     <div className="rpg-game">
       {!gameOver ? (
         <div>
-          {scenes.length > 0 && (
+          {scenes[scene] && (
             <>
-              <p>{scenes[scene].text}</p>
-              {scenes[scene].options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleChoice(option.points)}
-                  className="choice-button bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-                >
-                  {option.text}
-                </button>
-              ))}
+              {/* Display Scenario */}
+              <h2>{scenes[scene].text}</h2>
+
+              {/* Display Details */}
+              {scenes[scene].details && <p><strong>Details:</strong> {scenes[scene].details}</p>}
+
+              {/* Display Impact */}
+              {scenes[scene].impact && <p><strong>Impact:</strong> {scenes[scene].impact}</p>}
+
+              {/* Display Options */}
+              <div>
+                {scenes[scene].options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleChoice(option.points)}
+                    className="choice-button bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                  >
+                    {option.text}
+                  </button>
+                ))}
+              </div>
+
               {pointsPopup !== null && (
                 <div className={`points-popup ${pointsPopup > 0 ? 'positive' : 'negative'}`}>
                   {pointsPopup > 0 ? `+${pointsPopup}` : pointsPopup}
@@ -164,5 +180,6 @@ const CareerRPG = ({ selectedCareer }) => {
     </div>
   );
 };
+
 
 export default CareerSelection;
