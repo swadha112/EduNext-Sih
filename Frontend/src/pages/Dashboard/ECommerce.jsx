@@ -17,11 +17,13 @@ import Alumini from '../../images/cards/alumini.png';
 
 const ECommerce = () => {
   const [typedText, setTypedText] = useState('');
+  const [visible, setVisible] = useState(false); // State to detect if the section is visible for animation
   const fullText = "EduNext";
   const typingSpeed = 150;
   const erasingSpeed = 100;
   const pauseDuration = 1000;
 
+  // Typing effect logic
   useEffect(() => {
     let timer;
     let isTyping = true;
@@ -87,24 +89,16 @@ const ECommerce = () => {
     ],
   };
 
-  // Safely parse user data from localStorage
   const user = JSON.parse(localStorage.getItem('user')) || {};
 
-  // Fields to exclude from the calculation
   const excludedFields = ['cv', 'marksheet', '__v', '_id'];
-
-  // Get all keys from the user object, filtering out excluded fields
   const totalFields = Object.keys(user).filter(
     (field) => !excludedFields.includes(field),
   ).length;
-
-  // Count the number of filled fields (excluding null or empty values)
   const filledFields = Object.keys(user).filter(
     (field) =>
       !excludedFields.includes(field) && user[field] && user[field] !== '',
   ).length;
-
-  // Calculate profile completion percentage
   const profileCompletion = totalFields > 0 ? ((filledFields / totalFields) * 100).toFixed(2) : 0;
 
   const categories = [
@@ -121,17 +115,30 @@ const ECommerce = () => {
     'Agriculture',
   ];
 
+  // Function to observe when the job trends section enters the viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0.5 }
+    );
+
+    const trendsSection = document.querySelector('#job-trends-section');
+    if (trendsSection) observer.observe(trendsSection);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
-      {/* Welcome Message */}
-      <div className="text-center py-10 bg-gray-50 dark:bg-gray-900">
+      {/* Welcome Message with Fade In Animation */}
+      <div className="text-center py-10 bg-gray-50 dark:bg-gray-900 animate-fade-in">
         <h1 className="text-4xl font-bold mb-2">
-          Welcome to{' '} <span className="text-black dark:text-lemon-green"> {/* lemon green in dark mode */}{typedText}</span>
+          Welcome to{' '} <span className="text-black dark:text-lemon-green">{typedText}</span>
           <span className="animate-blink">|</span>
         </h1>
       </div>
 
-
+      {/* CSS Animations */}
       <style jsx>{`
         @keyframes blink {
           0%, 100% { opacity: 1; }
@@ -140,20 +147,70 @@ const ECommerce = () => {
         .animate-blink {
           animation: blink 0.7s infinite;
         }
+
+        @keyframes fade-in {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        .animate-fade-in {
+          animation: fade-in 1s ease-out;
+        }
+
+        @keyframes slide-up {
+          0% {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-slide-up {
+          animation: slide-up 1s ease-out;
+        }
+
+        @keyframes bounce-in {
+          0% {
+            transform: scale(0.5);
+            opacity: 0;
+          }
+          60% {
+            transform: scale(1.2);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
+        .animate-bounce-in {
+          animation: bounce-in 0.6s ease-out;
+        }
+
+        @keyframes bounce-delay {
+          0% { opacity: 0; transform: scale(0.5); }
+          100% { opacity: 1; transform: scale(1); }
+        }
       `}</style>
 
       {/* Dashboard-Style Progress Container */}
-      <div className="mx-auto my-8 w-3/4 dark:bg-boxdark p-6 rounded-md shadow-md">
+      <div className="mx-auto my-8 w-3/4 dark:bg-boxdark p-6 rounded-md shadow-md animate-slide-up">
         <h2 className="text-xl mb-2 font-semibold text-gray-800 dark:text-white ">
           You have completed {profileCompletion}% of your profile
         </h2>
-        <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
+        <div className="w-full bg-gray-200 rounded-full h-4 mb-4 transition-all duration-500">
           <div
             className="bg-blue-600 h-4 rounded-full"
             style={{ width: `${profileCompletion}%` }}
           ></div>
         </div>
-        {/* Conditionally render link based on profile completion */}
         {profileCompletion < 100 ? (
           <NavLink to="/update" className="text-blue-500 underline">
             Click here to complete your profile
@@ -164,18 +221,19 @@ const ECommerce = () => {
           </NavLink>
         )}
       </div>
+
+      {/* Restored Headings */}
       <div className="text-center py-10 bg-gray-50">
-        <h1 className="text-4xl font-bold mb-2">
-          Your Journey, Our Expertise.
-        </h1>
-        </div>
+        <h1 className="text-4xl font-bold mb-2">Your Journey, Our Expertise.</h1>
+      </div>
+
       {/* Grid of Cards */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5 animate-slide-up">
         <CardDataStats title="High School" content="">
           <img
             src={HighSchool}
             alt="High School"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover "
             title="High School"
           />
         </CardDataStats>
@@ -184,7 +242,7 @@ const ECommerce = () => {
           <img
             src={College}
             alt="College"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover "
             title="College"
           />
         </CardDataStats>
@@ -193,7 +251,7 @@ const ECommerce = () => {
           <img
             src={Counsellor}
             alt="Counsellors"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover "
             title="Counsellors"
           />
         </CardDataStats>
@@ -202,14 +260,13 @@ const ECommerce = () => {
           <img
             src={Professional}
             alt="Professional"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover "
             title="Professional"
           />
         </CardDataStats>
       </div>
-
-      {/* Tagline */}
-      <div className="text-center py-5 bg-gray-50">
+ {/* Tagline */}
+ <div className="text-center py-5 bg-gray-50">
         <p className="text-lg text-gray-600 mb-2">
           Count on our expertise to make the right choices for your education
           and career.
@@ -220,10 +277,11 @@ const ECommerce = () => {
           Career Services Tailored for you.
         </h1>
         </div>
+
       {/* Horizontal carousel with react-slick */}
-      <div className="my-5 px-4">
+      <div className="my-5 px-4 animate-slide-up">
         <Slider {...settings}>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/chatbot">
               <CardDataStats
                 title="Chatbot"
@@ -238,7 +296,7 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/quiz">
               <CardDataStats
                 title="Dynamic Quizzes"
@@ -253,7 +311,7 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/interview">
               <CardDataStats
                 title="Interview Preparation"
@@ -268,7 +326,7 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/tables">
               <CardDataStats
                 title="Market Trends"
@@ -283,7 +341,7 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/workshops">
               <CardDataStats
                 title="Upcoming Workshops"
@@ -298,7 +356,7 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/counsellors">
               <CardDataStats
                 title="Counsellors Nearby"
@@ -313,7 +371,7 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-          <div className="px-2">
+          <div className="px-2 transform hover:scale-105 transition-transform duration-300">
             <NavLink to="/alumni">
               <CardDataStats
                 title="Alumni Connect"
@@ -328,29 +386,29 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
+
         </Slider>
       </div>
-      <div className="text-center py-10 bg-gray-50">
-        <p className="text-lg text-gray-600 mb-4">
-          Our services are meticulously designed to unveil your potential, interests and skills.
-        </p>
-      </div>
-      {/* Explore Job Trends Button */}
-      <div className="text-center py-10 bg-gray-50">
+
+      {/* Explore Job Trends Section with Delayed Bounce-in Animation */}
+      <div id="job-trends-section" className="text-center py-10 bg-gray-50 animate-slide-up">
         <h1 className="text-4xl font-bold mb-2">Wondering about your future?</h1>
         <div className="flex flex-wrap justify-center gap-4 my-8">
           {categories.map((category, index) => (
             <button
               key={index}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg"
+              className={`px-6 py-3 bg-blue-600 text-white rounded-lg ${
+                visible ? `animate-bounce-in delay-${index * 200}` : ''
+              }`}
             >
               {category}
             </button>
           ))}
-          {/* Last Button for "Explore Job Trends" with NavLink */}
           <NavLink
             to="/tables"
-            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+            className={`px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-transform duration-300 transform hover:scale-110 ${
+              visible ? 'animate-bounce-in delay-1000' : ''
+            }`}
           >
             Explore Job Trends
           </NavLink>
