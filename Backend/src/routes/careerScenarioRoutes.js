@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const fetch = require('node-fetch'); // For making HTTP requests
+//const fetch = require('node-fetch'); // For making HTTP requests
+const fetch = (...args) => import('node-fetch').then(module => module.default(...args));
 require('dotenv').config();
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY2; // Load the API key
 
+
 router.get('/', async (req, res) => {
   console.log('Career scenario route hit');
-  const { career } = req.query; // Capture the career parameter
+  const { career } = req.query;
   console.log(`Career: ${career}`);
 
   if (!career) {
@@ -38,33 +40,34 @@ router.get('/', async (req, res) => {
       },
       body: JSON.stringify(requestBody),
     });
-    
-    const data = await response.json();
-    
-    console.log('API Response:', data); // Log the entire response
-    
-    if (!response.ok || !data.generatedText) {
-      console.error('API Error:', data);
-      throw new Error(`Error fetching data from Gemini API: ${response.statusText}`);
-    }
-    
 
-    const scenarios = [
-      {
-        text: data.generatedText || `We couldn't generate a personalized scenario for ${career}, but here is a generic exploration scenario.`,
-        options: [
-          { text: 'Option 1', points: 10 },
-          { text: 'Option 2', points: 5 },
-          { text: 'Option 3', points: 3 },
-        ],
-      },
-    ];
-    
+    const data = await response.json();
+    console.log('API response data:', JSON.stringify(data, null, 2));
+
+    // Extract the generated text from content.parts[0].text
+    if (!response.ok || !data.candidates || !data.candidates[0].content || !data.candidates[0].content.parts || !data.candidates[0].content.parts[0].text) {
+      console.error('API Error: No valid content available', data);
+      return res.status(response.status).json({ error: 'Error fetching data from Gemini API', details: data });
+    }
+
+    const generatedText = data.candidates[0].content.parts[0].text;
+
+    // Generate scenarios based on the text
+    const scenarios = generatedText.split('\n\n').map((scenarioText, index) => ({
+      text: scenarioText,
+      // details: 'Detailed explanation for scenario...',
+      // impact: 'The impact of making this choice...',
+      options: [
+        { text: 'Option 1', points: 10 },
+        { text: 'Option 2', points: 5 },
+        { text: 'Option 3', points: 3 },
+      ],
+    }));
 
     res.json({ scenarios });
   } catch (error) {
     console.error('Error fetching career scenarios from Gemini API:', error);
-    res.status(500).json({ error: 'Failed to fetch career scenarios' });
+    res.status(500).json({ error: 'Failed to fetch career scenarios', details: error.message });
   }
 });
 
