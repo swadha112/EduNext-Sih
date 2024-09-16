@@ -27,9 +27,14 @@ const Counselors = () => {
 
   // Dummy list for counselors affiliated with us
   const affiliatedCounselors = [
-    { title: 'John Doe', url: '#', maps_link: '#', phone: '+917039600864' },
-    { title: 'Jane Smith', url: '#', maps_link: '#', phone: '+917039600864' },
-    { title: 'Sam Wilson', url: '#', maps_link: '#', phone: '+917039600864' },
+    {
+      title: 'Ashish Rathod',
+      url: '#',
+      maps_link: '#',
+      phone: '+917039600864',
+    },
+    { title: 'Deepa Kumar', url: '#', maps_link: '#', phone: '+917039600864' },
+    { title: 'Sam Stallion', url: '#', maps_link: '#', phone: '+917039600864' },
   ];
 
   const handleInputChange = (e) => {

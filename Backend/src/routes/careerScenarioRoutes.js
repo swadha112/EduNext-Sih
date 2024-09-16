@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const fetch = (...args) => import('node-fetch').then(module => module.default(...args));
+// const fetch = (...args) => import('node-fetch').then(module => module.default(...args));
 require('dotenv').config();
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY2;
 
