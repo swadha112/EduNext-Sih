@@ -6,7 +6,8 @@
 
 .choice-button {
   display: block;
-  width: 250px;
+  width: 100%;
+  max-width: 500px;
   margin: 10px auto;
   padding: 10px;
   background-color: #4caf50;
