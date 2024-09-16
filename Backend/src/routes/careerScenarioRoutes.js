@@ -52,8 +52,21 @@ router.get('/', async (req, res) => {
       const scenarioText = scenarioBlock.split('Options:')[0].trim();
       const optionsText = scenarioBlock.split('Options:')[1]?.trim() || '';
 
+      // Log the optionsText to see its structure
+      console.log(`Parsed optionsText for scenario ${index + 1}:`, optionsText);
+
       const options = optionsText.split(',').map((option, idx) => {
         const parts = option.trim().split('(Points:');
+
+        // Defensive programming to check if parts are correctly parsed
+        if (parts.length < 2 || !parts[1]) {
+          console.error('Error parsing option:', option);
+          return {
+            text: 'Invalid option',
+            points: 0,
+          };
+        }
+
         return {
           text: parts[0].trim(),
           points: parseInt(parts[1].replace(')', '').trim(), 10),
