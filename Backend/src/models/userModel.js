@@ -1,6 +1,24 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
+const notificationSchema = new mongoose.Schema(
+  {
+    message: {
+      type: String,
+      required: true,
+    },
+    isRead: {
+      type: Boolean,
+      default: false, // Notification unread by default
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { _id: false } // Notifications are embedded, so no separate _id is needed
+);
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -33,15 +51,15 @@ const userSchema = new mongoose.Schema(
     category: {
       type: String,
       enum: ["UG", "PG", "School"],
-      default: "UG", // Default category can be set to any of the options
+      default: "UG",
     },
     cv: {
       type: String,
-      default: null, // Assuming you'll store the file path or URL as a string
+      default: null,
     },
     marksheet: {
       type: String,
-      default: null, // Assuming you'll store the file path or URL as a string
+      default: null,
     },
     bio: {
       type: String,
@@ -59,6 +77,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    notifications: [notificationSchema], // Array of notification objects
   },
   {
     timestamps: true,
