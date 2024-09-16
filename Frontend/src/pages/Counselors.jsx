@@ -23,6 +23,14 @@ const Counselors = () => {
   const [counselors, setCounselors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showAffiliated, setShowAffiliated] = useState(false); // Track if the search button has been clicked
+
+  // Dummy list for counselors affiliated with us
+  const affiliatedCounselors = [
+    { title: 'John Doe', url: '#', maps_link: '#', phone: '+917039600864' },
+    { title: 'Jane Smith', url: '#', maps_link: '#', phone: '+917039600864' },
+    { title: 'Sam Wilson', url: '#', maps_link: '#', phone: '+917039600864' },
+  ];
 
   const handleInputChange = (e) => {
     setAddress(e.target.value);
@@ -31,6 +39,7 @@ const Counselors = () => {
   const handleSubmit = async () => {
     setLoading(true);
     setError(null);
+    setShowAffiliated(true); // Show the affiliated counselors list after search is initiated
     try {
       const response = await fetch('http://localhost:5050/api/counselors', {
         method: 'POST',
@@ -50,6 +59,39 @@ const Counselors = () => {
       setError(error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleConnect = async (phone) => {
+    const user = JSON.parse(localStorage.getItem('user')); // Assuming the user info is stored as a JSON object in localStorage
+    const clientName = user?.name || 'Aahan Shetye'; // Default to 'Aahan Shetye' if user.name is not available
+    const email = user?.email || 'atharvaupare5@gmail.com'; // Default email
+    const bio = user?.bio || 'I am a 3rd year engineering student'; // Default bio
+
+    try {
+      const response = await fetch(
+        'http://localhost:5050/api/whatsapp/send-whatsapp',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: phone,
+            clientName,
+            email,
+            bio,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to send WhatsApp message');
+      }
+
+      console.log('Message sent successfully');
+    } catch (error) {
+      console.error('Error sending message:', error);
     }
   };
 
@@ -111,7 +153,8 @@ const Counselors = () => {
             sx={{
               height: '56px', // Matching the button height with the input field
               fontSize: '1rem', // Ensuring font size is clear and readable
-              backgroundColor: theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5', // Button background based on theme
+              backgroundColor:
+                theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5', // Button background based on theme
               color: theme.palette.mode === 'dark' ? '#fff' : '#fff', // Button text color based on theme
               '&:hover': {
                 backgroundColor:
@@ -124,17 +167,78 @@ const Counselors = () => {
         </Grid>
       </Grid>
 
+      {/* Affiliated Counselors List - Render only after search button is clicked */}
+      {showAffiliated && (
+        <>
+          <Typography
+            variant="h5"
+            sx={{ mt: 5, mb: 2, color: theme.palette.text.primary }}
+          >
+            Counsellors Affiliated with Us
+          </Typography>
+          <TableContainer component={Paper} sx={{ mb: 4, borderRadius: '8px' }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      fontWeight: 'bold',
+                      fontSize: '1.5rem',
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    Title
+                  </TableCell>
+                  <TableCell />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {affiliatedCounselors.map((counselor, index) => (
+                  <TableRow key={index}>
+                    <TableCell sx={{ color: theme.palette.text.primary }}>
+                      {counselor.title}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Button
+                        variant="contained"
+                        sx={{
+                          backgroundColor:
+                            theme.palette.mode === 'dark'
+                              ? '#1e88e5'
+                              : '#1e88e5', // Blue background
+                          color: '#fff', // White text
+                          '&:hover': {
+                            backgroundColor:
+                              theme.palette.mode === 'dark'
+                                ? '#1565c0'
+                                : '#1565c0', // Darker blue on hover
+                          },
+                        }}
+                        onClick={() => handleConnect(counselor.phone)} // Send the phone number in the request
+                      >
+                        Connect
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </>
+      )}
+
+      {/* Error Message */}
       {error && (
         <Alert severity="error" sx={{ mt: 3, mb: 3 }}>
           {error}
         </Alert>
       )}
 
+      {/* API Counselors List */}
       {counselors.length > 0 && (
         <TableContainer
           component={Paper}
           sx={{
-            mt: 5,
             maxHeight: '70vh',
             backgroundColor: theme.palette.background.paper, // Adapt table background to theme
             borderRadius: '8px', // Add some rounded corners to the table
