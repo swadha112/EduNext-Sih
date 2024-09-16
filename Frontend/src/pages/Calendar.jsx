@@ -22,10 +22,10 @@ const CareerSelection = () => {
       {!startGame ? (
         <div className="career-selection-container">
           <h1 className="text-xl mb-2 font-semibold text-gray-800 dark:text-white">
-            Select a Career to Start the Role-Playing Game
+            Select a Career to Start the Career Simulator
           </h1>
           <p className="text-xl mb-2 text-gray-800 dark:text-white">
-            Game Rules: In this role-playing game, you will be presented with various career-specific scenarios and challenges. For each scenario, you’ll have multiple choices, and each choice will award you a certain number of points based on the decision you make. Your goal is to make the best decisions that align with the career you've chosen. The game features a 15-second timer for each question, so make your choices wisely and quickly! At the end of the game, your total score will determine how well you've navigated your career path.
+            Game Rules: In this Career Simulator, you will be presented with various career-specific scenarios and challenges. For each scenario, you’ll have multiple choices, and each choice will award you a certain number of points based on the decision you make. Your goal is to make the best decisions that align with the career you've chosen. The game features a 15-second timer for each question, so make your choices wisely and quickly! At the end of the game, your total score will determine how well you've navigated your career path.
           </p>
           <div className="career-buttons-container grid grid-cols-3 gap-4 mt-4">
             {careers.map((career) => (
@@ -172,8 +172,8 @@ const CareerRPG = ({ selectedCareer }) => {
           <h2>Game Over</h2>
           <p>Your final score is: {score}</p>
           <p>{getGrade()}</p>
-          <button onClick={() => navigate('/roleplay')} className="back-button">
-            Back to Career Selection
+          <button onClick={() => navigate('/')} className="back-button">
+            Back to Dashboard
           </button>
         </div>
       )}
