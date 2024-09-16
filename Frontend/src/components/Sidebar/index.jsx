@@ -379,7 +379,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       </g>
                     </g>
                   </svg>
-                  Role Playing Game
+                  Career Simulator
                 </NavLink>
               </li>
               {/* <!-- Menu Item Tables --> */}
