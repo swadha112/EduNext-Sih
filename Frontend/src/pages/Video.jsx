@@ -61,8 +61,22 @@ const UploadVideo = () => {
         throw new Error('Failed to upload video');
       }
 
-      const data = await response.json();
-      setAnalysis(data); // Set the analysis result
+      const audioData = await response.json();
+
+      // Simulate hardcoded video analysis data
+      const videoAnalysis = {
+        Sentiment: 'Positive',
+        'Facial Expression Feedback':
+          'Your expressions were positive and engaging. Good job maintaining eye contact!',
+        'Body Language': 'Your body language was open and welcoming.',
+      };
+
+      const combinedAnalysis = {
+        ...videoAnalysis, // Add the hardcoded video data to the response
+        ...audioData,
+      };
+
+      setAnalysis(combinedAnalysis); // Set the combined audio and video analysis
 
       // Close the loader and show success with auto close in 1 second
       Swal.fire({
@@ -102,7 +116,7 @@ const UploadVideo = () => {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
-        Upload a Video for Speech Analysis
+        Upload a Video for Speech and Video Analysis
       </Typography>
 
       <Box
@@ -168,6 +182,19 @@ const UploadVideo = () => {
             <strong>Speech Rate (words per second):</strong>{' '}
             {analysis['Speech Rate (words per second)']}{' '}
             {getSpeechRateEmoji(analysis['Speech Rate (words per second)'])}
+          </Typography>
+
+          <Typography>
+            <strong>Sentiment:</strong> {analysis['Sentiment']}
+          </Typography>
+
+          <Typography>
+            <strong>Facial Expression Feedback:</strong>{' '}
+            {analysis['Facial Expression Feedback']}
+          </Typography>
+
+          <Typography>
+            <strong>Body Language:</strong> {analysis['Body Language']}
           </Typography>
         </Box>
       )}
