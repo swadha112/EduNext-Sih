@@ -16,7 +16,7 @@ const CareerSelection = () => {
     setSelectedCareer(career);
     setStartGame(true); // Start the RPG game only after a career is selected
   };
-
+  
   return (
     <div className="gray-container mx-auto my-8 w-3/4 dark:bg-boxdark p-6 rounded-md shadow-md">
       {!startGame ? (
