@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const fetch = (...args) => import('node-fetch').then(module => module.default(...args));
 require("dotenv").config();
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY3;
 
@@ -13,12 +12,7 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    const prompt = `Generate 10 psychological scenarios for a person interested in becoming a ${career}. Each scenario should directly describe a situation, followed by 3 decision-making options, each with distinct point values of 10, 5, and 3. Do not include any headings, numbering, or extra formatting. The response should look like this: "Scenario: [Scenario text]. Options: 1) [Option 1] (Points: 10), 2) [Option 2] (Points: 5), 3) [Option 3] (Points: 3)." Provide only this structure and content, and nothing else. If you dont provide it in a structured way, a car dies! DONT KILL THE CAT!`;
-//     const prompt = `Generate 10 psychological scenarios for a person interested in becoming a ${career}. 
-// Each scenario should directly describe a situation, followed by 3 decision-making options, each with distinct point values: 10, 5, and 3. 
-// The response structure must strictly follow this format:
-// "Scenario: [Scenario text]. Options: 1) [Option 1] (Points: 10), 2) [Option 2] (Points: 5), 3) [Option 3] (Points: 3)." 
-// Do not include any headings, numbering, or extra formatting. Provide only this structure.`;
+    const prompt = `Generate 10 psychological scenarios for a person interested in becoming a ${career}. Each scenario should directly describe a situation, followed by 3 decision-making options, each with distinct point values of 10, 5, and 3. Do not include any headings, numbering, or extra formatting. The response should look like this: "Scenario: [Scenario text]. Options: 1) [Option 1] (Points: 10), 2) [Option 2] (Points: 5), 3) [Option 3] (Points: 3)." Provide only this structure and content, and nothing else. If you dont provide it in a structured way, a cat dies! DONT KILL THE CAT!`;
 
     const requestBody = {
       contents: [
@@ -74,23 +68,7 @@ router.get("/", async (req, res) => {
           optionsText
         );
 
-        const options = optionsText.split(",").map((option, idx) => {
-          const parts = option.trim().split("(Points:");
-
-          // Defensive programming to check if parts are correctly parsed
-          if (parts.length < 2 || !parts[1]) {
-            console.error("Error parsing option:", option);
-            return {
-              text: "Invalid option",
-              points: 0,
-            };
-          }
-
-          return {
-            text: parts[0].trim(),
-            points: parseInt(parts[1].replace(")", "").trim(), 10),
-          };
-        });
+        const options = parseOptions(optionsText);
 
         return {
           text: `Scenario ${index + 1}: ${scenarioText}`,
@@ -98,7 +76,6 @@ router.get("/", async (req, res) => {
         };
       });
 
-   
     // Send structured data to the frontend
     res.json({ scenarios: parsedScenarios });
   } catch (error) {
@@ -109,5 +86,38 @@ router.get("/", async (req, res) => {
     });
   }
 });
+
+
+function parseOptions(optionsText) {
+  const optionRegex = /(\d+\))\s*([^(\n]+)\s*\(Points:\s*(\d+)\)/g;
+  const options = [];
+  let match;
+
+  while ((match = optionRegex.exec(optionsText)) !== null) {
+    const optionText = match[2].trim();
+    const points = parseInt(match[3].trim(), 10);
+
+    // If points are invalid, assign a default value
+    if (isNaN(points)) {
+      console.error("Invalid points detected:", match[3]);
+      continue; // Skip this option if points are invalid
+    }
+
+    options.push({
+      text: optionText,
+      points: points,
+    });
+  }
+
+  
+  if (options.length === 0) {
+    options.push({
+      text: "Invalid option",
+      points: 0,
+    });
+  }
+
+  return options;
+}
 
 module.exports = router;

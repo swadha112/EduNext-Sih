@@ -56,6 +56,8 @@ const CareerRPG = ({ selectedCareer }) => {
   };
 
   const handleChoice = (points) => {
+    if (isNaN(points)) return; // Ignore invalid points
+
     setCoins(coins + points); // Add points to coins
     setCoinPopup(points); // Show coin popup
     playCoinSound(); // Play coin sound effect
@@ -128,23 +130,31 @@ const CareerRPG = ({ selectedCareer }) => {
 
               <Grid item xs={12}>
                 <Box display="flex" flexDirection="column" alignItems="center">
-                  {scenes[scene].options.map((option, index) => (
-                    <Button
-                      key={index}
-                      onClick={() => handleChoice(option.points)}
-                      variant="contained"
-                      color="primary"
-                      sx={{
-                        marginBottom: 2,
-                        borderRadius: 3,
-                        width: '100%',
-                        maxWidth: '300px',
-                        '&:hover': { backgroundColor: 'primary.dark' },
-                      }}
-                    >
-                      {option.text}
-                    </Button>
-                  ))}
+                  {scenes[scene].options &&
+                  Array.isArray(scenes[scene].options) &&
+                  scenes[scene].options.length > 0 ? (
+                    scenes[scene].options.map((option, index) => (
+                      <Button
+                        key={index}
+                        onClick={() => handleChoice(option.points)}
+                        variant="contained"
+                        color="primary"
+                        sx={{
+                          marginBottom: 2,
+                          borderRadius: 3,
+                          width: '100%',
+                          maxWidth: '300px',
+                          '&:hover': { backgroundColor: 'primary.dark' },
+                        }}
+                      >
+                        {option.text}
+                      </Button>
+                    ))
+                  ) : (
+                    <Typography variant="body1" color="textSecondary">
+                      No options available
+                    </Typography>
+                  )}
                 </Box>
               </Grid>
 
@@ -229,3 +239,4 @@ const CareerRPG = ({ selectedCareer }) => {
 };
 
 export default CareerRPG;
+  
