@@ -1,0 +1,8 @@
+const contract = await ethers.getContractAt("UserRegistry", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+console.log(txReceipt);
+const txReceipt = await ethers.provider.getTransactionReceipt(txHash);
+const txHash = "0xd2b252109d3b84e3a031928c8a318ecc5c90bbdb45add265741e84ce76bd0989";  // Replace with your actual transaction hash
+console.log("Contract deployed to:", userRegistry.address);
+const userRegistry = await UserRegistry.deploy();
+const UserRegistry = await ethers.getContractFactory("UserRegistry");
+const [deployer] = await ethers.getSigners();
