@@ -17,8 +17,6 @@
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
-
-
 }
 
 .points-popup {
@@ -52,6 +50,7 @@
     opacity: 0;
   }
 }
+
 /* Timer clock styling */
 .timer-clock {
   margin-top: 20px;
@@ -59,6 +58,7 @@
   font-weight: bold;
   color: #ff6347; /* Tomato color for the timer */
 }
+
 .back-button {
   margin-top: 20px;
   padding: 10px 20px;
@@ -109,24 +109,23 @@
   height: 50px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* Center the content */
   padding: 0 20px;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .progress-bar {
-  flex: 1;
+  width: 80%; /* Make progress bar take up 80% of the container width */
   height: 8px;
   background-color: #d3d3d3;
   border-radius: 4px;
   position: relative;
-  margin: 0 20px;
 }
 
 .progress-bar-fill {
   height: 100%;
   background-color: #4caf50;
-  width: 0;
+  width: 0; /* This will be dynamically updated */
   transition: width 0.5s;
   border-radius: 4px;
 }
@@ -138,4 +137,3 @@
   height: 40px;
   transition: left 0.5s;
 }
-
