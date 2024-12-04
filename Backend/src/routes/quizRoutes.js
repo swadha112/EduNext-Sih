@@ -50,7 +50,7 @@ const recommendSubjects = (answers) => {
 // Route to generate questions using Gemini API
 router.post("/generate-questions", async (req, res) => {
   const { name, profession, interests, hobbies, experience, dob } = req.body;
-  const apiKey = process.env.GEMINI_API_KEY;  // Load your API key from environment variables
+  const apiKey = process.env.GEMINI_API_KEY3;  // Load your API key from environment variables
 
   const initialPrompt = (
     `Generate five questions based on the following user information:\n` +
