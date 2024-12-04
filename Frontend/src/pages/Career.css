@@ -74,3 +74,68 @@
 .back-button:hover {
   background-color: #0056b3;
 }
+
+/* new css  */
+
+/* Coins */
+.coin-popup {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  animation: pop-up-fade 1s ease-out;
+}
+
+.coin-popup img {
+  width: 24px;
+  height: 24px;
+  margin-left: 5px;
+}
+
+.coin-popup.positive {
+  color: gold;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #e0e0e0;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background-color: #d3d3d3;
+  border-radius: 4px;
+  position: relative;
+  margin: 0 20px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #4caf50;
+  width: 0;
+  transition: width 0.5s;
+  border-radius: 4px;
+}
+
+.bitmoji {
+  position: absolute;
+  top: -20px;
+  width: 40px;
+  height: 40px;
+  transition: left 0.5s;
+}
+
