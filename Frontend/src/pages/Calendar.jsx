@@ -12,6 +12,93 @@ import coinSound from '../images/coin-drop.mp3'; // Add a coin sound file
 import coinIcon from '../images/coin.png'; // Add a coin icon
 import bitmojiIcon from '../images/bitmoji.jpg'; // Add a bitmoji image
 
+const CareerSelection = () => {
+  const [selectedCareer, setSelectedCareer] = useState('');
+  const [customCareer, setCustomCareer] = useState('');
+  const [startGame, setStartGame] = useState(false); // State to start the RPG
+
+  const careers = [
+    'Lawyer',
+    'Doctor',
+    'Engineer',
+    'Teacher',
+    'Psychologist',
+    'Scientist',
+    'Artist',
+    'Entrepreneur',
+    'Musician',
+    'Chef',
+    'Architect',
+    'Pharmacist',
+    'Journalist',
+    'Pilot',
+    'Athlete',
+  ];
+
+  const handleCareerSelection = (career) => {
+    setSelectedCareer(career);
+    setStartGame(true); // Start the RPG game
+  };
+
+  const handleCustomCareerSubmit = () => {
+    if (customCareer.trim()) {
+      setSelectedCareer(customCareer.trim());
+      setStartGame(true);
+    }
+  };
+
+  return (
+    <div className="gray-container mx-auto my-8 w-3/4 dark:bg-boxdark p-6 rounded-md shadow-md">
+      {!startGame ? (
+        <div className="career-selection-container">
+          <h1 className="text-xl mb-2 font-semibold text-gray-800 dark:text-white">
+            Select a Career to Start the Career Simulator
+          </h1>
+          <p className="text-xl mb-2 text-gray-800 dark:text-white">
+            Game Rules: In this Career Simulator, you will be presented with
+            various career-specific scenarios and challenges. For each scenario,
+            you’ll have multiple choices, and each choice will award you a
+            certain number of points based on the decision you make. Your goal
+            is to make the best decisions that align with the career you've
+            chosen. The game features a 15-second timer for each question, so
+            make your choices wisely and quickly! At the end of the game, your
+            total score will determine how well you've navigated your career
+            path.
+          </p>
+          <div className="career-buttons-container grid grid-cols-3 gap-4 mt-4">
+            {careers.map((career) => (
+              <button
+                key={career}
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                onClick={() => handleCareerSelection(career)}
+              >
+                {career}
+              </button>
+            ))}
+          </div>
+          <div className="mt-6">
+            <input
+              type="text"
+              className="border border-gray-300 rounded py-2 px-4 w-full"
+              placeholder="Enter your career of choice"
+              value={customCareer}
+              onChange={(e) => setCustomCareer(e.target.value)}
+            />
+            <button
+              className="bg-green-500 text-white py-2 px-4 rounded mt-2 hover:bg-green-600"
+              onClick={handleCustomCareerSubmit}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      ) : (
+        <CareerRPG selectedCareer={selectedCareer} />
+      )}
+    </div>
+  );
+};
+
 const CareerRPG = ({ selectedCareer }) => {
   const navigate = useNavigate();
   const [scene, setScene] = useState(0); // Current scenario index
@@ -239,4 +326,3 @@ const CareerRPG = ({ selectedCareer }) => {
 };
 
 export default CareerRPG;
-  
