@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    const prompt = `Generate 10 psychological scenarios for a person interested in becoming a ${career}. Each scenario should directly describe a situation, followed by 3 decision-making options, each with distinct point values of 10, 5, and 3. Do not include any headings, numbering, or extra formatting. The response should look like this: "Scenario: [Scenario text]. Options: 1) [Option 1] (Points: 10), 2) [Option 2] (Points: 5), 3) [Option 3] (Points: 3)." Provide only this structure and content, and nothing else.`;
+    const prompt = `Generate 10 psychological scenarios for a person interested in becoming a ${career}. Each scenario should directly describe a situation, followed by 3 decision-making options, each with distinct point values of 10, 5, and 3. Do not include any headings, numbering, or extra formatting. The response should look like this: "Scenario: [Scenario text]. Options: 1) [Option 1] (Points: 10), 2) [Option 2] (Points: 5), 3) [Option 3] (Points: 3)." Provide only this structure and content, and nothing else. If you dont provide it in a structured way, a car dies! DONT KILL THE CAT!`;
 //     const prompt = `Generate 10 psychological scenarios for a person interested in becoming a ${career}. 
 // Each scenario should directly describe a situation, followed by 3 decision-making options, each with distinct point values: 10, 5, and 3. 
 // The response structure must strictly follow this format:
