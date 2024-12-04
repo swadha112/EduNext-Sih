@@ -20,6 +20,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     const publicRoutes = ['/auth/signup', '/auth/signin']; // Define your public routes
+    const protectedRoutes = ['/', '/update']; // Define routes that require user profile fetching
 
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token');
@@ -30,7 +31,8 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         return;
       }
 
-      if (token) {
+      // Only fetch profile if the current path is "/" or "/update"
+      if (token && protectedRoutes.includes(location.pathname)) {
         try {
           const response = await fetch(
             'http://localhost:5050/api/users/profile',
@@ -58,7 +60,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     };
 
     fetchUserProfile();
-  }, [navigate, location.pathname]); // Add location.pathname to check current path
+  }, [navigate, location.pathname]); // Add location.pathname to trigger useEffect on route change
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

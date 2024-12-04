@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import Swal from 'sweetalert2';
+import { UserContext } from '../context/UserContext'; // Import UserContext
 
 const predefinedInterests = [
   'Coding',
@@ -12,6 +13,7 @@ const predefinedInterests = [
 ];
 
 const Settings = () => {
+  const { user, setUser } = useContext(UserContext); // Access the UserContext
   const [userData, setUserData] = useState({
     name: '',
     mobileNo: '',
@@ -74,6 +76,8 @@ const Settings = () => {
     }
 
     try {
+      console.log('Old Context (before update):', user);
+
       const bodyData = {
         name: userData.name,
         mobileNo: userData.mobileNo,
@@ -99,7 +103,12 @@ const Settings = () => {
 
       if (response.ok) {
         // Update local storage
-        localStorage.setItem('user', JSON.stringify(data.data));
+        localStorage.setItem('user', JSON.stringify(data.data)); // TODO: remove later
+
+        setUser(data.data); // Update UserContext with the new user data
+
+        // Print the new context (after update)
+        console.log('New Context (after update):', data.data);
 
         // Show success message
         Swal.fire({

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Logo from '../../images/logo/EduNEXT.png';
+import { UserContext } from '../../context/UserContext'; // Import UserContext
 
 const SignIn = () => {
+  const { setUser } = useContext(UserContext); // Access the setUser function from the context
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -30,21 +32,51 @@ const SignIn = () => {
       const result = await response.json();
 
       if (result.status === 'success') {
-        localStorage.setItem('token', result.token);
-        Swal.fire({
-          icon: 'success',
-          title: 'Login successful',
-          text: result.message,
-          confirmButtonColor: '#007bff',
-        }).then(() => {
-          navigate('/');
-          window.location.reload();
-        });
+        localStorage.setItem('token', result.token); // Store token in localStorage
+
+        // Fetch user profile after login
+        const userProfileResponse = await fetch(
+          'http://localhost:5050/api/users/profile',
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${result.token}`, // Use the token for authentication
+            },
+          },
+        );
+
+        const userProfile = await userProfileResponse.json();
+
+        if (userProfile.status === 'success') {
+          // Set user information in context
+          setUser(userProfile.data); // Update the UserContext with user data
+
+          // Optionally, store the user in localStorage for persistence
+          localStorage.setItem('user', JSON.stringify(userProfile.data));
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Login successful',
+            text: result.message,
+            confirmButtonColor: '#007bff',
+          }).then(() => {
+            navigate('/'); // Navigate to the home page after successful login
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error fetching profile',
+            text: 'Could not fetch user profile data. Please try again later.',
+            confirmButtonColor: '#007bff',
+          });
+        }
       } else {
         Swal.fire({
           icon: 'error',
           title: 'Login failed',
-          text: result.message || 'Invalid email or password. Please try again.',
+          text:
+            result.message || 'Invalid email or password. Please try again.',
           confirmButtonColor: '#007bff',
         });
       }
@@ -76,12 +108,16 @@ const SignIn = () => {
         {/* Right section with the sign-in form */}
         <div className="w-full md:w-1/2 p-8 sm:p-12 bg-white flex justify-center items-center">
           <div className="w-full max-w-md">
-            <h2 className="text-3xl font-bold text-center text-gray-700 dark:text-white mb-8">Sign In</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-700 dark:text-white mb-8">
+              Sign In
+            </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email input */}
               <div>
-                <label className="block text-gray-700 dark:text-white font-medium mb-2">Email</label>
+                <label className="block text-gray-700 dark:text-white font-medium mb-2">
+                  Email
+                </label>
                 <div className="relative">
                   <input
                     type="email"
@@ -95,7 +131,9 @@ const SignIn = () => {
 
               {/* Password input */}
               <div>
-                <label className="block text-gray-700 dark:text-white font-medium mb-2">Password</label>
+                <label className="block text-gray-700 dark:text-white font-medium mb-2">
+                  Password
+                </label>
                 <div className="relative">
                   <input
                     type="password"
@@ -120,7 +158,12 @@ const SignIn = () => {
             <div className="mt-6 text-center">
               <p className="text-gray-600 dark:text-gray-400">
                 Don’t have an account?
-                <Link to="/auth/signup" className="text-blue-600 hover:underline ml-2">Sign Up</Link>
+                <Link
+                  to="/auth/signup"
+                  className="text-blue-600 hover:underline ml-2"
+                >
+                  Sign Up
+                </Link>
               </p>
             </div>
           </div>
