@@ -36,6 +36,42 @@
       "artifacts": [
         "UserRegistry"
       ]
+    },
+    "C:\\Users\\swadh\\OneDrive\\Desktop\\EduNext-Sih\\blockchain\\contracts\\UserHashRegistry.sol": {
+      "lastModificationDate": 1733355529074,
+      "contentHash": "ebbe2971404367a75f08d0add9472de2",
+      "sourceName": "contracts/UserHashRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "UserHashRegistry"
+      ]
     }
   }
 }

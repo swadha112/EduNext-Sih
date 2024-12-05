@@ -11,7 +11,6 @@ const registerUser = async (req, res) => {
   const { name, email, password, mobileNo, dob, gender } = req.body;
 
   try {
-    // Check if the user already exists
     const userExists = await User.findOne({ email });
 
     if (userExists) {
@@ -20,8 +19,7 @@ const registerUser = async (req, res) => {
         .json({ status: "fail", message: "User already exists" });
     }
 
-    // Create a new user
-    const user = await User.create({
+    const user = new User({
       name,
       email,
       password,
@@ -30,14 +28,15 @@ const registerUser = async (req, res) => {
       gender,
     });
 
-    // Generate token
-    const token = generateToken(user._id, user.email);
+    await user.save();
 
-    // Send response
     res.status(201).json({
       status: "success",
       message: "User registered successfully",
-      token,
+      blockchainDetails: {
+        contractAddress: process.env.BLOCKCHAIN_CONTRACT_ADDRESS,
+        transactionHash: user.blockchainTxHash,
+      },
     });
   } catch (error) {
     res.status(500).json({ status: "fail", message: "Error registering user" });
@@ -49,10 +48,8 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Find the user by email
     const user = await User.findOne({ email });
 
-    // Check if user exists and password matches
     if (user && (await user.matchPassword(password))) {
       const token = generateToken(user._id, user.email);
       res.status(200).json({

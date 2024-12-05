@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+const { ethers } = require("ethers");
 
 const notificationSchema = new mongoose.Schema(
   {
@@ -9,14 +11,14 @@ const notificationSchema = new mongoose.Schema(
     },
     isRead: {
       type: Boolean,
-      default: false, // Notification unread by default
+      default: false,
     },
     createdAt: {
       type: Date,
       default: Date.now,
     },
   },
-  { _id: false } // Notifications are embedded, so no separate _id is needed
+  { _id: false }
 );
 
 const userSchema = new mongoose.Schema(
@@ -77,27 +79,60 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    notifications: [notificationSchema], // Array of notification objects
+    notifications: [notificationSchema],
+    blockchainTxHash: {
+      type: String,
+      default: null, // To store the blockchain transaction hash
+    },
   },
   {
     timestamps: true,
   }
 );
 
-// Pre-save middleware to hash the password before saving it
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
-  }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
-
-// Compare entered password with hashed password in database
+// Add matchPassword method to compare password hashes
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const User = mongoose.model("User", userSchema);
+// Hash password before saving
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next(); // Only hash if password is new or modified
 
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+// Blockchain Integration in pre-save hook
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password") && !this.isNew) {
+    return next();
+  }
+
+  const userHash = crypto
+    .createHash("sha256")
+    .update(`${this.email}${this.dob}${this.password}`)
+    .digest("hex");
+
+  const provider = new ethers.providers.JsonRpcProvider(process.env.BLOCKCHAIN_RPC_URL);
+  const signer = new ethers.Wallet(process.env.BLOCKCHAIN_PRIVATE_KEY, provider);
+  const contract = new ethers.Contract(
+    process.env.BLOCKCHAIN_CONTRACT_ADDRESS,
+    ["function storeHash(string _dataHash) public"],
+    signer
+  );
+
+  try {
+    const tx = await contract.storeHash(userHash);
+    const receipt = await tx.wait(); // Wait for the transaction to be confirmed
+    this.blockchainTxHash = receipt.transactionHash; // Store the transaction hash
+    next(); // Proceed with saving the user to MongoDB
+  } catch (error) {
+    console.error("Error storing hash on blockchain:", error);
+    next(error); // Pass the error to the next middleware
+  }
+});
+
+const User = mongoose.model("User", userSchema);
 module.exports = User;

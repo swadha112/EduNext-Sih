@@ -1,31 +1,29 @@
-// scripts/deploy.js
+const hre = require("hardhat");
+
 async function main() {
-    const [deployer] = await ethers.getSigners();
+    // Get the contract factory
+    const UserHashRegistry = await hre.ethers.getContractFactory("UserHashRegistry");
 
-    console.log("Deploying contracts with the account:", deployer.address);
+    // Deploy the contract and get the contract instance
+    const userHashRegistry = await UserHashRegistry.deploy();
+    
+    // Log the userHashRegistry object
+    console.log("userHashRegistry:", userHashRegistry);
 
-    // Get the contract factory for UserRegistry
-    const UserRegistry = await ethers.getContractFactory("UserRegistry");
-
-    console.log("Deploying contract...");
-    const userRegistry = await UserRegistry.deploy();
-
-    console.log("Contract deployment initiated...");
-
-    // Ensure the deployment was successful and log the contract instance
-    if (userRegistry && userRegistry.deployTransaction) {
-        console.log("Transaction Hash:", userRegistry.deployTransaction.hash);
-
-        // Wait for the transaction to be mined and get the receipt
-        const txReceipt = await userRegistry.deployTransaction.wait();
-        console.log("Contract deployed successfully!");
-        console.log("Contract address:", userRegistry.address);  // Log the deployed address
-        console.log("Transaction mined in block:", txReceipt.blockNumber);  // Show the block number the contract was mined in
-    } else {
-        console.error("Deployment failed, no transaction hash found.");
+    // Ensure the transaction is returned
+    if (!userHashRegistry.deployTransaction) {
+        throw new Error("Deployment transaction not found");
     }
+
+    // Wait for the transaction to be mined (get the receipt)
+    const txReceipt = await userHashRegistry.deployTransaction.wait();
+
+    // Log the transaction receipt and contract address
+    console.log("Transaction Receipt:", txReceipt);
+    console.log("Contract deployed to:", userHashRegistry.address);
 }
 
+// Run the script
 main()
     .then(() => process.exit(0))
     .catch((error) => {
