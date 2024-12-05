@@ -4,6 +4,7 @@ import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
 import LogoIcon from '../../images/logo/EduNEXT.png';
 import DarkModeSwitcher from './DarkModeSwitcher';
+import DropdownCoin from './DropdownCoin';
 
 const Header = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation(); // Get the current location object
@@ -16,32 +17,32 @@ const Header = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
-      <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
-  {/* Hamburger Toggle Button */}
-  <button
-    aria-controls="sidebar"
-    onClick={(e) => {
-      e.stopPropagation();
-      setSidebarOpen(!sidebarOpen);
-    }}
-    className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
-  >
-    <span className="relative block h-5.5 w-5.5 cursor-pointer">
-      {/* Hamburger icon */}
-      {/* (your hamburger icon code remains here) */}
-    </span>
-  </button>
-  {/* Hamburger Toggle Button */}
+        <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
+          {/* Hamburger Toggle Button */}
+          <button
+            aria-controls="sidebar"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSidebarOpen(!sidebarOpen);
+            }}
+            className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
+          >
+            <span className="relative block h-5.5 w-5.5 cursor-pointer">
+              {/* Hamburger icon */}
+              {/* (your hamburger icon code remains here) */}
+            </span>
+          </button>
+          {/* Hamburger Toggle Button */}
 
-  {/* Responsive Logo */}
-  <Link className="block flex-shrink-0 lg:hidden" to="/">
-    <img
-      src={LogoIcon}
-      alt="EduNext Logo"
-      className="h-auto w-40 sm:w-48 md:w-56 lg:w-64 xl:w-72" // Adjust logo size based on screen size
-    />
-  </Link>
-</div>
+          {/* Responsive Logo */}
+          <Link className="block flex-shrink-0 lg:hidden" to="/">
+            <img
+              src={LogoIcon}
+              alt="EduNext Logo"
+              className="h-auto w-40 sm:w-48 md:w-56 lg:w-64 xl:w-72" // Adjust logo size based on screen size
+            />
+          </Link>
+        </div>
 
         <div className="hidden sm:block">
           <form action="https://formbold.com/s/unique_form_id" method="POST">
@@ -62,8 +63,11 @@ const Header = ({ sidebarOpen, setSidebarOpen }) => {
             <DarkModeSwitcher />
             {/* Dark Mode Toggler */}
 
+            <DropdownCoin/>
+
             {/* Notification Menu Area */}
             <DropdownNotification />
+
             {/* Notification Menu Area */}
 
             {/* Chat Notification Area */}
