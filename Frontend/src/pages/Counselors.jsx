@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Container,
   TextField,
@@ -16,6 +16,7 @@ import {
   Grid,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { UserContext } from '../context/UserContext';
 
 const Counselors = () => {
   const theme = useTheme(); // Access the current theme (light or dark)
@@ -24,6 +25,10 @@ const Counselors = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showAffiliated, setShowAffiliated] = useState(false); // Track if the search button has been clicked
+  const { user } = useContext(UserContext);
+
+  // Get user data from context or localStorage as a fallback
+  const userData = user || JSON.parse(localStorage.getItem('user')) || {};
 
   // Dummy list for counselors affiliated with us
   const affiliatedCounselors = [
@@ -68,10 +73,10 @@ const Counselors = () => {
   };
 
   const handleConnect = async (phone) => {
-    const user = JSON.parse(localStorage.getItem('user')); // Assuming the user info is stored as a JSON object in localStorage
-    const clientName = user?.name || 'Aahan Shetye'; // Default to 'Aahan Shetye' if user.name is not available
-    const email = user?.email || 'atharvaupare5@gmail.com'; // Default email
-    const bio = user?.bio || 'I am a 3rd year engineering student'; // Default bio
+    const clientName = userData?.name || 'Aahan Shetye'; // Default to 'Aahan Shetye' if user.name is not available
+    const email = userData?.email || 'atharvaupare5@gmail.com'; // Default email
+    const bio = userData?.bio || 'I am a 3rd year engineering student'; // Default bio
+    console.log(clientName, email, bio);
 
     try {
       const response = await fetch(

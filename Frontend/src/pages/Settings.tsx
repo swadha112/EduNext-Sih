@@ -30,27 +30,33 @@ const Settings = () => {
   const [selectedInterests, setSelectedInterests] = useState([]);
 
   useEffect(() => {
-    // Fetch user data from local storage
-    const user = JSON.parse(localStorage.getItem('user'));
+    // Get user data from UserContext or localStorage if context is not available
+    const currentUser = user || JSON.parse(localStorage.getItem('user'));
 
-    if (user) {
+    if (currentUser) {
       setUserData({
-        name: user.name || '',
-        mobileNo: user.mobileNo || '',
-        email: user.email || '',
-        dob: user.dob ? new Date(user.dob).toISOString().split('T')[0] : '',
-        gender: user.gender || '',
-        category: user.category || 'UG',
-        bio: user.bio || '',
-        interests: user.interests ? user.interests.split(', ') : [], // Convert to array
-        grade: user.grade || '',
-        stream: user.stream || '',
+        name: currentUser.name || '',
+        mobileNo: currentUser.mobileNo || '',
+        email: currentUser.email || '',
+        dob: currentUser.dob
+          ? new Date(currentUser.dob).toISOString().split('T')[0]
+          : '',
+        gender: currentUser.gender || '',
+        category: currentUser.category || 'UG',
+        bio: currentUser.bio || '',
+        interests: currentUser.interests
+          ? currentUser.interests.split(', ')
+          : [], // Convert to array
+        grade: currentUser.grade || '',
+        stream: currentUser.stream || '',
       });
 
       // Pre-select user's interests
-      setSelectedInterests(user.interests ? user.interests.split(', ') : []);
+      setSelectedInterests(
+        currentUser.interests ? currentUser.interests.split(', ') : [],
+      );
     }
-  }, []);
+  }, [user]); // Depend on user to update when it changes
 
   const handleInterestChange = (interest) => {
     // Toggle selected interest
@@ -136,7 +142,6 @@ const Settings = () => {
       });
     }
   };
-
   return (
     <>
       <div className="mx-auto max-w-270">
