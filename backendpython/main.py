@@ -13,8 +13,10 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from dotenv import load_dotenv
 
 # Initialize FastAPI app
+load_dotenv()
 app = FastAPI()
 
 # CORS middleware for frontend communication
@@ -27,8 +29,7 @@ app.add_middleware(
 )
 
 # Set the Google API key in the environment
-if "GOOGLE_API_KEY" not in os.environ:
-    os.environ["GOOGLE_API_KEY"] = "AIzaSyDCMWFGzDZh06-i-VJ23iOc-1QPyhTXAVU"
+google_api_key = os.getenv("GOOGLE_API_KEY")
 
 # Initialize the Google Generative AI with the specified model
 llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
