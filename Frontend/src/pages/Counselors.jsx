@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Container,
   TextField,
@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { UserContext } from '../context/UserContext';
 import { motion } from 'framer-motion'; // Animation library
 
 const Counselors = () => {
@@ -26,6 +27,10 @@ const Counselors = () => {
   const [error, setError] = useState(null);
   const [showAffiliated, setShowAffiliated] = useState(false);
   const [points, setPoints] = useState(0);
+  const { user } = useContext(UserContext);
+
+  // Get user data from context or localStorage as a fallback
+  const userData = user || JSON.parse(localStorage.getItem('user')) || {};
 
   // Dummy list for counselors affiliated with us
   const affiliatedCounselors = [
@@ -66,8 +71,40 @@ const Counselors = () => {
   };
 
   const handleConnect = async (phone) => {
+    const clientName = userData?.name || 'Aahan Shetye'; // Default to 'Aahan Shetye' if user.name is not available
+    const email = userData?.email || 'atharvaupare5@gmail.com'; // Default email
+    const bio = userData?.bio || 'I am a 3rd year engineering student'; // Default bio
+    console.log(clientName, email, bio);
+
     setPoints((prev) => prev + 50); // Award points for connecting with counselor
     alert(`Connecting with counselor at ${phone}!`);
+
+
+    try {
+      const response = await fetch(
+        'http://localhost:5050/api/whatsapp/send-whatsapp',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: phone,
+            clientName,
+            email,
+            bio,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to send WhatsApp message');
+      }
+
+      console.log('Message sent successfully');
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   };
 
   return (

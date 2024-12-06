@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -14,14 +14,22 @@ import Quiz from '../../images/cards/quiz.png';
 import Interview from '../../images/cards/interview.png';
 import Workshop from '../../images/cards/workshop.png';
 import Alumini from '../../images/cards/alumini.png';
+import { UserContext } from '../../context/UserContext';
 
 const ECommerce = () => {
   const [typedText, setTypedText] = useState('');
   const [visible, setVisible] = useState(false); // State to detect if the section is visible for animation
-  const fullText = "EduNext";
+  const fullText = 'EduNext';
   const typingSpeed = 150;
   const erasingSpeed = 100;
   const pauseDuration = 1000;
+
+  // UserContext Hook
+  const { userContext } = useContext(UserContext); // Destructure user from context
+
+  // Check localStorage first, then fall back to context
+  const userFromLocalStorage = JSON.parse(localStorage.getItem('user')) || {};
+  const user = userFromLocalStorage || userContext;
 
   // Typing effect logic
   useEffect(() => {
@@ -89,9 +97,14 @@ const ECommerce = () => {
     ],
   };
 
-  const user = JSON.parse(localStorage.getItem('user')) || {};
-
-  const excludedFields = ['cv', 'marksheet', '__v', '_id'];
+  const excludedFields = [
+    'cv',
+    'marksheet',
+    '__v',
+    '_id',
+    'notifications',
+    'blockchainTxHash',
+  ];
   const totalFields = Object.keys(user).filter(
     (field) => !excludedFields.includes(field),
   ).length;
@@ -99,7 +112,8 @@ const ECommerce = () => {
     (field) =>
       !excludedFields.includes(field) && user[field] && user[field] !== '',
   ).length;
-  const profileCompletion = totalFields > 0 ? ((filledFields / totalFields) * 100).toFixed(2) : 0;
+  const profileCompletion =
+    totalFields > 0 ? ((filledFields / totalFields) * 100).toFixed(2) : 0;
 
   const categories = [
     'Technology',
@@ -119,7 +133,7 @@ const ECommerce = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     const trendsSection = document.querySelector('#job-trends-section');
@@ -133,7 +147,8 @@ const ECommerce = () => {
       {/* Welcome Message with Fade In Animation */}
       <div className="text-center py-10 bg-gray-50 dark:bg-gray-900 animate-fade-in">
         <h1 className="text-4xl font-bold mb-2">
-          Welcome to{' '} <span className="text-black dark:text-lemon-green">{typedText}</span>
+          Welcome to{' '}
+          <span className="text-black dark:text-lemon-green">{typedText}</span>
           <span className="animate-blink">|</span>
         </h1>
       </div>
@@ -141,8 +156,13 @@ const ECommerce = () => {
       {/* CSS Animations */}
       <style jsx>{`
         @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0;
+          }
         }
         .animate-blink {
           animation: blink 0.7s infinite;
@@ -195,8 +215,14 @@ const ECommerce = () => {
         }
 
         @keyframes bounce-delay {
-          0% { opacity: 0; transform: scale(0.5); }
-          100% { opacity: 1; transform: scale(1); }
+          0% {
+            opacity: 0;
+            transform: scale(0.5);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
         }
       `}</style>
 
@@ -224,7 +250,9 @@ const ECommerce = () => {
 
       {/* Restored Headings */}
       <div className="text-center py-10 bg-gray-50">
-        <h1 className="text-4xl font-bold mb-2">Your Journey, Our Expertise.</h1>
+        <h1 className="text-4xl font-bold mb-2">
+          Your Journey, Our Expertise.
+        </h1>
       </div>
 
       {/* Grid of Cards */}
@@ -265,8 +293,8 @@ const ECommerce = () => {
           />
         </CardDataStats>
       </div>
- {/* Tagline */}
- <div className="text-center py-5 bg-gray-50">
+      {/* Tagline */}
+      <div className="text-center py-5 bg-gray-50">
         <p className="text-lg text-gray-600 mb-2">
           Count on our expertise to make the right choices for your education
           and career.
@@ -276,7 +304,7 @@ const ECommerce = () => {
         <h1 className="text-4xl font-bold mb-2">
           Career Services Tailored for you.
         </h1>
-        </div>
+      </div>
 
       {/* Horizontal carousel with react-slick */}
       <div className="my-5 px-4 animate-slide-up">
@@ -386,13 +414,17 @@ const ECommerce = () => {
               </CardDataStats>
             </NavLink>
           </div>
-
         </Slider>
       </div>
 
       {/* Explore Job Trends Section with Delayed Bounce-in Animation */}
-      <div id="job-trends-section" className="text-center py-10 bg-gray-50 animate-slide-up">
-        <h1 className="text-4xl font-bold mb-2">Wondering about your future?</h1>
+      <div
+        id="job-trends-section"
+        className="text-center py-10 bg-gray-50 animate-slide-up"
+      >
+        <h1 className="text-4xl font-bold mb-2">
+          Wondering about your future?
+        </h1>
         <div className="flex flex-wrap justify-center gap-4 my-8">
           {categories.map((category, index) => (
             <button
@@ -414,7 +446,8 @@ const ECommerce = () => {
           </NavLink>
         </div>
         <p className="text-lg text-gray-600 mb-6">
-          Take the first step to your future by choosing a field of interest and discovering the trends in the job market.
+          Take the first step to your future by choosing a field of interest and
+          discovering the trends in the job market.
         </p>
       </div>
     </>

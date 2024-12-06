@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import UserOne from '../../images/user/user-01.png';
+import { UserContext } from '../../context/UserContext';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userName, setUserName] = useState('Swadha Khatod'); // Default name
+  const { user, setUser } = useContext(UserContext);
 
   const handleLogout = () => {
     // Remove user and token from local storage
@@ -14,21 +16,26 @@ const DropdownUser = () => {
 
     // Update user state in context to null
 
-
     // Redirect to the sign-in page
     window.location.href = '/auth/signin';
   };
 
   useEffect(() => {
-    // Check if user data exists in local storage
-    const user = localStorage.getItem('user');
+    // Check if user data exists in context
     if (user) {
-      const parsedUser = JSON.parse(user);
-      if (parsedUser.name) {
-        setUserName(parsedUser.name); // Update state with the user's name from local storage
+      console.log(user.name);
+      setUserName(user.name); // Update state with user's name from context
+    } else {
+      // If user data is not found in context, check localStorage
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        if (parsedUser.name) {
+          setUserName(parsedUser.name); // Update state with the user's name from local storage
+        }
       }
     }
-  }, []);
+  }, [user]); // Add user as a dependency to re-run the effect when user context changes
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">

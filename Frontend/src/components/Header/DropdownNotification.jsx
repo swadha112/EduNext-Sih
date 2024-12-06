@@ -1,18 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
+import { UserContext } from '../../context/UserContext'; // Import UserContext
 
 const DropdownNotification = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifying, setNotifying] = useState(true);
   const [notifications, setNotifications] = useState([]);
+  const { user, setUser } = useContext(UserContext);
 
-  // Function to fetch notifications from localStorage
   const fetchNotifications = () => {
     const storedUser = localStorage.getItem('user'); // Fetch user data from localStorage
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      setNotifications(user.notifications || []); // Set notifications if available
+
+    if (user) {
+      console.log(user);
+      setNotifications(user.notifications || []); // Set notifications from context if available
+    } else if (storedUser) {
+      const parsedUser = JSON.parse(storedUser); // Parse the user data from localStorage
+      setNotifications(parsedUser.notifications || []); // Set notifications from localStorage if available
+    } else {
+      setNotifications([]); // Set an empty array if no notifications are available
     }
   };
 
