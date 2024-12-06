@@ -52,7 +52,7 @@ const UploadVideo = () => {
     });
 
     try {
-      const response = await fetch('http://localhost:8001/process_video/', {
+      const response = await fetch('http://localhost:8000/process_video/', {
         method: 'POST',
         body: formData,
       });
@@ -62,6 +62,7 @@ const UploadVideo = () => {
       }
 
       const audioData = await response.json();
+      console.log(audioData);
 
       // Simulate hardcoded video analysis data
       const videoAnalysis = {
