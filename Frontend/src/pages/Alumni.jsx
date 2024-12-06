@@ -15,15 +15,21 @@ import {
   TableRow,
   Paper,
   Link,
+  Box,
+  Snackbar,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import SchoolIcon from '@mui/icons-material/School';
 
 const Alumni = () => {
-  const theme = useTheme(); // Access the current theme (light or dark)
+  const theme = useTheme();
   const [universityName, setUniversityName] = useState('');
   const [alumniData, setAlumniData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleInputChange = (e) => {
     setUniversityName(e.target.value);
@@ -33,6 +39,8 @@ const Alumni = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setSuccessMessage('');
+    setAlumniData([]);
     try {
       const response = await fetch('http://localhost:5050/api/alumni', {
         method: 'POST',
@@ -48,6 +56,8 @@ const Alumni = () => {
 
       const data = await response.json();
       setAlumniData(data);
+      setSuccessMessage('Awesome! We found your alumni!');
+      setOpenSnackbar(true);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -56,23 +66,35 @@ const Alumni = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      {/* Title with custom dark grey color, reduced left padding and increased font size */}
+    <Container maxWidth="lg" sx={{ py: 4, backgroundColor: '#e3f2fd', borderRadius: 3 }}>
       <Typography
         variant="h3"
-        align="left"
+        align="center"
         gutterBottom
         sx={{
           fontWeight: 'bold',
-          color: '#4A4A4A', // Dark grey color
-          ml: 1, // Reduced left padding
-          fontSize: '2.5rem', // Increased font size
+          color: '#0277bd',
+          fontSize: '2.5rem',
+          mb: 4,
         }}
       >
-        Alumni Information
+        🌟 Alumni Quest: Find Your Mentors! 🌟
       </Typography>
 
-      <Grid container spacing={3} justifyContent="flex-start">
+      <Typography
+        variant="h6"
+        align="center"
+        sx={{
+          color: '#01579b',
+          fontSize: '1.2rem',
+          mb: 5,
+          fontWeight: 'bold',
+        }}
+      >
+        🎓 Start your quest by entering your university name to connect with alumni!
+      </Typography>
+
+      <Grid container spacing={3} justifyContent="center">
         <Grid item xs={12} sm={8} md={6}>
           <TextField
             fullWidth
@@ -84,20 +106,21 @@ const Alumni = () => {
             sx={{
               mb: 2,
               '& .MuiOutlinedInput-root': {
-                height: '56px', // Ensuring the input height matches the button height
-                backgroundColor: theme.palette.mode === 'dark' ? '#424242' : '#e3f2fd', // Custom background for dark mode
-                borderRadius: '8px', // Rounded corners for search box
+                height: '56px',
+                backgroundColor: theme.palette.mode === 'dark' ? '#424242' : '#b3e5fc',
+                borderRadius: '12px',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               },
               '& .MuiInputLabel-root': {
-                color: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Custom label color for dark/light mode
+                color: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5',
               },
               '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5', // Border color based on theme
+                borderColor: theme.palette.mode === 'dark' ? '#90caf9' : '#1e88e5',
               },
               '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.mode === 'dark' ? '#42a5f5' : '#1565c0', // Focus border color for dark/light mode
+                borderColor: theme.palette.mode === 'dark' ? '#42a5f5' : '#1565c0',
               },
-              color: theme.palette.text.primary, // Adjust text color based on the theme
+              color: theme.palette.text.primary,
             }}
           />
         </Grid>
@@ -109,47 +132,78 @@ const Alumni = () => {
             disabled={loading || !universityName}
             startIcon={loading && <CircularProgress size={20} />}
             sx={{
-              height: '56px', // Matching the button height with the input field
-              fontSize: '1rem', // Ensuring font size is clear and readable
-              backgroundColor: theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5', // Button background based on theme
-              color: theme.palette.mode === 'dark' ? '#fff' : '#fff', // Button text color based on theme
+              height: '56px',
+              fontSize: '1.2rem',
+              backgroundColor: '#00bcd4',
+              color: '#fff',
               '&:hover': {
-                backgroundColor: theme.palette.mode === 'dark' ? '#303f9f' : '#303f9f', // Hover state background color
+                backgroundColor: '#00838f',
+              },
+              '&:active': {
+                transform: 'scale(0.98)',
               },
             }}
           >
-            {loading ? 'Searching...' : 'Search'}
+            {loading ? 'Searching...' : 'Start the Quest!'}
           </Button>
         </Grid>
       </Grid>
 
       {error && (
-        <Alert severity="error" sx={{ mt: 3, mb: 3 }}>
+        <Alert severity="error" sx={{ mt: 3, mb: 3, fontWeight: 'bold', backgroundColor: '#ffebee' }}>
           {error}
         </Alert>
       )}
 
-      {/* Display results in a table */}
+      {/* Display success message in a Snackbar */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+        message={successMessage}
+        sx={{ backgroundColor: '#388e3c', color: '#fff' }}
+      />
+
+      {/* Show Alumni Data with Fun Animations */}
       {alumniData.length > 0 && (
-        <TableContainer component={Paper} sx={{ mt: 5, borderRadius: 3, p: 3 }}>
-          <Table sx={{ minWidth: 650 }}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            mt: 5,
+            borderRadius: 3,
+            p: 3,
+            backgroundColor: '#e1f5fe',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          }}
+        >
+          <Typography variant="h5" align="center" sx={{ color: '#0288d1', fontWeight: 'bold', mb: 3 }}>
+            🏆 Alumni Found! Here are some amazing alumni to connect with:
+          </Typography>
+          <Table sx={{ minWidth: 650 }} aria-label="alumni table">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem', padding: '16px' }}>#</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem', padding: '16px' }}>Name</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem', padding: '16px' }}>University</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem', padding: '16px' }}>LinkedIn Profile</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem' }}>#</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem' }}>Name</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem' }}>University</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.4rem' }}>LinkedIn</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {alumniData.map((alumni, index) => (
-                <TableRow key={index}>
-                  <TableCell sx={{ fontSize: '1.2rem', padding: '16px' }}>{index + 1}</TableCell>
-                  <TableCell sx={{ fontSize: '1.2rem', padding: '16px' }}>{alumni.name}</TableCell>
-                  <TableCell sx={{ fontSize: '1.2rem', padding: '16px' }}>{alumni.university_name}</TableCell>
-                  <TableCell sx={{ fontSize: '1.2rem', padding: '16px' }}>
+                <TableRow
+                  key={index}
+                  sx={{
+                    '&:nth-of-type(even)': { backgroundColor: '#f1f8e9' },
+                    '&:nth-of-type(odd)': { backgroundColor: '#ffffff' },
+                    '&:hover': { backgroundColor: '#e0f7fa' },
+                  }}
+                >
+                  <TableCell sx={{ fontSize: '1.2rem' }}>{index + 1}</TableCell>
+                  <TableCell sx={{ fontSize: '1.2rem' }}>{alumni.name}</TableCell>
+                  <TableCell sx={{ fontSize: '1.2rem' }}>{alumni.university_name}</TableCell>
+                  <TableCell sx={{ fontSize: '1.2rem' }}>
                     <Link href={alumni.linkedin_link} target="_blank" rel="noopener noreferrer">
-                      LinkedIn Profile
+                      Connect on LinkedIn
                     </Link>
                   </TableCell>
                 </TableRow>
