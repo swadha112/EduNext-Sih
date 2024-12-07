@@ -2,6 +2,8 @@
   position: relative;
   padding: 20px;
   text-align: center;
+  min-height: 600px;  /* Adjust this value to make the container taller */
+
 }
 
 .choice-button {
@@ -99,28 +101,29 @@
 .coin-popup.positive {
   color: gold;
 }
-
-/* Progress Bar */
+/* Adjust progress bar container */
 .progress-bar-container {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #e0e0e0;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Center the content */
-  padding: 0 20px;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  text-align: center;
+  position: relative;
 }
 
 .progress-bar {
-  width: 80%; /* Make progress bar take up 80% of the container width */
-  height: 8px;
-  background-color: #d3d3d3;
-  border-radius: 4px;
+  width: 100%;
+  height: 25px;
+  border-radius: 5px;
+  background-color: #e0e0e0;
+  border: none;
   position: relative;
 }
+
+/* Styling for Lottie animation container */
+.lottie-container {
+  max-width: 300px;
+  margin: 20px auto;
+}
+
+
 
 .progress-bar-fill {
   height: 100%;
@@ -128,12 +131,33 @@
   width: 0; /* This will be dynamically updated */
   transition: width 0.5s;
   border-radius: 4px;
+  position: relative;
 }
 
-.bitmoji {
+/* .bitmoji {
   position: absolute;
   top: -20px;
   width: 40px;
   height: 40px;
   transition: left 0.5s;
 }
+ */
+
+/* Lottie Animation Container */
+.lottie-container {
+  position: absolute;
+  top: 10%; /* Adjusted to be closer to the top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px; /* Increased size */
+  height: 6000px; /* Increased size */
+  z-index: 10; /* Ensure it's on top of other elements */
+}
+
+.animation-container {
+  margin-bottom: 20px; /* Adjust this value to create space between animation and progress bar */
+  text-align: center;
+}
+
+
+

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Career.css'; // Optional CSS for styling
 import { useNavigate } from 'react-router-dom';
+import Lottie from 'react-lottie';
+import animationData from '../assets/thinking.json'; // Ensure you have this file
 
 const CareerSelection = () => {
   const [selectedCareer, setSelectedCareer] = useState('');
@@ -16,7 +18,7 @@ const CareerSelection = () => {
     setSelectedCareer(career);
     setStartGame(true); // Start the RPG game only after a career is selected
   };
-  
+
   return (
     <div className="gray-container mx-auto my-8 w-3/4 dark:bg-boxdark p-6 rounded-md shadow-md">
       {!startGame ? (
@@ -145,6 +147,16 @@ const CareerRPG = ({ selectedCareer }) => {
 
   const currentScene = splitOptions(scenes[scene].text);
 
+  // Lottie animation options
+  const lottieOptions = {
+    animationData: animationData,
+    loop: true,
+    autoplay: true, // Starts the animation when loaded
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
+
   return (
     <div className="rpg-game">
       {!gameOver ? (
@@ -174,6 +186,15 @@ const CareerRPG = ({ selectedCareer }) => {
           <div className="timer-clock">
             <p>{timer} seconds left</p>
           </div>
+
+          {/* Add the Lottie animation */}
+          <div className="lottie-container">
+            <Lottie
+              options={lottieOptions}
+              height={200}  // Adjust based on need
+              width={200}   // Adjust based on need
+            />
+          </div>
         </div>
       ) : (
         <div className="game-over">
@@ -181,7 +202,7 @@ const CareerRPG = ({ selectedCareer }) => {
           <p>Your final score is: {score}</p>
           <p>{getGrade()}</p>
           <button onClick={() => navigate('/')} className="back-button">
-            Back to Dashbboard
+            Back to Dashboard
           </button>
         </div>
       )}
