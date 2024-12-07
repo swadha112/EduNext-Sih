@@ -5,10 +5,8 @@ import Swal from 'sweetalert2';
 
 const UploadVideo = () => {
   const [videoFile, setVideoFile] = useState(null);
-  const [analysis, setAnalysis] = useState(null);
-
-  const optimalArticulationRate = 4.5; // Good range could be around 4.0 - 5.0 syllables/second
-  const optimalSpeechRate = 150; // Good range could be around 120-160 words/minute
+  const [audioAnalysis, setAudioAnalysis] = useState(null); // Separate state for audio analysis
+  const [videoAnalysis, setVideoAnalysis] = useState(null); // Separate state for video analysis
 
   // Callback when file is dropped
   const onDrop = useCallback((acceptedFiles) => {
@@ -61,23 +59,15 @@ const UploadVideo = () => {
         throw new Error('Failed to upload video');
       }
 
-      const audioData = await response.json();
-      console.log(audioData);
+      const responseData = await response.json();
+      console.log('Response Data:', responseData); // Log the response data
 
-      // Simulate hardcoded video analysis data
-      const videoAnalysis = {
-        Sentiment: 'Positive',
-        'Facial Expression Feedback':
-          'Your expressions were positive and engaging. Good job maintaining eye contact!',
-        'Body Language': 'Your body language was open and welcoming.',
-      };
+      // Store audio and video analysis separately
+      const audio = responseData.audio_analysis;
+      const video = responseData.video_analysis;
 
-      const combinedAnalysis = {
-        ...videoAnalysis, // Add the hardcoded video data to the response
-        ...audioData,
-      };
-
-      setAnalysis(combinedAnalysis); // Set the combined audio and video analysis
+      setAudioAnalysis(audio); // Store audio analysis
+      setVideoAnalysis(video); // Store video analysis
 
       // Close the loader and show success with auto close in 1 second
       Swal.fire({
@@ -98,20 +88,6 @@ const UploadVideo = () => {
         text: 'Failed to upload video. Please try again.',
       });
     }
-  };
-
-  // Determine emoji based on optimal articulation rate
-  const getArticulationRateEmoji = (rate) => {
-    if (rate >= 4.0 && rate <= 5.0) return '✅';
-    if ((rate > 3.0 && rate < 4.0) || (rate > 5.0 && rate < 6.0)) return '⚠️';
-    return '❌';
-  };
-
-  // Determine emoji based on optimal speech rate
-  const getSpeechRateEmoji = (rate) => {
-    if (rate >= 120 && rate <= 160) return '✅';
-    if ((rate >= 100 && rate < 120) || (rate > 160 && rate <= 180)) return '⚠️';
-    return '❌';
   };
 
   return (
@@ -157,46 +133,30 @@ const UploadVideo = () => {
         Upload and Analyze
       </Button>
 
-      {analysis && (
+      {/* Display Audio Analysis */}
+      {audioAnalysis && (
+        <Box>
+          <Typography variant="h3" gutterBottom>
+            Todo: Beautiy this output
+          </Typography>{' '}
+          <Typography variant="h5" gutterBottom>
+            Audio Analysis Results
+          </Typography>
+          <Box sx={{ marginBottom: '20px' }}>
+            <Typography>{audioAnalysis}</Typography>
+          </Box>
+        </Box>
+      )}
+
+      {/* Display Video Analysis */}
+      {videoAnalysis && (
         <Box>
           <Typography variant="h5" gutterBottom>
-            Analysis Results
+            Video Analysis Results
           </Typography>
-
-          <Typography>
-            <strong>Transcription:</strong> {analysis['Transcription']}
-          </Typography>
-          <Typography>
-            <strong>Communication Feedback:</strong>{' '}
-            {analysis['Communication Feedback']}
-          </Typography>
-
-          <Typography>
-            <strong>Articulation Rate (syllables per second):</strong>{' '}
-            {analysis['Articulation Rate (syllables per second)']}{' '}
-            {getArticulationRateEmoji(
-              analysis['Articulation Rate (syllables per second)'],
-            )}
-          </Typography>
-
-          <Typography>
-            <strong>Speech Rate (words per second):</strong>{' '}
-            {analysis['Speech Rate (words per second)']}{' '}
-            {getSpeechRateEmoji(analysis['Speech Rate (words per second)'])}
-          </Typography>
-
-          <Typography>
-            <strong>Sentiment:</strong> {analysis['Sentiment']}
-          </Typography>
-
-          <Typography>
-            <strong>Facial Expression Feedback:</strong>{' '}
-            {analysis['Facial Expression Feedback']}
-          </Typography>
-
-          <Typography>
-            <strong>Body Language:</strong> {analysis['Body Language']}
-          </Typography>
+          <Box sx={{ marginBottom: '20px' }}>
+            <Typography>{videoAnalysis}</Typography>
+          </Box>
         </Box>
       )}
     </Container>

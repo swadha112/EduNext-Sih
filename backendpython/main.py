@@ -357,11 +357,27 @@ def extract_audio_from_video(video_path):
     video_clip.audio.write_audiofile(audio_path, codec='pcm_s16le')
     return audio_path
 
-def analyze_frames(frame_dir):
-    import cv2
-    import numpy as np
-    import math
+import os
+import cv2
+import numpy as np
+import math
 
+import os
+import cv2
+import numpy as np
+import math
+
+import os
+import cv2
+import numpy as np
+import math
+
+import os
+import cv2
+import numpy as np
+import math
+
+def analyze_frames(frame_dir):
     # Comprehensive interview performance metrics
     performance_metrics = {
         'face_visibility': {'count': 0, 'consistency': 0},
@@ -433,14 +449,20 @@ def analyze_frames(frame_dir):
         except Exception as e:
             print(f"Frame analysis error: {e}")
     
+    # Normalize and weight different metrics
+    def normalize_percentage(value, max_value):
+        return min(max((value / max_value) * 100, 0), 100) if max_value > 0 else 0  # Protect against zero division
+
+    def normalize_stability_score(stability_score):
+        return min(max(stability_score, 0), 100)  # Stability score cannot be negative
+
     # Performance scoring
     def calculate_performance_score():
-        # Normalize and weight different metrics
-        face_visibility = min((performance_metrics['face_visibility']['count'] / frame_count) * 100, 100)
-        stability_score = performance_metrics['movement_analysis']['stability_score']
-        camera_contact = min((performance_metrics['confidence_indicators']['direct_camera_contact'] / frame_count) * 100, 100)
+        face_visibility = normalize_percentage(performance_metrics['face_visibility']['count'], frame_count)
+        stability_score = normalize_stability_score(performance_metrics['movement_analysis']['stability_score'])
+        camera_contact = normalize_percentage(performance_metrics['confidence_indicators']['direct_camera_contact'], frame_count)
         
-        # Weighted performance calculation
+        # Weighted performance calculation with additional tiers
         performance_score = (
             (face_visibility * 0.3) + 
             (stability_score * 0.4) + 
@@ -451,29 +473,60 @@ def analyze_frames(frame_dir):
 
     # Detailed performance interpretation
     performance_score = calculate_performance_score()
-    
+
     def generate_detailed_feedback():
         feedback = "Interview Performance Insights:\n\n"
         
         # Movement Analysis
-        if performance_metrics['movement_analysis']['movement_types']['body_shift'] > 5:
-            feedback += "- Excessive body movement detected. Practice sitting still and maintaining a composed posture.\n"
+        body_shift = performance_metrics['movement_analysis']['movement_types']['body_shift']
+        head_rotation = performance_metrics['movement_analysis']['movement_types']['head_rotation']
         
-        if performance_metrics['movement_analysis']['movement_types']['head_rotation'] > 3:
-            feedback += "- Noticeable head movements observed. Try to minimize unnecessary head rotations.\n"
+        # Body Shift Analysis
+        if body_shift > 10:
+            feedback += "- Significant body movement detected. It's important to remain still to convey confidence.\n"
+        elif body_shift > 5:
+            feedback += "- Moderate body movement detected. Try to practice sitting still.\n"
+        else:
+            feedback += "- Minimal body movement detected. Excellent posture!\n"
+        
+        # Head Rotation Analysis
+        if head_rotation > 5:
+            feedback += "- Excessive head rotation detected. This may indicate nervousness. Try to minimize head movements.\n"
+        elif head_rotation > 3:
+            feedback += "- Moderate head rotation observed. Aim to keep your head steady.\n"
+        else:
+            feedback += "- Minimal head movement. Great job in maintaining focus!\n"
         
         # Camera Presence
-        face_visibility_percent = (performance_metrics['face_visibility']['count'] / frame_count) * 100
-        if face_visibility_percent < 60:
-            feedback += "- Inconsistent camera presence. Ensure you remain centered and visible throughout the interview.\n"
+        face_visibility_percent = normalize_percentage(performance_metrics['face_visibility']['count'], frame_count)
+        if face_visibility_percent < 40:
+            feedback += "- Poor camera presence. Ensure you're well-centered and visible.\n"
+        elif face_visibility_percent < 60:
+            feedback += "- Inconsistent camera presence. Ensure you're clearly visible during the entire interview.\n"
+        elif face_visibility_percent < 80:
+            feedback += "- Good camera presence. Keep up the visibility, but try to stay centered.\n"
+        else:
+            feedback += "- Excellent camera presence. You're always in frame and clearly visible.\n"
+        
+        # Camera Contact
+        if performance_metrics['confidence_indicators']['direct_camera_contact'] < 0.5 * frame_count:
+            feedback += "- Low direct camera contact. This may indicate a lack of engagement.\n"
+        elif performance_metrics['confidence_indicators']['direct_camera_contact'] < 0.7 * frame_count:
+            feedback += "- Moderate camera contact. Try to keep your focus on the camera more often.\n"
+        else:
+            feedback += "- Excellent direct camera contact. You appear engaged and focused.\n"
         
         # Performance Score Interpretation
-        if performance_score >= 80:
+        if performance_score >= 90:
+            feedback += "\nOverall Performance: Outstanding\n"
+        elif performance_score >= 80:
             feedback += "\nOverall Performance: Excellent\n"
-        elif performance_score >= 60:
+        elif performance_score >= 70:
             feedback += "\nOverall Performance: Good, with room for improvement\n"
+        elif performance_score >= 60:
+            feedback += "\nOverall Performance: Average, needs significant improvement\n"
         else:
-            feedback += "\nOverall Performance: Needs significant work\n"
+            feedback += "\nOverall Performance: Needs substantial work\n"
         
         return feedback
 
