@@ -1,0 +1,577 @@
+/* Custom Font for Dashboard Title */
+@font-face {
+    font-family: 'YourCustomFont';
+    src: url('/Users/apurvadharam/Desktop/EduNext-Sih/Frontend/src/fonts/Freudian One Demo.otf') format('opentype');
+}
+
+/* Dashboard Title Section */
+.ds-title {
+    background-image: url('/Users/apurvadharam/Desktop/EduNext-Sih/Frontend/src/images/bg-dark2.png'); /* Ensure the correct path */
+    background-size: cover; /* Ensures the background image covers the div */
+    background-position: center;
+    background-attachment: fixed; /* Makes the background fixed when scrolling */
+    height: 100vh; /* Use full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #F8F7E5; /* Text color on the background */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Optional for readability */
+    font-family: 'YourCustomFont', sans-serif; /* Use your custom font */
+    padding: 0 20px; /* Adjust padding as needed */
+    box-sizing: border-box; /* Ensures padding doesn't affect layout */
+    margin-top: 4rem;
+}
+
+.ds-title h1 {
+    
+    font-size: 9rem;
+    margin-bottom: 10px;
+    word-wrap: break-word; /* Handles long text properly */
+}
+
+.ds-title p {
+    font-family: eczar; 
+    font-size: 2.5rem;
+    margin-top: 20px;
+}
+
+/* About Us Section */
+.about-us {
+    background-color: #F5F5DC; /* Beige background */
+    padding: 50px 20px;
+    font-family: 'CustomFont', sans-serif; /* Use your custom font */
+    text-align: center;
+    color: #333; /* Dark text for readability */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Removed animation for About Us section */
+.about-us h2 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.about-us p {
+    font-family: eczar;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+/* Removed card-related animations */
+.cards {
+    padding: 20px;
+    background-color: #F5F5DC;
+}
+
+
+.cards img {
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hover effect for the cards */
+.cards img:hover {
+    transform: scale(1.05);
+}
+
+/* Custom Font for About Us Section */
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/Users/apurvadharam/Desktop/EduNext-Sih/Frontend/src/fonts/ROSEFORD DEMO.otf') format('opentype');
+}
+
+/* Services */
+
+.services {
+    background-color: #191919; /* Dark background */
+    color: #F5F5DC; /* Light text for contrast */
+    font-family: eczar; /* Use your custom font */
+    text-align: center;
+    display: flex;
+    
+    align-items: center;
+    padding: 3rem 1rem;
+}
+
+.services h2 {
+    font-family: 'CustomFont';
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.services > div:first-child {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.services > div:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+
+.service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 15.625rem;
+    margin-bottom: 1.25rem;
+}
+
+.service-card-image-container {
+    width: 12.5rem;
+    height: 12.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.938rem;
+    transition: transform 0.3s ease;
+}
+
+.service-card-image-container:hover {
+    transform: scale(1.05);
+}
+
+.service-card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.service-card-title {
+    color: #F5F5DC;
+    font-family: eczar;
+    font-size: 1.5rem;
+    margin-bottom: 0.625rem;
+}
+
+.service-card-content {
+    color: #F5F5DC;
+    font-family: eczar;
+    text-align: center;
+    font-size: 1rem;
+    max-width: 15.625rem;
+}
+
+@media (max-width: 48rem) {
+    .services > div:last-child {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .service-card {
+        width: 100%;
+        max-width: 18.75rem;
+    }
+
+    .service-card-image-container {
+        width: 9.375rem;
+        height: 9.375rem;
+    }
+
+    .service-card-title {
+        font-size: 1.25rem;
+    }
+
+    .service-card-content {
+        font-size: 0.9rem;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 30rem) {
+    .services > div:last-child {
+        gap: 1rem;
+        padding: 0.75rem;
+    }
+
+    .service-card-image-container {
+        width: 7.5rem;
+        height: 7.5rem;
+    }
+
+    .service-card-title {
+        font-size: 1rem;
+    }
+
+    .service-card-content {
+        font-size: 0.8rem;
+    }
+}
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .ds-title h1 {
+        font-size: 6rem;
+        margin-top: 0.5rem;
+    }
+
+    .ds-title p {
+        font-size: 1.25rem;
+    }
+
+    .about-us h2 {
+        font-size: 2.5rem;
+    }
+
+    .about-us p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .ds-title h1 {
+        font-size: 4rem;
+        margin-top: 0.5rem;
+    }
+
+    .ds-title p {
+        font-size: 2rem;
+    }
+
+    .about-us h2 {
+        font-size: 2rem;
+    }
+
+    .about-us p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .ds-title h1 {
+        font-size: 3rem;
+        margin-top: 0.5rem;
+    }
+
+    .ds-title p {
+        font-size: 0.875rem;
+        margin-top: 10px;
+    }
+
+    .about-us h2 {
+        font-size: 1.5rem;
+    }
+
+    .about-us p {
+        font-size: 0.9rem;
+    }
+}
+
+.services-title-section {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+}
+
+.services-title-section h2 {
+    font-family: 'CustomFont';
+    font-size: 3.5rem;
+    color: #F5F5DC;
+    text-align: left;
+    line-height: 1.2;
+    max-width: 15ch;
+}
+
+.services-cards-section {
+    flex: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: flex-end;
+}
+
+.service-card {
+    width: calc(33.33% - 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.7s, transform 0.7s;
+}
+
+.service-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.service-card-image-container {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    transition: transform 0.3s;
+}
+
+.service-card-image-container:hover {
+    transform: scale(1.05);
+}
+
+.service-card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.service-card-title {
+    color: #F5F5DC;
+    font-family: 'CustomFont';
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.service-card-content {
+    color: #F5F5DC;
+    font-family: eczar;
+    text-align: center;
+    font-size: 1rem;
+    max-width: 15rem;
+}
+
+@media (max-width: 1024px) {
+    .services {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .services-title-section h2 {
+        font-size: 2.5rem;
+    }
+
+    .services-cards-section {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .service-card {
+        width: calc(50% - 2rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .services-title-section h2 {
+        font-size: 2rem;
+    }
+
+    .service-card {
+        width: 100%;
+    }
+
+    .service-card-image-container {
+        width: 10rem;
+        height: 10rem;
+    }
+}
+
+.service-card {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.7s, transform 0.7s;
+}
+
+.service-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Add these styles to your existing CSS */
+.services-content-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .services-title-section {
+    margin-left: 2rem;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 2rem;
+    
+  }
+  .services-title-section p{
+    font-size: 1.2rem;
+    text-align: left;
+  }
+  .decorative-circles {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .decorative-circles .circle {
+    width: 2rem;
+    height: 2rem;
+    background-color: #F5F5DC;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  
+  .decorative-circles .circle:nth-child(1) {
+    transition-delay: 0.2s;
+  }
+  
+  .decorative-circles .circle:nth-child(2) {
+    transition-delay: 0.4s;
+  }
+  
+  .services-title-section h2 {
+    flex-grow: 1;
+  }
+  
+  .service-card {
+    opacity: 0;
+    transform: translateX(100px); /* Slide from right */
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  
+  .service-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* Stagger the service cards */
+  .service-card:nth-child(1) { transition-delay: 0.2s; }
+  .service-card:nth-child(2) { transition-delay: 0.4s; }
+  .service-card:nth-child(3) { transition-delay: 0.6s; }
+  .service-card:nth-child(4) { transition-delay: 0.8s; }
+  .service-card:nth-child(5) { transition-delay: 1s; }
+  .service-card:nth-child(6) { transition-delay: 1.2s; }
+  .service-card:nth-child(7) { transition-delay: 1.4s; }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .services-title-section {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .decorative-circles {
+      align-self: flex-end;
+      margin-top: 1rem;
+    }
+  }
+
+  
+.dashboard-container {
+    position: relative;
+    overflow-x: hidden;
+    background-image: url('/Users/apurvadharam/Desktop/EduNext-Sih/Frontend/src/images/bg-dark2.png');
+
+  }
+  
+  .ds-title {
+    /* Existing styles */
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 10;
+    transition: transform 0.1s ease-out;
+  }
+  
+  .lottie-container {
+    margin: 0 auto;
+    width: 50%;
+    max-width: 600px;
+  }
+  
+  @media (max-width: 768px) {
+    .lottie-container {
+      width: 75%;
+      max-width: 400px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .lottie-container {
+      width: 90%;
+      max-width: 300px;
+    }
+  }
+
+  /* new styles */
+/* Services grid layout */
+.services-cards-section {
+    flex: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: flex-start;
+    padding: 0 2rem;
+}
+
+.service-card {
+    width: calc(33.33% - 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    /* transform: translateY(50px); */
+    transition: opacity 0.7s, transform 0.7s;
+}
+
+/* Center the last item when it's alone in its row */
+.services-cards-section::after {
+    content: "";
+    flex: auto;
+    width: calc(33.33% - 2rem);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .service-card {
+        width: calc(50% - 2rem);
+    }
+    
+    .services-cards-section::after {
+        width: calc(50% - 2rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .service-card {
+        width: 100%;
+    }
+    
+    .services-cards-section::after {
+        display: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    .ds-title {
+        margin-top: 3rem; /* Reduce the margin on medium-sized screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .ds-title {
+        margin-top: 2rem; /* Further reduce the margin on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .ds-title {
+        margin-top: 1rem; /* Minimize the margin on very small screens */
+    }
+}

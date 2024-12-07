@@ -22,6 +22,7 @@ import Quiz from './pages/Quiz.jsx';
 import Alumni from './pages/Alumni.jsx';
 import Video from './pages/Video.jsx';
 import Workshop from './pages/Workshops.jsx';
+import Dashboard from './pages/Dashboard/Dashboard.jsx';
 function App() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
@@ -31,7 +32,8 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => setLoading(false), 1000);
+    
   }, []);
 
   return loading ? (
@@ -57,6 +59,15 @@ function App() {
           </>
         }
       />
+       <Route
+        path="/dashboard"
+        element={
+          <>
+            <PageTitle title="Dashboard" />
+            <Dashboard />
+          </>
+        }
+      />
       {/* DefaultLayout routes */}
       <Route
         path="*"
@@ -69,24 +80,6 @@ function App() {
                   <>
                     <PageTitle title="EduNext" />
                     <ECommerce />
-                  </>
-                }
-              />
-              <Route
-                path="/roleplay"
-                element={
-                  <>
-                    <PageTitle title="Role Playing Game" />
-                    <Calendar />
-                  </>
-                }
-              />
-              <Route
-                path="/roleplay"
-                element={
-                  <>
-                    <PageTitle title="Role Playing Game" />
-                    <Calendar />
                   </>
                 }
               />

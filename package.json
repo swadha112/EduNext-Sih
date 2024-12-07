@@ -1,0 +1,11 @@
+{
+  "name": "edunext-sih",
+  "version": "1.0.0",
+  "description": "AI-Driven Chatbot for Personalized Career Guidance: The AI chatbot scans the user's profile, analyzing their background, skills, and interests. It provides personalized career recommendations and answers user queries. Additionally, features like Advanced Communication Skill Analysis, Career Simulator, Counsellor Connect, Domain Strength Quiz, Real-Time Market Trends, Alumni Connect, and Nearby Workshop and Event Finder are integrated. These help users explore various careers, connect with counselors, and receive real-time data and feedback.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
