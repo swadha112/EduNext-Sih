@@ -36,45 +36,54 @@ const Workshops = () => {
         setResults(response.data.data);
         setError("");
       } else {
-        setError("No results found");
+        setError("No results found.");
       }
     } catch (err) {
-      setError("Error fetching search results");
+      setError("Error fetching search results.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container
+      maxWidth="lg"
+      sx={{
+        py: 4,
+        px: 3,
+        background: "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)", // Soft pastel gradient
+        borderRadius: "12px",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      }}
+    >
       <Typography
-        variant="h3"
-        align="left"
+        variant="h4"
+        align="center"
         gutterBottom
         sx={{
           fontWeight: "bold",
-          color: "#4A4A4A",
-          ml: 1,
-          fontSize: "2.5rem",
+          color: "#5c6bc0",
+          fontFamily: "'Comic Sans MS', cursive, sans-serif",
         }}
       >
-        Search for Career Workshops
+        Find Career Workshops 
       </Typography>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
             variant="outlined"
             label="Career Domain"
+            placeholder="E.g., Coding, Art"
             value={domain}
             onChange={(e) => setDomain(e.target.value)}
             disabled={loading}
             sx={{
               mb: 2,
-              '& .MuiOutlinedInput-root': {
-                backgroundColor: theme.palette.mode === 'dark' ? '#424242' : '#e3f2fd',
-                borderRadius: '8px',
+              "& .MuiOutlinedInput-root": {
+                backgroundColor: "#fff",
+                borderRadius: "8px",
               },
             }}
           />
@@ -84,14 +93,15 @@ const Workshops = () => {
             fullWidth
             variant="outlined"
             label="City"
+            placeholder="E.g., New York"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             disabled={loading}
             sx={{
               mb: 2,
-              '& .MuiOutlinedInput-root': {
-                backgroundColor: theme.palette.mode === 'dark' ? '#424242' : '#e3f2fd',
-                borderRadius: '8px',
+              "& .MuiOutlinedInput-root": {
+                backgroundColor: "#fff",
+                borderRadius: "8px",
               },
             }}
           />
@@ -102,13 +112,15 @@ const Workshops = () => {
             variant="contained"
             onClick={handleSearch}
             disabled={loading || !domain || !city}
-            startIcon={loading && <CircularProgress size={20} />}
+            startIcon={loading && <CircularProgress size={20} color="inherit" />}
             sx={{
-              height: "56px",
-              backgroundColor: theme.palette.mode === 'dark' ? '#f7819f' : '#3f51b5',
-              color: '#fff',
+              height: "50px",
+              backgroundColor: "#64b5f6",
+              fontWeight: "bold",
+              borderRadius: "8px",
+              color: "#fff",
               "&:hover": {
-                backgroundColor: theme.palette.mode === 'dark' ? '#303f9f' : '#303f9f',
+                backgroundColor: "#42a5f5",
               },
             }}
           >
@@ -118,28 +130,40 @@ const Workshops = () => {
       </Grid>
 
       {error && (
-        <Alert severity="error" sx={{ mt: 3 }}>
+        <Alert severity="error" sx={{ mt: 3, borderRadius: "8px" }}>
           {error}
         </Alert>
       )}
 
       {results && (
         <Box sx={{ mt: 4 }}>
-          <Typography variant="h5" gutterBottom>
-            Web Results
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{ color: "#43a047", fontWeight: "bold" }}
+          >
+            Results
           </Typography>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             {results.siteLinks.map((result, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card variant="outlined" sx={{ p: 2 }}>
+                <Card
+                  variant="outlined"
+                  sx={{
+                    p: 2,
+                    borderRadius: "8px",
+                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                    backgroundColor: "#e3f2fd",
+                  }}
+                >
                   <CardContent>
                     <Typography variant="body1" gutterBottom>
                       {result.snippet}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Link href={result.url} target="_blank" rel="noopener noreferrer">
-                      {result.url}
+                    <Link href={result.url} target="_blank" rel="noopener noreferrer" underline="hover">
+                      Learn More
                     </Link>
                   </CardActions>
                 </Card>
@@ -147,26 +171,24 @@ const Workshops = () => {
             ))}
           </Grid>
 
-          <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
-            Google Maps Results
-          </Typography>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             {results.mapLinks.map((place, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card variant="outlined" sx={{ p: 2 }}>
+                <Card
+                  variant="outlined"
+                  sx={{
+                    p: 2,
+                    borderRadius: "8px",
+                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                    backgroundColor: "#e3f2fd",
+                  }}
+                >
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
                       {place.name}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Link
-                      href={`https://www.google.com/maps?q=${place.google_maps_link.latitude},${place.google_maps_link.longitude}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      View on Google Maps
-                    </Link>
                   </CardActions>
                 </Card>
               </Grid>
