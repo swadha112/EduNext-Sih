@@ -302,6 +302,7 @@
     .service-card {
         width: calc(50% - 2rem);
     }
+    
 
     .decorative-circles {
         align-self: flex-end;
@@ -351,6 +352,9 @@
     .services {
         margin-top: -8vh;
     }
+    .services-title-section {
+        padding: 2rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -387,6 +391,23 @@
     .services {
         margin-top: -6vh;
     }
+
+    .services-title-section {
+        padding: 2rem;
+    }
+
+    /* .services-cards-section{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+    }
+    .service-card{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+    } */
 }
 
 /* Custom Font for About Us Section */
@@ -394,3 +415,5 @@
     font-family: 'CustomFont';
     src: url('/Users/apurvadharam/Desktop/EduNext-Sih/Frontend/src/fonts/ROSEFORD DEMO.otf') format('opentype');
 }
+
+

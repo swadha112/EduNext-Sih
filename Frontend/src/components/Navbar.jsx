@@ -10,7 +10,7 @@ const Navbar = () => {
     { title: 'Quiz', path: '/quiz' },
     { title: 'Interview Prep', path: '/interview' },
     { title: 'Market Trends', path: '/tables' },
-    { title: 'Upcoming Workshops', path: '/workshops' },
+    { title: 'Upcoming Workshops', path: '/workshop' },
     { title: 'Counsellors Nearby', path: '/counsellors' },
     { title: 'Alumni Connect', path: '/alumni' },
   ];
