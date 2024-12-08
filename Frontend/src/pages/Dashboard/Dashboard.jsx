@@ -7,7 +7,6 @@ import College from '../../images/cards/cllg.jpg';
 import Counsellor from '../../images/cards/counsellor.jpg';
 import Professional from '../../images/cards/prof.jpg';
 import Lottie from 'lottie-react';
-import hatanimation from '../../images/careerHat.json';
 import Chatbot from '../../images/cards/chatbot.png';
 import Trends from '../../images/cards/trends.png';
 import Quiz from '../../images/cards/quiz.png';
@@ -15,6 +14,7 @@ import Interview from '../../images/cards/interview.png';
 import Workshop from '../../images/cards/workshop.png';
 import Alumini from '../../images/cards/alumini.png';
 import Navbar from '../../components/Navbar.jsx'; 
+import hatanimation from '../../images/careerHat.json';
 
 const Dashboard = () => {
   const [isAboutUsVisible, setIsAboutUsVisible] = useState(false);
@@ -26,6 +26,21 @@ const Dashboard = () => {
   const lottieContainerRef = useRef(null);
 
   // Scroll position tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      const position = window.pageYOffset;
+      setScrollPosition(position);
+      
+      // More gradual hat position calculation
+      const maxScroll = window.innerHeight;
+      const scrollProgress = Math.min(1, position / maxScroll);
+      setHatPosition(scrollProgress);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
    // Update scroll position tracking
    useEffect(() => {
     const handleScroll = () => {
@@ -157,33 +172,37 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <Navbar />
-      <div
-        className="ds-title"
-        ref={lottieContainerRef}
-        style={{
-          transform: `translateY(${scrollPosition * 0.5}px)`,
-          zIndex: hatPosition > 0.5 ? 5 : 10, // Reduce z-index as we scroll down
-        }}
-      >
-        <h1 className="text-5xl">Shape your future with </h1>
-        <h1 className="text-5xl text-orange-500">EduNext</h1>
-        <p>Empowering students with career guidance and resources.</p>
-        <div
-          className="lottie-container"
+      <div className="hero-section">
+        <div 
+          className="ds-title"
           style={{
-            width: '50%',
-            maxWidth: '600px',
-            transform: `scale(${1 - hatPosition * 0.2})`, // Slightly reduce size as we scroll
-            opacity: Math.max(0.3, 1 - hatPosition * 0.5), // Fade out slightly as we scroll
-            
+            transform: `translateY(${scrollPosition * 0.5}px)`,
           }}
         >
-          <Lottie
-            animationData={hatanimation}
-            style={{ width: '100%', height: '100%' }}
-          />
+          <h1>Shape your future with</h1>
+          <h1 className="text-orange-500">EduNext</h1>
+          
+          <div 
+            className="lottie-wrapper"
+            style={{ 
+              opacity: Math.max(0.5, 1 - hatPosition),
+              transform: `scale(${1 - hatPosition * 0.1})` 
+            }}
+          >
+            <Lottie
+              animationData={hatanimation}
+              autoplay={true}
+              loop={true}
+              style={{ 
+                width: '300px', 
+                height: '300px' 
+              }}
+            />
+          </div>
         </div>
       </div>
+
+      {/* //about us section */}
 
       <div
         className={`about-us ${isAboutUsVisible ? 'animate-slide-up' : ''}`}
