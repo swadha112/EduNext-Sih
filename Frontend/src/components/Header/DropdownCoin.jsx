@@ -7,26 +7,43 @@ const DropdownCoin = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [coins, setCoins] = useState(0); // Initialize with 0
   const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(null); // Add error state
 
   // Fetch coin balance and transactions from the server
   useEffect(() => {
     const fetchCoinData = async () => {
+      const token = localStorage.getItem('token'); // Get token from localStorage
+
+      if (!token) {
+        setError('No token found. Please log in.');
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await fetch('http://localhost:5050/api/coins', {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`, // Include JWT token
+            Authorization: `Bearer ${token}`, // Include JWT token
           },
         });
 
         if (!response.ok) {
+          if (response.status === 401) {
+            localStorage.removeItem('token'); // Clear token if unauthorized
+            window.location.href = '/login'; // Redirect to login page
+          }
           throw new Error('Failed to fetch coin data');
         }
 
         const data = await response.json();
-        setCoins(data.coins);
-        setTransactions(data.transactions || []); // Set transactions if available
-      } catch (error) {
-        console.error('Error fetching coin data:', error.message);
+        setCoins(data.coins || 0);
+        setTransactions(data.transactions || []);
+      } catch (err) {
+        console.error('Error fetching coin data:', err.message);
+        setError('Unable to fetch coin data. Please try again.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -66,6 +83,18 @@ const DropdownCoin = () => {
       </li>
     ));
   };
+
+  if (loading) {
+    return <p className="text-center">Loading coin data...</p>;
+  }
+
+  if (error) {
+    return (
+      <p className="text-center text-red-500">
+        {error}
+      </p>
+    );
+  }
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">

@@ -15,6 +15,7 @@ import Workshop from '../../images/cards/workshop.png';
 import Alumini from '../../images/cards/alumini.png';
 import Navbar from '../../components/Navbar.jsx'; 
 import hatanimation from '../../images/careerHat.json';
+import LogoIcon from '../../images/logo/EduNEXT.svg';
 
 const Dashboard = () => {
   const [isAboutUsVisible, setIsAboutUsVisible] = useState(false);
