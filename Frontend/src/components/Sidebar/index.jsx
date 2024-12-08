@@ -57,11 +57,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink to="/">
-          <img src={Logo} alt="Logo" />
-        </NavLink>
-
+      <div
+  className="flex items-center justify-between pl-10" // Reduced padding
+>
+  <NavLink to="/">
+    <img
+      src={Logo}
+      alt="Logo"
+      className="h-40 w-auto" // Adjusted height to make it smaller
+    />
+  </NavLink>
         <button
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}

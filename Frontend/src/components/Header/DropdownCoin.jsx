@@ -1,29 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import CoinIcon from '../../images/goldencoin.png';
 
 const DropdownCoin = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [coins] = useState(1500); // Hard-coded coin count
-  const [transactions] = useState([
-    {
-      description: 'Premium Membership',
-      timestamp: new Date('2024-12-01T10:15:00Z'),
-    },
-    {
-      description: 'Earned from Quiz',
-      timestamp: new Date('2024-12-02T14:30:00Z'),
-    },
-    {
-      description: 'Referral Bonus',
-      timestamp: new Date('2024-12-03T09:00:00Z'),
-    },
-    {
-      description: 'Gifted to Friend',
-      timestamp: new Date('2024-12-04T17:45:00Z'),
-    },
-  ]);
+  const [coins, setCoins] = useState(0); // Initialize with 0
+  const [transactions, setTransactions] = useState([]);
+
+  // Fetch coin balance and transactions from the server
+  useEffect(() => {
+    const fetchCoinData = async () => {
+      try {
+        const response = await fetch('http://localhost:5050/api/coins', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // Include JWT token
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch coin data');
+        }
+
+        const data = await response.json();
+        setCoins(data.coins);
+        setTransactions(data.transactions || []); // Set transactions if available
+      } catch (error) {
+        console.error('Error fetching coin data:', error.message);
+      }
+    };
+
+    fetchCoinData();
+  }, []);
 
   // Format date to "DD MMM, hh:mm A"
   const formatDate = (date) => {
@@ -34,7 +42,7 @@ const DropdownCoin = () => {
       minute: '2-digit',
       hour12: true,
     };
-    return new Intl.DateTimeFormat('en-US', options).format(date);
+    return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
   };
 
   const renderTransactionHistory = () => {
@@ -51,9 +59,9 @@ const DropdownCoin = () => {
         key={index}
         className="flex justify-between items-center px-4 py-2 text-sm text-black dark:text-white"
       >
-        <span>{transaction.description}</span>
+        <span>{transaction.message}</span>
         <span className="text-xs text-gray-500 dark:text-gray-400">
-          {formatDate(transaction.timestamp)}
+          {formatDate(transaction.createdAt)}
         </span>
       </li>
     ));

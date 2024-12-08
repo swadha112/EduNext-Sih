@@ -14,6 +14,7 @@ const videoRoutes = require("./routes/videoRoutes");
 const workshopRoutes = require("./routes/workshopRoutes");
 const whatsappRoutes = require("./routes/whatsappRoutes");
 const careerScenarioRoutes = require("./routes/careerScenarioRoutes");
+const coinRoutes = require("./routes/coinRoutes");
 const careerPathRoutes = require("./routes/careerPathRoutes");
 const twilio = require("twilio");
 
@@ -47,6 +48,7 @@ app.use("/api/workshop", workshopRoutes);
 app.use("/api/whatsapp", whatsappRoutes);
 app.use("/api/career-scenarios", careerScenarioRoutes);
 app.use("/api/careerpath", careerPathRoutes);
+app.use("/api", coinRoutes); 
 // Health Check Route
 app.get("/", (req, res) => {
   res.send("API is running...");

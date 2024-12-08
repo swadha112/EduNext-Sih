@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 // Generate JWT Token
 const generateToken = (id, email) => {
-  return jwt.sign({ id, email }, process.env.JWT_SECRET);
+  return jwt.sign({ id, email }, process.env.JWT_SECRET, { expiresIn: "7d" });
 };
 
 // Register user
@@ -14,9 +14,7 @@ const registerUser = async (req, res) => {
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      return res
-        .status(400)
-        .json({ status: "fail", message: "User already exists" });
+      return res.status(400).json({ status: "fail", message: "User already exists" });
     }
 
     const user = new User({
@@ -39,6 +37,7 @@ const registerUser = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("Error registering user:", error);
     res.status(500).json({ status: "fail", message: "Error registering user" });
   }
 };
@@ -51,18 +50,25 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
+      user.coins += 3; // Add login bonus
+      await user.save();
+
       const token = generateToken(user._id, user.email);
       res.status(200).json({
         status: "success",
         message: "Login successful",
         token,
+        user: {
+          name: user.name,
+          email: user.email,
+          coins: user.coins,
+        },
       });
     } else {
-      res
-        .status(401)
-        .json({ status: "fail", message: "Invalid email or password" });
+      res.status(401).json({ status: "fail", message: "Invalid email or password" });
     }
   } catch (error) {
+    console.error("Error logging in user:", error);
     res.status(500).json({ status: "fail", message: "Error logging in user" });
   }
 };

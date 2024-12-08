@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom'; // Import useLocation
 import DropdownMessage from './DropdownMessage';
 import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
-import LogoIcon from '../../images/logo/EduNEXT.png';
+import LogoIcon from '../../images/logo/EduNEXT.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import DropdownCoin from './DropdownCoin';
 
@@ -35,13 +35,15 @@ const Header = ({ sidebarOpen, setSidebarOpen }) => {
           {/* Hamburger Toggle Button */}
 
           {/* Responsive Logo */}
-          <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img
-              src={LogoIcon}
-              alt="EduNext Logo"
-              className="h-auto w-40 sm:w-48 md:w-56 lg:w-64 xl:w-72" // Adjust logo size based on screen size
-            />
-          </Link>
+          
+<Link className="block flex-shrink-0 lg:hidden" to="/">
+  <img
+    src={LogoIcon}
+    alt="EduNext Logo"
+    className="h-40 w-auto sm:h-12 md:h-14 lg:h-16" // Adjust height based on screen size
+  />
+</Link>
+
         </div>
 
         <div className="hidden sm:block">

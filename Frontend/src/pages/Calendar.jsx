@@ -118,23 +118,44 @@ const CareerRPG = ({ selectedCareer }) => {
     audio.play();
   };
 
-  const handleChoice = (points) => {
-    setCoins(coins + points); // Add points to coins
+  const handleChoice = async (points) => {
+    setCoins((prevCoins) => prevCoins + points); // Add points to coins
     setCoinPopup(points); // Show coin popup
     playCoinSound(); // Play coin sound effect
     setTimeout(() => setCoinPopup(null), 1000);
-
+  
+    try {
+      const response = await fetch('http://localhost:5050/api/update-coins', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // Include JWT token
+        },
+        body: JSON.stringify({ coins: points }),
+      });
+  
+      const result = await response.json();
+      if (response.ok) {
+        console.log('Coins updated successfully');
+      } else {
+        console.error('Failed to update coins:', result.message);
+      }
+    } catch (err) {
+      console.error('Error while updating coins:', err);
+    }
+  
     const nextScene = scene + 1;
-
+  
     if (nextScene < scenes.length) {
       setScene(nextScene);
       setProgress(((nextScene + 1) / scenes.length) * 100); // Update progress bar
-      setAnimationKey(prev => prev + 1); // Increment to trigger animation reset
+      setAnimationKey((prev) => prev + 1); // Increment to trigger animation reset
       resetTimer();
     } else {
       setGameOver(true);
     }
   };
+  
 
   const resetTimer = () => {
     setTimer(15);

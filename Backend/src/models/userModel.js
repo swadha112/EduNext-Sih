@@ -84,6 +84,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null, // To store the blockchain transaction hash
     },
+    coins: {
+      type: Number,
+      default: 0, // Initial coin balance
+    },
   },
   {
     timestamps: true,
