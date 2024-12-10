@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import Logo from '../../images/logo/EduNEXT.png';
+import Logo from '../../images/logo/EduNEXT.svg';
 import { UserContext } from '../../context/UserContext'; // Import UserContext
 
 const SignIn = () => {

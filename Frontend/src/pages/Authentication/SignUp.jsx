@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import Logo from '../../images/logo/EduNEXT.png';
+import Logo from '../../images/logo/EduNEXT.svg';
 import SelectGroupGender from '../../components/Forms/SelectGroup/SelectGroupGender';
 
 const SignUp = () => {
